@@ -1,2 +1,25 @@
 rootProject.name = 'Pineapple'
 
+gradle.rootProject {
+    it.version = '1.0.0-SNAPSHOT'
+    it.group = 'sh.miles'
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+        maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+        maven { url = 'https://repo.epicebic.xyz/public' }
+        maven { url = "https://libraries.minecraft.net/" }
+    }
+}
+
+include 'pineapple-core'
+include 'pineapple-nms'
+include 'pineapple-nms:spigot-v1_20_R1'
+findProject(':pineapple-nms:spigot-v1_20_R1')?.name = 'spigot-v1_20_R1'
+include 'pineapple-nms:api'
+findProject(':pineapple-nms:api')?.name = 'api'
+

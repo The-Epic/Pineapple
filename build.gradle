@@ -1,19 +1,33 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
-group = 'sh.miles'
-version = '1.0.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+// shadowJar takes care of this
+jar.enabled = true
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation(project(":pineapple-core"))
+    implementation(project(":pineapple-nms"))
 }
 
-test {
-    useJUnitPlatform()
+shadowJar {
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+build {
+    dependsOn shadowJar
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+            repositories {
+                // TODO repo stuff
+            }
+        }
+    }
 }

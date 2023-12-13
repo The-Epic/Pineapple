@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id "io.github.patrick.remapper" version "1.4.0" apply false
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: "io.github.patrick.remapper"
+
+    if (project.getName() != "api") {
+        dependencies {
+            compileOnly project(":pineapple-nms:api")
+        }
+    }
+
+}
+
+dependencies {
+    for (final def subproject in subprojects) {
+        subproject.plugins.withId("java") {
+            implementation(subproject)
+        }
+    }
+}
