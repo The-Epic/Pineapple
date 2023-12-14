@@ -1,7 +1,5 @@
 package sh.miles.pineapple.collection.registry;
 
-import com.google.common.collect.ImmutableMap;
-
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -13,6 +11,6 @@ import java.util.function.Supplier;
 public class FrozenRegistry<T extends RegistryKey> extends AbstractRegistry<T> {
 
     public FrozenRegistry(final Supplier<Map<String, T>> registrySupplier) {
-        super(() -> ImmutableMap.copyOf(registrySupplier.get()));
+        super(() -> Map.copyOf(registrySupplier.get()));
     }
 }
