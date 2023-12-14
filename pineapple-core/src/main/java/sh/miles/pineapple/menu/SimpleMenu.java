@@ -4,6 +4,8 @@ import com.google.common.base.Preconditions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +36,7 @@ public abstract class SimpleMenu<T extends MenuScene> implements Menu<T> {
         this.slots = new HashMap<>();
     }
 
-    protected void decorate() {
+    private void updateMenu() {
         slots.forEach((slot, item) -> inventory.setItem(slot, item.item(viewer)));
         for (int i = 0; i < inventory.getSize(); i++) {
             if (inventory.getItem(i) == null) {
@@ -66,8 +68,12 @@ public abstract class SimpleMenu<T extends MenuScene> implements Menu<T> {
 
     @Override
     public void open() {
-        decorate();
+        updateMenu();
         viewer.openInventory(getScene().getBukkitView());
+    }
+
+    @Override
+    public void close() {
     }
 
     @Override
@@ -75,5 +81,13 @@ public abstract class SimpleMenu<T extends MenuScene> implements Menu<T> {
         event.setCancelled(true);
         final int slot = event.getSlot();
         getItem(slot).ifPresent(item -> item.click((Player) event.getWhoClicked(), event));
+    }
+
+    @Override
+    public void handleOpen(@NotNull final InventoryOpenEvent event) {
+    }
+
+    @Override
+    public void handleClose(@NotNull final InventoryCloseEvent event) {
     }
 }

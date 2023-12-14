@@ -16,6 +16,11 @@ import java.util.Optional;
 public interface Menu<T extends MenuScene> {
 
     /**
+     * Used to initialize and add items
+     */
+    void init();
+
+    /**
      * Opens the menu for the viewer
      */
     void open();
