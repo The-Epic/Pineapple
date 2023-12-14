@@ -7,4 +7,5 @@ compileJava.options.encoding = 'UTF-8'
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly(project(":pineapple-nms:api"))
+    compileOnly(project(":pineapple-utils"))
 }
