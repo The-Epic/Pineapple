@@ -214,6 +214,21 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Attempts to safely invoke a method handle if a failure occurs this method throws a runtime exception
+     *
+     * @param handle     the handle
+     * @param parameters the parameters
+     * @return the object created from the invocation
+     */
+    public static Object safeInvoke(MethodHandle handle, Object... parameters) {
+        try {
+            return handle.invokeWithArguments(parameters);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Sets the given accessible object accessible and then returns the result of hte provided function
      *
      * @param accessibleObject the accessible object
