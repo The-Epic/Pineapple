@@ -33,12 +33,12 @@ public class ReloadableObject<T> extends ConfigReloadable<T> {
 
     @Override
     protected void setField(ConfigField field, Object value) throws ReflectiveOperationException {
-        ReflectionHelper.setField(field, value, this.wrapped);
+        ConfigReflectionHelper.setField(field, value, this.wrapped);
     }
 
     @Override
     protected Object getField(ConfigField field) {
-        return ReflectionHelper.getField(field, this.wrapped);
+        return ConfigReflectionHelper.getField(field, this.wrapped);
     }
 
     public T getWrapped() {

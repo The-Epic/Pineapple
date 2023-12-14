@@ -2,7 +2,7 @@ package sh.miles.pineapple.config;
 
 import java.lang.reflect.Field;
 
-public class ReflectionHelper {
+public class ConfigReflectionHelper {
     public static <T> void setField(ConfigField field, Object value, T wrapped) throws ReflectiveOperationException {
         Field internal = field.getField();
         if (field.isStatic()) {

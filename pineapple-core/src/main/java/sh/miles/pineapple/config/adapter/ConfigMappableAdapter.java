@@ -9,7 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import sh.miles.pineapple.config.ConfigField;
 import sh.miles.pineapple.config.ConfigType;
 import sh.miles.pineapple.config.ConfigurationManager;
-import sh.miles.pineapple.config.ReflectionHelper;
+import sh.miles.pineapple.config.ConfigReflectionHelper;
 import sh.miles.pineapple.config.annotation.ConfigEntry;
 
 public class ConfigMappableAdapter<T> implements TypeAdapter<T> {
@@ -52,7 +52,7 @@ public class ConfigMappableAdapter<T> implements TypeAdapter<T> {
                     continue;
                 }
 
-                ReflectionHelper.setField(field, readValue, object);
+                ConfigReflectionHelper.setField(field, readValue, object);
             }
 
             return object;
@@ -79,7 +79,7 @@ public class ConfigMappableAdapter<T> implements TypeAdapter<T> {
                 continue;
             }
 
-            Object writeValue = ReflectionHelper.getField(field, value);
+            Object writeValue = ConfigReflectionHelper.getField(field, value);
             if (writeValue == null) {
                 // logger.log(Level.WARNING, "null");
                 continue;
