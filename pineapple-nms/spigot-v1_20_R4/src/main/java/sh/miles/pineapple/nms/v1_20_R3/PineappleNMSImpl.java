@@ -1,4 +1,4 @@
-package sh.miles.pineapple.nms.v1_20_R1;
+package sh.miles.pineapple.nms.v1_20_R3;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.core.Registry;
@@ -10,10 +10,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_20_R1.event.CraftEventFactory;
-import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftContainer;
+import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftContainer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,8 +23,8 @@ import org.jetbrains.annotations.Nullable;
 import sh.miles.nms.api.PineappleNMS;
 import sh.miles.nms.api.menu.MenuType;
 import sh.miles.nms.api.menu.scene.MenuScene;
-import sh.miles.pineapple.nms.v1_20_R1.internal.ComponentUtils;
-import sh.miles.pineapple.nms.v1_20_R1.inventory.PineappleMenuType;
+import sh.miles.pineapple.nms.v1_20_R3.internal.ComponentUtils;
+import sh.miles.pineapple.nms.v1_20_R3.inventory.PineappleMenuType;
 
 public class PineappleNMSImpl implements PineappleNMS {
 
