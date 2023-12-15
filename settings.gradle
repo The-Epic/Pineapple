@@ -17,6 +17,7 @@ dependencyResolutionManagement {
 }
 
 include 'pineapple-utils'
+include 'pineapple-chat'
 include 'pineapple-core'
 include 'pineapple-nms'
 include 'pineapple-nms:spigot-v1_20_R1'
