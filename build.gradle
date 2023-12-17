@@ -48,8 +48,15 @@ publishing {
     publications {
         shadow(MavenPublication) { publication ->
             project.shadow.component(publication)
+
             repositories {
-                // TODO repo stuff
+                maven {
+                    url = 'https://maven.miles.sh/libraries'
+                    credentials {
+                        username = System.getenv('PINEAPPLE_REPOSILITE_USERNAME')
+                        password = System.getenv('PINEAPPLE_REPOSILITE_PASSWORD')
+                    }
+                }
             }
         }
     }
