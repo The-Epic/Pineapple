@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "io.freefair.aggregate-javadoc-jar" version "8.4"
 }
 
 // shadowJar takes care of this
@@ -31,6 +32,12 @@ subprojects {
             events("passed", "skipped", "failed")
         }
     }
+
+    aggregateJavadocJar {
+        configure {
+            exclude "sh/miles/pineapple/nms/impl/**"
+        }
+    }
 }
 
 shadowJar {
@@ -44,10 +51,13 @@ build {
     dependsOn shadowJar
 }
 
+aggregateJavadoc.options.addStringOption('Xdoclint:none', '-quiet')
+
 publishing {
     publications {
         shadow(MavenPublication) { publication ->
             project.shadow.component(publication)
+            publication.artifact(aggregateJavadocJar)
 
             repositories {
                 maven {
