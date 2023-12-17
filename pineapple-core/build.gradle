@@ -4,6 +4,10 @@ plugins {
 
 compileJava.options.encoding = 'UTF-8'
 
+java {
+    withJavadocJar()
+}
+
 dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.9.0")
     testImplementation(project(":pineapple-chat"))
