@@ -13,6 +13,7 @@ dependencyResolutionManagement {
         maven { url = 'https://oss.sonatype.org/content/repositories/central' }
         maven { url = 'https://repo.epicebic.xyz/public' }
         maven { url = "https://libraries.minecraft.net/" }
+        maven { url = 'https://repo.jeff-media.com/public' }
     }
 }
 
