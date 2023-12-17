@@ -3,9 +3,12 @@ package sh.miles.pineapple;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.config.ConfigurationManager;
+import sh.miles.pineapple.json.JsonAdapter;
+import sh.miles.pineapple.json.JsonHelper;
 import sh.miles.pineapple.menu.MenuManager;
 import sh.miles.pineapple.task.work.ServerThreadTicker;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class PineappleLib {
@@ -64,5 +67,10 @@ public class PineappleLib {
     @NotNull
     public static ServerThreadTicker getThreadTicker() {
         return getInstance().threadTicker;
+    }
+
+    @NotNull
+    public static JsonHelper createNewJsonHelper(List<JsonAdapter<?>> adapters) {
+        return new JsonHelper(adapters);
     }
 }
