@@ -38,7 +38,7 @@ public record PineappleMenuType<T extends MenuScene>(NamespacedKey key,
 
     @NotNull
     @Override
-    public NamespacedKey getKey() {
-        return key;
+    public String getKey() {
+        return key.toString();
     }
 }

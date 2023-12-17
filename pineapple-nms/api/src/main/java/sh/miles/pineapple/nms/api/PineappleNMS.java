@@ -2,6 +2,7 @@ package sh.miles.pineapple.nms.api;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -9,8 +10,11 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import sh.miles.pineapple.collection.registry.FrozenRegistry;
+import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.menu.MenuType;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.world.damagesource.DamageType;
 
 import java.util.List;
 
@@ -90,12 +94,16 @@ public interface PineappleNMS {
     ItemStack setItemLore(@NotNull final ItemStack item, List<BaseComponent> lore);
 
     /**
-     * Gets the a MenuType from a given id for the internal registry.
+     * Gets the last DamageType that an entity experienced
      *
-     * @param id the internal id
-     * @return the given MenuType at that id or null
+     * @param entity the entity
+     * @return the last damage type or null
      */
-    @ApiStatus.Internal
     @Nullable
-    MenuType<?> getMenuType(String id);
+    DamageType getEntityLastDamageType(@NotNull final LivingEntity entity);
+
+    @ApiStatus.Internal
+    @NotNull
+    <T extends RegistryKey> FrozenRegistry<T> getRegistry(Class<? super T> clazz);
+
 }

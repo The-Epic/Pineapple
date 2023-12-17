@@ -2,13 +2,18 @@ package sh.miles.pineapple.nms.api.menu;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Keyed;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.loader.NMSManager;
 import sh.miles.pineapple.nms.api.menu.scene.AnvilScene;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
 
-public interface MenuType<T extends MenuScene> extends Keyed {
+import javax.naming.Name;
+
+public interface MenuType<T extends MenuScene> extends RegistryKey {
 
     MenuType<MenuScene> GENERIC_9x1 = get("generic_9x1");
     MenuType<MenuScene> GENERIC_9x2 = get("generic_9x2");
@@ -55,6 +60,6 @@ public interface MenuType<T extends MenuScene> extends Keyed {
 
     @SuppressWarnings("unchecked")
     private static <T extends MenuScene> MenuType<T> get(String id) {
-        return (MenuType<T>) NMSManager.getPineapple().getMenuType(id);
+        return (MenuType<T>) PineappleRegistry.MENU.getOrNull(NamespacedKey.minecraft(id).toString());
     }
 }
