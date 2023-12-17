@@ -15,6 +15,8 @@ dependencies {
     // Bundled with Spigot should be synced
     // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/browse/Bukkit-Patches/0010-BungeeCord-Chat-API.patch#15-21
     compileOnly("net.md-5:bungeecord-chat:1.20-R0.1")
+    testImplementation("net.md-5:bungeecord-chat:1.20-R0.1")
     // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/pom.xml#42-47
     compileOnly("com.google.code.gson:gson:2.10.1")
+    testImplementation("com.google.code.gson:gson:2.10.1")
 }

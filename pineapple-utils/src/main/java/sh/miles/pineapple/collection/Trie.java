@@ -1,7 +1,8 @@
-package sh.miles.pineapple.util;
+package sh.miles.pineapple.collection;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,26 @@ public class Trie {
         this.root = new TrieNode();
     }
 
+    public Trie(Collection<String> input) {
+        this();
+        for (final String s : input) {
+            insert(s);
+        }
+    }
+
+    public Trie(String... input) {
+        this();
+        for (final String s : input) {
+            insert(s);
+        }
+    }
+
     public void insert(String string) {
         string = string + END;
         TrieNode current = root;
         for (int i = 0; i < string.length(); i++) {
             char at = string.charAt(i);
-            if (!current.hasEdge(at)) {
+            if (current.hasNoEdge(at)) {
                 current = current.insertEdge(at, new TrieNode());
                 continue;
             }
@@ -31,20 +46,48 @@ public class Trie {
 
     public boolean contains(String string) {
         string = string + END;
-        return containsPartial(string);
+        return contains0(string);
     }
 
-    public boolean containsPartial(String string) {
+    public boolean contains(String string, boolean partial) {
+        if (!partial) {
+            string = string + END;
+        }
+        return contains0(string, !partial);
+    }
+
+    private boolean contains0(String string) {
         TrieNode current = root;
         for (int i = 0; i < string.length(); i++) {
             char at = string.charAt(i);
-            if (!current.hasEdge(at)) {
+            if (current.hasNoEdge(at)) {
                 return false;
             }
 
             current = current.getChild(at);
         }
         return true;
+    }
+
+    private boolean contains0(String string, boolean pure) {
+        char lastKey = ' ';
+        TrieNode current = root;
+        for (int i = 0; i < string.length(); i++) {
+            char at = string.charAt(i);
+            if (current.hasNoEdge(at)) {
+                return false;
+            }
+
+            current = current.getChild(at);
+            lastKey = at;
+        }
+
+        if (lastKey == END && pure) {
+            return true;
+        }
+
+        // no need for pure comparison we know its false
+        return lastKey != END;
     }
 
     private static class TrieNode {
@@ -59,8 +102,8 @@ public class Trie {
             return nodes.get(character);
         }
 
-        public boolean hasEdge(char character) {
-            return nodes.containsKey(character);
+        public boolean hasNoEdge(char character) {
+            return !nodes.containsKey(character);
         }
     }
 
