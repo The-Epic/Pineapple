@@ -51,7 +51,15 @@ build {
     dependsOn shadowJar
 }
 
-aggregateJavadoc.options.addStringOption('Xdoclint:none', '-quiet')
+aggregateJavadoc.options {
+    addStringOption('Xdoclint:none', '-quiet')
+    links(
+            'https://docs.oracle.com/en/java/javase/17/docs/api/',
+            'https://hub.spigotmc.org/javadocs/spigot/',
+            'https://javadoc.io/doc/org.jetbrains/annotations-java5/24.0.1',
+            'https://repo.jeff-media.com/javadoc/public/com/jeff_media/MorePersistentDataTypes/2.4.0/raw/'
+    )
+}
 
 publishing {
     publications {
