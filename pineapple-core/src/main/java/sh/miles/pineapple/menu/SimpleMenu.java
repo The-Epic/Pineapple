@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 
 import java.util.HashMap;
 import java.util.Map;

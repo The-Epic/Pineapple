@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-public abstract class SimplePaginatedMenu<T extends MenuScene> implements Menu {
+public abstract class SimplePaginatedMenu<T extends MenuScene> implements Menu<T> {
 
     private final T scene;
     private final Player viewer;

@@ -4,7 +4,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 
 import java.util.Optional;
 
