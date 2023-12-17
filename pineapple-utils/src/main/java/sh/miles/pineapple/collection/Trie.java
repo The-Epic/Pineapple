@@ -46,17 +46,23 @@ public class Trie {
 
     public boolean contains(String string) {
         string = string + END;
-        return contains0(string);
+        TrieNode current = root;
+        for (int i = 0; i < string.length(); i++) {
+            char at = string.charAt(i);
+            if (current.hasNoEdge(at)) {
+                return false;
+            }
+
+            current = current.getChild(at);
+        }
+        return current.hasNoEdges();
     }
 
     public boolean contains(String string, boolean partial) {
         if (!partial) {
-            string = string + END;
+            return contains(string);
         }
-        return contains0(string, !partial);
-    }
 
-    private boolean contains0(String string) {
         TrieNode current = root;
         for (int i = 0; i < string.length(); i++) {
             char at = string.charAt(i);
@@ -66,28 +72,7 @@ public class Trie {
 
             current = current.getChild(at);
         }
-        return true;
-    }
-
-    private boolean contains0(String string, boolean pure) {
-        char lastKey = ' ';
-        TrieNode current = root;
-        for (int i = 0; i < string.length(); i++) {
-            char at = string.charAt(i);
-            if (current.hasNoEdge(at)) {
-                return false;
-            }
-
-            current = current.getChild(at);
-            lastKey = at;
-        }
-
-        if (lastKey == END && pure) {
-            return true;
-        }
-
-        // no need for pure comparison we know its false
-        return lastKey != END;
+        return !current.hasNoEdges();
     }
 
     private static class TrieNode {
@@ -104,6 +89,10 @@ public class Trie {
 
         public boolean hasNoEdge(char character) {
             return !nodes.containsKey(character);
+        }
+
+        public boolean hasNoEdges() {
+            return nodes.isEmpty();
         }
     }
 

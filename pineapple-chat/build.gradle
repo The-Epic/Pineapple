@@ -4,12 +4,6 @@ plugins {
 
 compileJava.options.encoding = 'UTF-8'
 
-repositories {
-    maven {
-        url 'https://repo.papermc.io/repository/maven-public/'
-    }
-}
-
 dependencies {
     compileOnly(project(":pineapple-utils"))
     // Bundled with Spigot should be synced
