@@ -3,6 +3,9 @@ package sh.miles.pineapple.nms.impl.v1_20_R1;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -14,10 +17,12 @@ import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R1.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftContainer;
+import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.nms.api.PineappleNMS;
@@ -26,7 +31,25 @@ import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 import sh.miles.pineapple.nms.impl.v1_20_R1.internal.ComponentUtils;
 import sh.miles.pineapple.nms.impl.v1_20_R1.inventory.PineappleMenuType;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Field;
+import java.util.List;
+
 public class PineappleNMSImpl implements PineappleNMS {
+
+    private static final MethodHandle itemStackHandle;
+
+    static {
+        try {
+            final Field handleField = CraftItemStack.class.getDeclaredField("handle");
+            handleField.setAccessible(true);
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+            itemStackHandle = lookup.unreflectGetter(handleField);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Nullable
     @Override
@@ -79,7 +102,48 @@ public class PineappleNMSImpl implements PineappleNMS {
         return new PineappleMenuType<>(NamespacedKey.minecraft(id), getRegistry(Registries.MENU).get(new ResourceLocation("minecraft:%s".formatted(id))));
     }
 
+    @Override
+    public ItemStack setItemDisplayName(@NotNull final ItemStack item, final BaseComponent displayName) {
+        final CraftItemStack craftItem = ensureCraftItemStack(item);
+        final net.minecraft.world.item.ItemStack nmsItem = getItemStackHandle(craftItem);
+        nmsItem.setHoverName(ComponentUtils.toMinecraftChat(displayName));
+        return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
+    @Override
+    public ItemStack setItemLore(@NotNull ItemStack item, @NotNull List<BaseComponent> lore) {
+        final CraftItemStack craftItem = ensureCraftItemStack(item);
+        final net.minecraft.world.item.ItemStack nmsItem = getItemStackHandle(craftItem);
+
+        final CompoundTag tag = nmsItem.getTag() == null ? new CompoundTag() : nmsItem.getTag();
+        if (!tag.contains(net.minecraft.world.item.ItemStack.TAG_DISPLAY)) {
+            tag.put(net.minecraft.world.item.ItemStack.TAG_DISPLAY, new CompoundTag());
+        }
+
+        final CompoundTag displayTag = tag.getCompound(net.minecraft.world.item.ItemStack.TAG_DISPLAY);
+        ListTag loreTag = new ListTag();
+        for (int i = 0; i < lore.size(); i++) {
+            loreTag.add(i, StringTag.valueOf(ComponentUtils.toJsonString(lore.get(i))));
+        }
+
+        displayTag.put(net.minecraft.world.item.ItemStack.TAG_LORE, loreTag);
+        return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
     private <T> Registry<T> getRegistry(ResourceKey<? extends Registry<T>> registryKey) {
         return ((CraftServer) Bukkit.getServer()).getHandle().getServer().registryAccess().registryOrThrow(registryKey);
+    }
+
+    private CraftItemStack ensureCraftItemStack(ItemStack item) {
+        return item instanceof CraftItemStack ? (CraftItemStack) item : CraftItemStack.asCraftCopy(item);
+    }
+
+
+    private static net.minecraft.world.item.ItemStack getItemStackHandle(CraftItemStack itemStack) {
+        try {
+            return (net.minecraft.world.item.ItemStack) itemStackHandle.invokeExact(itemStack);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -5,11 +5,14 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.nms.api.menu.MenuType;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
+
+import java.util.List;
 
 /**
  * Pineapple NMS adapts a bunch of useful stuffs from NMS so that we can use it. Don't tell MD_5 he won't be happy.
@@ -67,6 +70,24 @@ public interface PineappleNMS {
      */
     @Nullable
     InventoryView openInventory(@NotNull final Player player, @NotNull final Inventory inventory, @NotNull BaseComponent... title);
+
+    /**
+     * Renames the given item stack with the base component
+     *
+     * @param item        the item to rename
+     * @param displayName the display name
+     * @return the item with its display name changed
+     */
+    ItemStack setItemDisplayName(@NotNull final ItemStack item, BaseComponent displayName);
+
+    /**
+     * Sets the lore of the given item stack with the base component list
+     *
+     * @param item the item to set the lore of
+     * @param lore the lore
+     * @return the item with its lore changed
+     */
+    ItemStack setItemLore(@NotNull final ItemStack item, List<BaseComponent> lore);
 
     /**
      * Gets the a MenuType from a given id for the internal registry.
