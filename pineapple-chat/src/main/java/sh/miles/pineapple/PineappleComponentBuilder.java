@@ -1,10 +1,10 @@
-package sh.miles.pineapple.util.bungeechat;
+package sh.miles.pineapple;
+
 
 import com.google.common.base.Preconditions;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;
@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Better component building implementation for BungeeChat ComponentBuilder that rids the use of BaseComponent arrays
  * which are outdated and ineffective. Due to the pending PR I have taken it upon myself to use this feature it may be
- * removed in the future see {@link ComponentBuilder} for a better description of use.
+ * removed in the future see {@link net.md_5.bungee.api.chat.ComponentBuilder} for a better description of use.
  * <p>
  * This class will be deprecated for removal in 2 minor versions after the BungeeChat Component Builder build removal.
  */
 @SuppressWarnings("deprecation")
-public final class BungeeComponent {
+public final class PineappleComponentBuilder {
 
     /**
      * The position for the current part to modify. Modified cursors will automatically reset to the last part after
@@ -30,7 +30,7 @@ public final class BungeeComponent {
     private final List<BaseComponent> parts;
     private BaseComponent dummy;
 
-    private BungeeComponent(@NotNull final BaseComponent[] components) {
+    private PineappleComponentBuilder(@NotNull final BaseComponent[] components) {
         this.cursor = -1;
         this.dummy = null;
         this.parts = new ArrayList<>();
@@ -40,20 +40,24 @@ public final class BungeeComponent {
         resetCursor();
     }
 
-    private BungeeComponent() {
+    private PineappleComponentBuilder() {
         this.parts = new ArrayList<>();
     }
 
-    private BungeeComponent(@NotNull final ComponentBuilder original) {
+    private PineappleComponentBuilder(@NotNull final net.md_5.bungee.api.chat.ComponentBuilder original) {
         this(original.getParts().toArray(BaseComponent[]::new));
     }
 
-    private BungeeComponent(@NotNull final BungeeComponent original) {
+    private PineappleComponentBuilder(@NotNull final PineappleComponentBuilder original) {
         this(original.parts.toArray(BaseComponent[]::new));
     }
 
-    private BungeeComponent(@NotNull final BaseComponent component) {
+    private PineappleComponentBuilder(@NotNull final BaseComponent component) {
         this(new BaseComponent[]{component});
+    }
+
+    private PineappleComponentBuilder(@NotNull final String text) {
+        this(new TextComponent(text));
     }
 
     /**
@@ -89,7 +93,7 @@ public final class BungeeComponent {
     /**
      * Resets the cursor to index of the last element.
      * <p>
-     * for official javadoc {@link ComponentBuilder#resetCursor()}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#resetCursor()}
      */
     public void resetCursor() {
         cursor = parts.size() - 1;
@@ -102,9 +106,9 @@ public final class BungeeComponent {
      * @param component the component to append
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(BaseComponent)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#append(BaseComponent)}
      */
-    public BungeeComponent append(BaseComponent component) {
+    public PineappleComponentBuilder append(BaseComponent component) {
         return append(component, FormatRetention.ALL);
     }
 
@@ -116,11 +120,12 @@ public final class BungeeComponent {
      * @param retention the formatting to retain
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(BaseComponent, ComponentBuilder.FormatRetention)} this method
-     * must use a method handle for BaseComponent#isReset as it is not natively exposed so expect slightly slower
-     * appendages
+     * for official javadoc
+     * {@link net.md_5.bungee.api.chat.ComponentBuilder#append(BaseComponent,
+     * net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention)} this method must use a method handle for
+     * BaseComponent#isReset as it is not natively exposed so expect slightly slower appendages
      */
-    public BungeeComponent append(BaseComponent component, FormatRetention retention) {
+    public PineappleComponentBuilder append(BaseComponent component, FormatRetention retention) {
         BaseComponent previous = (parts.isEmpty()) ? null : parts.get(parts.size() - 1);
         if (previous == null) {
             previous = dummy;
@@ -141,9 +146,9 @@ public final class BungeeComponent {
      * @param components the components to append
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(BaseComponent[])}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#append(BaseComponent[])}
      */
-    public BungeeComponent append(BaseComponent[] components) {
+    public PineappleComponentBuilder append(BaseComponent[] components) {
         return append(components, FormatRetention.ALL);
     }
 
@@ -156,9 +161,11 @@ public final class BungeeComponent {
      * @param retention  the formatting to retain
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(BaseComponent[], ComponentBuilder.FormatRetention)}
+     * for official javadoc
+     * {@link net.md_5.bungee.api.chat.ComponentBuilder#append(BaseComponent[],
+     * net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention)}
      */
-    public BungeeComponent append(BaseComponent[] components, FormatRetention retention) {
+    public PineappleComponentBuilder append(BaseComponent[] components, FormatRetention retention) {
         Preconditions.checkArgument(components.length != 0, "No components to append");
 
         for (BaseComponent component : components) {
@@ -175,9 +182,9 @@ public final class BungeeComponent {
      * @param text the text to append
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(String)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#append(String)}
      */
-    public BungeeComponent append(String text) {
+    public PineappleComponentBuilder append(String text) {
         return append(text, FormatRetention.ALL);
     }
 
@@ -189,9 +196,11 @@ public final class BungeeComponent {
      * @param retention the formatting to retain
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(String, ComponentBuilder.FormatRetention)}
+     * for official javadoc
+     * {@link net.md_5.bungee.api.chat.ComponentBuilder#append(String,
+     * net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention)}
      */
-    public BungeeComponent append(String text, FormatRetention retention) {
+    public PineappleComponentBuilder append(String text, FormatRetention retention) {
         return append(new TextComponent(text), retention);
     }
 
@@ -205,7 +214,7 @@ public final class BungeeComponent {
      * @param joiner joiner used for operation
      * @return this ComponentBuilder for chaining
      */
-    public BungeeComponent append(Joiner joiner) {
+    public PineappleComponentBuilder append(Joiner joiner) {
         return joiner.join(this, FormatRetention.ALL);
     }
 
@@ -218,9 +227,11 @@ public final class BungeeComponent {
      * @param retention the formatting to retain
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#append(ComponentBuilder.Joiner, ComponentBuilder.FormatRetention)}
+     * for official javadoc
+     * {@link net.md_5.bungee.api.chat.ComponentBuilder#append(net.md_5.bungee.api.chat.ComponentBuilder.Joiner,
+     * net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention)}
      */
-    public BungeeComponent append(Joiner joiner, FormatRetention retention) {
+    public PineappleComponentBuilder append(Joiner joiner, FormatRetention retention) {
         return joiner.join(this, retention);
     }
 
@@ -231,9 +242,9 @@ public final class BungeeComponent {
      * @param text the text to append
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#appendLegacy(String)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#appendLegacy(String)}
      */
-    public BungeeComponent appendLegacy(String text) {
+    public PineappleComponentBuilder appendLegacy(String text) {
         return append(TextComponent.fromLegacyText(text));
     }
 
@@ -244,9 +255,10 @@ public final class BungeeComponent {
      * @return this ComponentBuilder for chaining
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      *                                   <p>
-     *                                   for official javadoc {@link ComponentBuilder#setCursor(int)}
+     *                                   for official javadoc
+     *                                   {@link net.md_5.bungee.api.chat.ComponentBuilder#setCursor(int)}
      */
-    public BungeeComponent setCursor(int pos) throws IndexOutOfBoundsException {
+    public PineappleComponentBuilder setCursor(int pos) throws IndexOutOfBoundsException {
         if ((this.cursor != pos) && (pos < 0 || pos >= parts.size())) {
             throw new IndexOutOfBoundsException("Cursor out of bounds (expected between 0 + " + (parts.size() - 1) + ")");
         }
@@ -261,7 +273,8 @@ public final class BungeeComponent {
      * @param pos the index to remove at
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      *                                   <p>
-     *                                   for official javadoc {@link ComponentBuilder#removeComponent(int)}
+     *                                   for official javadoc
+     *                                   {@link net.md_5.bungee.api.chat.ComponentBuilder#removeComponent(int)}
      */
     public void removeComponent(int pos) throws IndexOutOfBoundsException {
         if (parts.remove(pos) != null) {
@@ -276,7 +289,8 @@ public final class BungeeComponent {
      * @return the component
      * @throws IndexOutOfBoundsException if the index is out of range ({@code index < 0 || index >= size()})
      *                                   <p>
-     *                                   for official javadoc {@link ComponentBuilder#getComponent(int)}
+     *                                   for official javadoc
+     *                                   {@link net.md_5.bungee.api.chat.ComponentBuilder#getComponent(int)}
      */
     public BaseComponent getComponent(int pos) throws IndexOutOfBoundsException {
         return parts.get(pos);
@@ -287,7 +301,7 @@ public final class BungeeComponent {
      *
      * @return the active component or null if builder is empty
      * <p>
-     * for official javadoc {@link ComponentBuilder#getCurrentComponent()}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#getCurrentComponent()}
      */
     public BaseComponent getCurrentComponent() {
         return (cursor == -1) ? getDummy() : parts.get(cursor);
@@ -299,9 +313,9 @@ public final class BungeeComponent {
      * @param color the new color
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#color(ChatColor)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#color(ChatColor)}
      */
-    public BungeeComponent color(ChatColor color) {
+    public PineappleComponentBuilder color(ChatColor color) {
         getCurrentComponent().setColor(color);
         return this;
     }
@@ -312,9 +326,9 @@ public final class BungeeComponent {
      * @param font the new font
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#font(String)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#font(String)}
      */
-    public BungeeComponent font(String font) {
+    public PineappleComponentBuilder font(String font) {
         getCurrentComponent().setFont(font);
         return this;
     }
@@ -325,9 +339,9 @@ public final class BungeeComponent {
      * @param bold whether this part is bold
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#bold(boolean)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#bold(boolean)}
      */
-    public BungeeComponent bold(boolean bold) {
+    public PineappleComponentBuilder bold(boolean bold) {
         getCurrentComponent().setBold(bold);
         return this;
     }
@@ -338,9 +352,9 @@ public final class BungeeComponent {
      * @param italic whether this part is italic
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#italic(boolean)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#italic(boolean)}
      */
-    public BungeeComponent italic(boolean italic) {
+    public PineappleComponentBuilder italic(boolean italic) {
         getCurrentComponent().setItalic(italic);
         return this;
     }
@@ -351,9 +365,9 @@ public final class BungeeComponent {
      * @param underlined whether this part is underlined
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#underlined(boolean)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#underlined(boolean)}
      */
-    public BungeeComponent underlined(boolean underlined) {
+    public PineappleComponentBuilder underlined(boolean underlined) {
         getCurrentComponent().setUnderlined(underlined);
         return this;
     }
@@ -364,9 +378,9 @@ public final class BungeeComponent {
      * @param strikethrough whether this part is strikethrough
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#strikethrough(boolean)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#strikethrough(boolean)}
      */
-    public BungeeComponent strikethrough(boolean strikethrough) {
+    public PineappleComponentBuilder strikethrough(boolean strikethrough) {
         getCurrentComponent().setStrikethrough(strikethrough);
         return this;
     }
@@ -377,9 +391,9 @@ public final class BungeeComponent {
      * @param obfuscated whether this part is obfuscated
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#obfuscated(boolean)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#obfuscated(boolean)}
      */
-    public BungeeComponent obfuscated(boolean obfuscated) {
+    public PineappleComponentBuilder obfuscated(boolean obfuscated) {
         getCurrentComponent().setObfuscated(obfuscated);
         return this;
     }
@@ -390,9 +404,9 @@ public final class BungeeComponent {
      * @param insertion the insertion text
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#insertion(String)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#insertion(String)}
      */
-    public BungeeComponent insertion(String insertion) {
+    public PineappleComponentBuilder insertion(String insertion) {
         getCurrentComponent().setInsertion(insertion);
         return this;
     }
@@ -403,9 +417,9 @@ public final class BungeeComponent {
      * @param clickEvent the click event
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#event(ClickEvent)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#event(ClickEvent)}
      */
-    public BungeeComponent event(ClickEvent clickEvent) {
+    public PineappleComponentBuilder event(ClickEvent clickEvent) {
         getCurrentComponent().setClickEvent(clickEvent);
         return this;
     }
@@ -416,9 +430,9 @@ public final class BungeeComponent {
      * @param hoverEvent the hover event
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#event(HoverEvent)}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#event(HoverEvent)}
      */
-    public BungeeComponent event(HoverEvent hoverEvent) {
+    public PineappleComponentBuilder event(HoverEvent hoverEvent) {
         getCurrentComponent().setHoverEvent(hoverEvent);
         return this;
     }
@@ -428,9 +442,9 @@ public final class BungeeComponent {
      *
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#reset()}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#reset()}
      */
-    public BungeeComponent reset() {
+    public PineappleComponentBuilder reset() {
         return retain(FormatRetention.NONE);
     }
 
@@ -440,9 +454,11 @@ public final class BungeeComponent {
      * @param retention the formatting to retain
      * @return this ComponentBuilder for chaining
      * <p>
-     * for official javadoc {@link ComponentBuilder#retain(ComponentBuilder.FormatRetention)}
+     * for official javadoc
+     * {@link
+     * net.md_5.bungee.api.chat.ComponentBuilder#retain(net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention)}
      */
-    public BungeeComponent retain(FormatRetention retention) {
+    public PineappleComponentBuilder retain(FormatRetention retention) {
         getCurrentComponent().retain(retention.toBungee());
         return this;
     }
@@ -471,8 +487,8 @@ public final class BungeeComponent {
      *
      * @return the created components
      * <p>
-     * for official javadoc {@link ComponentBuilder#create()}
-     * @deprecated do not use legacy create method prefer use of {@link BungeeComponent#build()}
+     * for official javadoc {@link net.md_5.bungee.api.chat.ComponentBuilder#create()}
+     * @deprecated do not use legacy create method prefer use of {@link PineappleComponentBuilder#build()}
      */
     @Deprecated(forRemoval = true)
     public BaseComponent[] create() {
@@ -503,7 +519,7 @@ public final class BungeeComponent {
      * @return the new array
      */
     public static BaseComponent[] array(final BaseComponent component) {
-        return BungeeComponent.of(component).create();
+        return PineappleComponentBuilder.of(component).create();
     }
 
     /**
@@ -512,8 +528,8 @@ public final class BungeeComponent {
      * @param builder the builder
      * @return the new component
      */
-    public static BungeeComponent of(@NotNull final ComponentBuilder builder) {
-        return new BungeeComponent(builder);
+    public static PineappleComponentBuilder of(@NotNull final net.md_5.bungee.api.chat.ComponentBuilder builder) {
+        return new PineappleComponentBuilder(builder);
     }
 
     /**
@@ -522,8 +538,8 @@ public final class BungeeComponent {
      * @param original the original component
      * @return the new component
      */
-    public static BungeeComponent of(@NotNull final BungeeComponent original) {
-        return new BungeeComponent(original);
+    public static PineappleComponentBuilder of(@NotNull final PineappleComponentBuilder original) {
+        return new PineappleComponentBuilder(original);
     }
 
     /**
@@ -532,8 +548,8 @@ public final class BungeeComponent {
      * @param component the component to change
      * @return the new component
      */
-    public static BungeeComponent of(@NotNull final BaseComponent component) {
-        return new BungeeComponent(component);
+    public static PineappleComponentBuilder of(@NotNull final BaseComponent component) {
+        return new PineappleComponentBuilder(component);
     }
 
     /**
@@ -542,8 +558,18 @@ public final class BungeeComponent {
      * @param components the component to use
      * @return the new component
      */
-    public static BungeeComponent of(@NotNull final BaseComponent[] components) {
-        return new BungeeComponent(components);
+    public static PineappleComponentBuilder of(@NotNull final BaseComponent[] components) {
+        return new PineappleComponentBuilder(components);
+    }
+
+    /**
+     * Creates a component from a string
+     *
+     * @param text the text
+     * @return the new component
+     */
+    public static PineappleComponentBuilder of(@NotNull final String text) {
+        return new PineappleComponentBuilder(text);
     }
 
     /**
@@ -551,8 +577,8 @@ public final class BungeeComponent {
      *
      * @return the new component
      */
-    public static BungeeComponent empty() {
-        return new BungeeComponent();
+    public static PineappleComponentBuilder empty() {
+        return new PineappleComponentBuilder();
     }
 
     /**
@@ -582,8 +608,8 @@ public final class BungeeComponent {
          *
          * @return the bungee equivalent
          */
-        public ComponentBuilder.FormatRetention toBungee() {
-            return ComponentBuilder.FormatRetention.valueOf(name());
+        public net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention toBungee() {
+            return net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention.valueOf(name());
         }
     }
 
@@ -593,8 +619,8 @@ public final class BungeeComponent {
     public interface Joiner {
 
         /**
-         * Joins additional components to the provided {@link ComponentBuilder} and then returns it to fulfill a chain
-         * pattern.
+         * Joins additional components to the provided {@link net.md_5.bungee.api.chat.ComponentBuilder} and then
+         * returns it to fulfill a chain pattern.
          * <p>
          * Retention may be ignored and is to be understood as an optional recommendation to the Joiner and not as a
          * guarantee to have a previous component in builder unmodified.
@@ -603,6 +629,6 @@ public final class BungeeComponent {
          * @param retention        the formatting to possibly retain
          * @return input componentBuilder for chaining
          */
-        BungeeComponent join(BungeeComponent componentBuilder, FormatRetention retention);
+        PineappleComponentBuilder join(PineappleComponentBuilder componentBuilder, FormatRetention retention);
     }
 }
