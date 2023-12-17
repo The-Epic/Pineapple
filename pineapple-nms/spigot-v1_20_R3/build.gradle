@@ -1,7 +1,9 @@
+String spigotVersion = "1.20.4"
+
 dependencies {
-    compileOnly "org.spigotmc:spigot:1.20.4-R0.1-SNAPSHOT:remapped-mojang"
+    compileOnly "org.spigotmc:spigot:$spigotVersion-R0.1-SNAPSHOT:remapped-mojang"
 }
 
 remap {
-    version = '1.20.4'
+    version = spigotVersion
 }
