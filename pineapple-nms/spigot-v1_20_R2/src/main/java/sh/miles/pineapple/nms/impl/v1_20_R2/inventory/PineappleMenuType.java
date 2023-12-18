@@ -11,8 +11,8 @@ import org.bukkit.craftbukkit.v1_20_R2.inventory.CraftInventoryView;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
-import sh.miles.pineapple.nms.impl.v1_20_R2.inventory.scene.PineappleSceneFactory;
 import sh.miles.pineapple.nms.impl.v1_20_R2.internal.ComponentUtils;
+import sh.miles.pineapple.nms.impl.v1_20_R2.inventory.scene.PineappleSceneFactory;
 
 public record PineappleMenuType<T extends MenuScene>(NamespacedKey key,
                                                      MenuType<?> handle) implements sh.miles.pineapple.nms.api.menu.MenuType<T> {
@@ -38,7 +38,7 @@ public record PineappleMenuType<T extends MenuScene>(NamespacedKey key,
 
     @NotNull
     @Override
-    public NamespacedKey getKey() {
-        return key;
+    public String getKey() {
+        return key.toString();
     }
 }
