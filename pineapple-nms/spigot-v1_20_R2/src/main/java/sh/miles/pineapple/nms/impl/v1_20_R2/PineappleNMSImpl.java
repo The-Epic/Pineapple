@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_20_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R2.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
@@ -22,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.checkerframework.checker.units.qual.N;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.collection.registry.FrozenRegistry;
@@ -108,8 +110,8 @@ public class PineappleNMSImpl implements PineappleNMS {
     @SuppressWarnings("unchecked")
     @NotNull
     @Override
-    public <T extends RegistryKey> FrozenRegistry<T> getRegistry(final Class<? super T> clazz) {
-        return (FrozenRegistry<T>) PineappleNmsRegistry.makeRegistry(clazz);
+    public <T extends RegistryKey<NamespacedKey>> FrozenRegistry<T, NamespacedKey> getRegistry(final Class<? super T> clazz) {
+        return (FrozenRegistry<T, NamespacedKey>) PineappleNmsRegistry.makeRegistry(clazz);
     }
 
     @Override

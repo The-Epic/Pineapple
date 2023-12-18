@@ -12,26 +12,26 @@ import java.util.function.Supplier;
  *
  * @param <T> the type
  */
-public abstract class AbstractRegistry<T extends RegistryKey> implements Registry<T> {
+public abstract class AbstractRegistry<T extends RegistryKey<K>, K> implements Registry<T, K> {
 
-    protected final Map<String, T> registry;
+    protected final Map<K, T> registry;
 
-    protected AbstractRegistry(Supplier<Map<String, T>> registrySupplier) {
+    protected AbstractRegistry(Supplier<Map<K, T>> registrySupplier) {
         this.registry = registrySupplier.get();
     }
 
     @Override
-    public Optional<T> get(@NotNull final String key) {
+    public Optional<T> get(@NotNull final K key) {
         return Optional.ofNullable(registry.get(key));
     }
 
     @Override
-    public T getOrNull(@NotNull final String key) {
+    public T getOrNull(@NotNull final K key) {
         return registry.get(key);
     }
 
     @Override
-    public Set<String> keys() {
+    public Set<K> keys() {
         return registry.keySet();
     }
 }

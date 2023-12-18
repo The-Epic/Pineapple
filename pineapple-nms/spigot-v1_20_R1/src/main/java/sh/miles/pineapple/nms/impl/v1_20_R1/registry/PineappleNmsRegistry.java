@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-public final class PineappleNmsRegistry<P extends RegistryKey, M> extends FrozenRegistry<P> {
+public final class PineappleNmsRegistry<P extends RegistryKey<NamespacedKey>, M> extends FrozenRegistry<P, NamespacedKey> {
 
     public PineappleNmsRegistry(Class<? super P> interfaceClass, Registry<M> minecraftRegistry, BiFunction<NamespacedKey, M, P> minecraftToBukkit) {
         super(() -> {
@@ -32,7 +32,7 @@ public final class PineappleNmsRegistry<P extends RegistryKey, M> extends Frozen
                     return minecraftRegistry.keySet()
                             .stream()
                             .collect(Collectors.toMap(
-                                    (ResourceLocation key) -> CraftNamespacedKey.fromMinecraft(key).toString(),
+                                    CraftNamespacedKey::fromMinecraft,
                                     (ResourceLocation key) -> minecraftToBukkit.apply(CraftNamespacedKey.fromMinecraft(key), minecraftRegistry.get(key))
                             ));
                 }
@@ -47,13 +47,13 @@ public final class PineappleNmsRegistry<P extends RegistryKey, M> extends Frozen
                 throw new IllegalStateException("Could not load registry class " + interfaceClass, e);
             }
             return Arrays.stream(minecraftEnumEntries).collect(Collectors.toMap(
-                    (M value) -> value.toString().toLowerCase(),
+                    (M value) -> NamespacedKey.minecraft(value.toString().toLowerCase()),
                     (M value) -> minecraftToBukkit.apply(NamespacedKey.minecraft(value.toString().toLowerCase()), value)
             ));
         });
     }
 
-    public static <P extends RegistryKey> FrozenRegistry<?> makeRegistry(Class<? super P> interfaceClass) {
+    public static <P extends RegistryKey<NamespacedKey>> FrozenRegistry<?, ?> makeRegistry(Class<? super P> interfaceClass) {
         final RegistryAccess access = ((CraftServer) Bukkit.getServer()).getHandle().getServer().registryAccess();
         if (interfaceClass == MenuType.class) {
             return new PineappleNmsRegistry<>(MenuType.class, access.registryOrThrow(Registries.MENU), PineappleMenuType::new);

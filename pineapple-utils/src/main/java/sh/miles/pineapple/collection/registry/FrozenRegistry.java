@@ -8,9 +8,9 @@ import java.util.function.Supplier;
  *
  * @param <T> the type of the object
  */
-public class FrozenRegistry<T extends RegistryKey> extends AbstractRegistry<T> {
+public class FrozenRegistry<T extends RegistryKey<K>, K> extends AbstractRegistry<T, K> {
 
-    public FrozenRegistry(final Supplier<Map<String, T>> registrySupplier) {
+    public FrozenRegistry(final Supplier<Map<K, T>> registrySupplier) {
         super(() -> Map.copyOf(registrySupplier.get()));
     }
 }

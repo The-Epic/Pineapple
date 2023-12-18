@@ -15,12 +15,12 @@ public record PineappleDamageEffect(NamespacedKey key, DamageEffects effects) im
     }
 
     @Override
-    public String getKey() {
-        return key.toString();
+    public NamespacedKey getKey() {
+        return key;
     }
 
     public static DamageEffect minecraftToPineapple(DamageEffects effects) {
         NamespacedKey key = NamespacedKey.minecraft(effects.toString().toLowerCase());
-        return PineappleRegistry.DAMAGE_EFFECT.getOrNull(key.toString());
+        return PineappleRegistry.DAMAGE_EFFECT.getOrNull(key);
     }
 }

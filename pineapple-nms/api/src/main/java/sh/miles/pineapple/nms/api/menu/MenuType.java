@@ -13,7 +13,7 @@ import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
 
 import javax.naming.Name;
 
-public interface MenuType<T extends MenuScene> extends RegistryKey {
+public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey> {
 
     MenuType<MenuScene> GENERIC_9x1 = get("generic_9x1");
     MenuType<MenuScene> GENERIC_9x2 = get("generic_9x2");
@@ -60,6 +60,6 @@ public interface MenuType<T extends MenuScene> extends RegistryKey {
 
     @SuppressWarnings("unchecked")
     private static <T extends MenuScene> MenuType<T> get(String id) {
-        return (MenuType<T>) PineappleRegistry.MENU.getOrNull(NamespacedKey.minecraft(id).toString());
+        return (MenuType<T>) PineappleRegistry.MENU.getOrNull(NamespacedKey.minecraft(id));
     }
 }
