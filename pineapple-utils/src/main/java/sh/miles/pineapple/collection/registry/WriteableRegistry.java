@@ -11,9 +11,9 @@ import java.util.function.Supplier;
  *
  * @param <T> the type
  */
-public class WriteableRegistry<T extends RegistryKey> extends AbstractRegistry<T> {
+public class WriteableRegistry<T extends RegistryKey<K>, K> extends AbstractRegistry<T, K> {
 
-    public WriteableRegistry(final Supplier<Map<String, T>> registrySupplier) {
+    public WriteableRegistry(final Supplier<Map<K, T>> registrySupplier) {
         super(registrySupplier);
     }
 

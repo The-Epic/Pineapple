@@ -4,7 +4,7 @@ import org.bukkit.NamespacedKey;
 import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
 
-public interface DamageType extends RegistryKey {
+public interface DamageType extends RegistryKey<NamespacedKey> {
     DamageType IN_FIRE = get("in_fire");
     DamageType LIGHTNING_BOLT = get("lightning_bolt");
     DamageType ON_FIRE = get("on_fire");
@@ -65,6 +65,6 @@ public interface DamageType extends RegistryKey {
     DamageEffect effect();
 
     private static DamageType get(String id) {
-        return (DamageType) PineappleRegistry.DAMAGE_TYPE.getOrNull(NamespacedKey.minecraft(id).toString());
+        return (DamageType) PineappleRegistry.DAMAGE_TYPE.getOrNull(NamespacedKey.minecraft(id));
     }
 }

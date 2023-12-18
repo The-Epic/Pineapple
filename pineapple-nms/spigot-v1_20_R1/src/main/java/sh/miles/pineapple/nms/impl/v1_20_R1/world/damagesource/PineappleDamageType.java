@@ -31,12 +31,12 @@ public class PineappleDamageType implements DamageType {
     }
 
     @Override
-    public String getKey() {
-        return key.toString();
+    public NamespacedKey getKey() {
+        return key;
     }
 
     public static DamageType minecraftToPineapple(net.minecraft.world.damagesource.DamageType damageType) {
         Registry<net.minecraft.world.damagesource.DamageType> registry = ((CraftServer) Bukkit.getServer()).getHandle().getServer().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE);
-        return PineappleRegistry.DAMAGE_TYPE.getOrNull(CraftNamespacedKey.fromMinecraft(registry.getKey(damageType)).toString());
+        return PineappleRegistry.DAMAGE_TYPE.getOrNull(CraftNamespacedKey.fromMinecraft(registry.getKey(damageType)));
     }
 }

@@ -8,7 +8,7 @@ import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
 /**
  * An Effect of Damage represented internally within NMS. These Effects Usually display an effect on the screen
  */
-public interface DamageEffect extends RegistryKey {
+public interface DamageEffect extends RegistryKey<NamespacedKey> {
 
     DamageEffect HURT = get("hurt");
     DamageEffect THORNS = get("thorns");
@@ -25,6 +25,6 @@ public interface DamageEffect extends RegistryKey {
     Sound sound();
 
     private static DamageEffect get(String id) {
-        return (DamageEffect) PineappleRegistry.DAMAGE_EFFECT.getOrNull(NamespacedKey.minecraft(id).toString());
+        return (DamageEffect) PineappleRegistry.DAMAGE_EFFECT.getOrNull(NamespacedKey.minecraft(id));
     }
 }

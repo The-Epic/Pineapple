@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
@@ -108,8 +109,8 @@ public class PineappleNMSImpl implements PineappleNMS {
     @SuppressWarnings("unchecked")
     @NotNull
     @Override
-    public <T extends RegistryKey> FrozenRegistry<T> getRegistry(final Class<? super T> clazz) {
-        return (FrozenRegistry<T>) PineappleNmsRegistry.makeRegistry(clazz);
+    public <T extends RegistryKey<NamespacedKey>> FrozenRegistry<T, NamespacedKey> getRegistry(final Class<? super T> clazz) {
+        return (FrozenRegistry<T, NamespacedKey>) PineappleNmsRegistry.makeRegistry(clazz);
     }
 
     @Override

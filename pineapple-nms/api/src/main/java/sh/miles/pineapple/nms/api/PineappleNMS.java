@@ -1,6 +1,7 @@
 package sh.miles.pineapple.nms.api;
 
 import net.md_5.bungee.api.chat.BaseComponent;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -104,6 +105,6 @@ public interface PineappleNMS {
 
     @ApiStatus.Internal
     @NotNull
-    <T extends RegistryKey> FrozenRegistry<T> getRegistry(Class<? super T> clazz);
+    <T extends RegistryKey<NamespacedKey>> FrozenRegistry<T, NamespacedKey> getRegistry(Class<? super T> clazz);
 
 }
