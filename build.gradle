@@ -51,6 +51,7 @@ shadowJar {
     archiveVersion.set('')
 
     relocate('com.jeff_media.morepersistentdatatypes', 'sh.miles.pineapple.pdc.morepdc')
+    relocate('org.bstats.bstats-bukkit', 'sh.miles.pineapple.bstats.bstats')
 }
 
 build {
