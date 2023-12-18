@@ -38,6 +38,12 @@ subprojects {
             exclude "sh/miles/pineapple/nms/impl/**"
         }
     }
+
+    javadoc {
+        configure {
+            exclude "sh/miles/pineapple/nms/impl/**"
+        }
+    }
 }
 
 shadowJar {
