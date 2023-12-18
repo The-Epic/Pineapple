@@ -11,7 +11,7 @@ public record PineappleDamageEffect(NamespacedKey key, DamageEffects effects) im
 
     @Override
     public Sound sound() {
-        return CraftSound.getBukkit(effects.sound());
+        return CraftSound.minecraftToBukkit(effects.sound());
     }
 
     @Override
