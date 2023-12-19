@@ -11,14 +11,15 @@ subprojects {
         dependencies {
             compileOnly project(":pineapple-nms:api")
         }
-    }
 
+        jar {
+            dependsOn(remap)
+        }
+    }
 }
 
 dependencies {
     for (final def subproject in subprojects) {
-        subproject.plugins.withId("java") {
-            implementation(subproject)
-        }
+        implementation(subproject as Project)
     }
 }
