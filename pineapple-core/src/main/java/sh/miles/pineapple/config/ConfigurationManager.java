@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,6 +40,7 @@ public class ConfigurationManager {
         registerTypeAdapter(Boolean.class, new PrimitiveAdapter<>(Boolean::parseBoolean));
 
         registerTypeAdapter(String.class, new StringTypeAdapter());
+        registerTypeAdapter(BaseComponent.class, new BaseComponentAdapter());
         registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter());
         registerTypeAdapter(Material.class, new MaterialAdapter());
 
