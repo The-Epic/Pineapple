@@ -43,7 +43,7 @@ public class NMSManager {
      */
     @ApiStatus.Internal
     private static PineappleNMS getHandle() {
-        return ReflectionUtils.newInstance(PATH.formatted(MinecraftVersion.CURRENT.getInternalName(), Pipe.class.getSimpleName()), new Object[0]);
+        return ReflectionUtils.newInstance(PATH.formatted(MinecraftVersion.CURRENT.getProtocolVersion(), PineappleNMS.class.getSimpleName() + "Impl"), new Object[0]);
     }
 
 
