@@ -1,4 +1,4 @@
-package sh.miles.pineapple.collection;
+package sh.miles.pineapple.collection.trie;
 
 import org.jetbrains.annotations.NotNull;
 

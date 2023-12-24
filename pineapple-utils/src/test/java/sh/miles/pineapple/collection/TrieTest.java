@@ -2,6 +2,7 @@ package sh.miles.pineapple.collection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sh.miles.pineapple.collection.trie.Trie;
 
 import static org.junit.jupiter.api.Assertions.*;
 
