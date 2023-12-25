@@ -1,9 +1,8 @@
 package sh.miles.pineapple.chat.tag;
 
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.PineappleComponentBuilder;
-import sh.miles.pineapple.chat.parse.ParserContext;
+import sh.miles.pineapple.chat.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.parse.PineappleParserContext;
 
 import java.util.Queue;
 
@@ -19,7 +18,7 @@ public abstract class AbstractTag {
         this.childTextLength = childTextLength;
     }
 
-    public abstract void apply(final @NotNull PineappleComponentBuilder builder, ParserContext context);
+    public abstract void apply(final @NotNull PineappleComponentBuilder builder, PineappleParserContext context);
 
     public int getChildTextLength() {
         return this.childTextLength;

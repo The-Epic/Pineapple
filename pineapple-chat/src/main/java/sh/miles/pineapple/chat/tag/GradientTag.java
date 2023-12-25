@@ -1,11 +1,10 @@
 package sh.miles.pineapple.chat.tag;
 
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.PineappleComponentBuilder;
 import sh.miles.pineapple.chat.parse.ColorUtil;
-import sh.miles.pineapple.chat.parse.ParserContext;
+import sh.miles.pineapple.chat.parse.PineappleParserContext;
 
 import java.util.Queue;
 
@@ -27,7 +26,7 @@ public class GradientTag extends ColorTag implements IteratingTag {
     }
 
     @Override
-    public void apply(final @NotNull PineappleComponentBuilder builder, @NotNull final ParserContext context) {
+    public void apply(final @NotNull PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
         if (index > colors.length) {
             throw new IllegalStateException("Issue while applying gradient! Gradient application extends beyond expected range of %d".formatted(super.childTextLength));
         }

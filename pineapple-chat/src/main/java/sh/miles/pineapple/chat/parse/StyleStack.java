@@ -1,8 +1,7 @@
 package sh.miles.pineapple.chat.parse;
 
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.PineappleComponentBuilder;
 import sh.miles.pineapple.chat.tag.AbstractTag;
 import sh.miles.pineapple.chat.tag.ClickEventTag;
 import sh.miles.pineapple.chat.tag.ColorTag;
@@ -12,7 +11,7 @@ import sh.miles.pineapple.chat.tag.HoverEventTag;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-class StyleStack {
+public class StyleStack {
 
     private final Deque<ColorTag> colors = new ArrayDeque<>();
     private final Deque<DecorationTag> decorations = new ArrayDeque<>();
@@ -52,21 +51,21 @@ class StyleStack {
         return decorations.peek();
     }
 
-    public void applyTopColor(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
+    public void applyTopColor(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
         ColorTag tag = colors.peek();
         if (tag != null) {
             tag.apply(builder, context);
         }
     }
 
-    public void applyTopClick(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
+    public void applyTopClick(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
         ClickEventTag tag = clickEvents.peek();
         if (tag != null) {
             tag.apply(builder, context);
         }
     }
 
-    public void applyTopHover(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
+    public void applyTopHover(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
         HoverEventTag tag = hoverEvents.peek();
         if (tag != null) {
             tag.apply(builder, context);

@@ -13,7 +13,7 @@ public record Token(int start, int end, @NotNull TokenType tokenType) {
             case OPEN -> {
                 return source.substring(start + 1, end - 1);
             }
-            case CLOSE -> {
+            case REPLACE, CLOSE -> {
                 return source.substring(start + 2, end - 1);
             }
             default -> throw new IllegalStateException("severe error occurred");

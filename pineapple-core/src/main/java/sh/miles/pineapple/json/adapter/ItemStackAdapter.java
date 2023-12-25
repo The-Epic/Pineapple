@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import sh.miles.pineapple.PineappleChat;
+import sh.miles.pineapple.chat.PineappleChat;
 import sh.miles.pineapple.json.JsonAdapter;
 import sh.miles.pineapple.nms.api.loader.NMSManager;
 

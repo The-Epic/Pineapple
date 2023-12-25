@@ -40,7 +40,6 @@ public class ConfigurationManager {
         registerTypeAdapter(Boolean.class, new PrimitiveAdapter<>(Boolean::parseBoolean));
 
         registerTypeAdapter(String.class, new StringTypeAdapter());
-        registerTypeAdapter(BaseComponent.class, new BaseComponentAdapter());
         registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter());
         registerTypeAdapter(Material.class, new MaterialAdapter());
 

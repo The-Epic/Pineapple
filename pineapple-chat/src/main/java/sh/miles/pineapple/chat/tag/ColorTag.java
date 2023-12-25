@@ -1,10 +1,9 @@
 package sh.miles.pineapple.chat.tag;
 
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.PineappleComponentBuilder;
-import sh.miles.pineapple.chat.parse.ParserContext;
+import sh.miles.pineapple.chat.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.parse.PineappleParserContext;
 
 import java.awt.Color;
 import java.util.Queue;
@@ -25,7 +24,7 @@ public class ColorTag extends AbstractTag {
     }
 
     @Override
-    public void apply(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
+    public void apply(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
         builder.color(color);
     }
 
