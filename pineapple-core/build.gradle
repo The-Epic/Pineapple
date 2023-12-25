@@ -10,11 +10,11 @@ java {
 
 dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.9.0")
-    testImplementation(project(":pineapple-chat"))
+    testImplementation(project(":pineapple-chat-legacy"))
 
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
     implementation 'com.jeff_media:MorePersistentDataTypes:2.4.0'
     compileOnly(project(":pineapple-nms:api"))
-    compileOnly(project(":pineapple-chat"))
+    compileOnly(project(":pineapple-chat-legacy"))
     compileOnly(project(":pineapple-utils"))
 }

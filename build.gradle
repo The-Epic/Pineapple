@@ -10,7 +10,7 @@ jar.enabled = true
 
 dependencies {
     implementation(project(":pineapple-utils"))
-    implementation(project(":pineapple-chat"))
+    implementation(project(":pineapple-chat-legacy"))
     implementation(project(":pineapple-core"))
     implementation(project(":pineapple-nms"))
 }

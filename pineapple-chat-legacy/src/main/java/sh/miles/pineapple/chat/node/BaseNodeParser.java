@@ -6,8 +6,6 @@ import sh.miles.pineapple.chat.token.Token;
 import sh.miles.pineapple.chat.token.TokenType;
 import sh.miles.pineapple.chat.token.Tokenizer;
 
-import java.util.Map;
-
 public final class BaseNodeParser {
 
     private BaseNodeParser() {
@@ -17,7 +15,6 @@ public final class BaseNodeParser {
     public static BaseNode parseTree(@NotNull final String source, PineappleParserContext context) {
         final Tokenizer tokenizer = new Tokenizer(source);
         final BaseNode root = new BaseNode(null, null, source);
-
         BaseNode parent = root;
         Token token;
         while ((token = tokenizer.next()) != null) {
