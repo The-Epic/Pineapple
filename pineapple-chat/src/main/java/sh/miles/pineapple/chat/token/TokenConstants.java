@@ -7,6 +7,7 @@ final class TokenConstants {
     static final char CLOSE_DENOTE = '/';
     static final char ESCAPE = '\\';
     static final char QUOTE_ESCAPE = '\'';
+    static final char REPLACE_DENOTE = '$';
 
     private TokenConstants() {
         throw new UnsupportedOperationException("no");

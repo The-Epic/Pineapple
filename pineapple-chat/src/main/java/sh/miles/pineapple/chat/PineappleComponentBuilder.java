@@ -1,4 +1,4 @@
-package sh.miles.pineapple;
+package sh.miles.pineapple.chat;
 
 
 import com.google.common.base.Preconditions;

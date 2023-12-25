@@ -16,6 +16,7 @@ public class Tokenizer {
 
     public Token next() {
         boolean inQuotes = false;
+        boolean escaped = false;
         if (!hasNext()) {
             return null;
         }
@@ -25,15 +26,23 @@ public class Tokenizer {
         int start = -1;
         for (; cursor < string.length(); cursor++) {
             at = string.charAt(cursor);
-            if (at == TokenConstants.OPEN) {
+            if (at == TokenConstants.ESCAPE) {
+                escaped = true;
+                continue;
+            } else if (at == TokenConstants.OPEN && !escaped) {
                 start = cursor;
                 break;
+            }
+
+            if (escaped) {
+                escaped = false;
             }
         }
 
         if (cursor == string.length()) {
             return new Token(lastTokenEnd, string.length(), TokenType.CONTENT);
         } else if (start > lastTokenEnd) {
+            TokenType tokenType;
             return new Token(lastTokenEnd, start, TokenType.CONTENT);
         }
 
@@ -42,7 +51,7 @@ public class Tokenizer {
             at = string.charAt(cursor);
             if (at == TokenConstants.QUOTE_ESCAPE) {
                 inQuotes = !inQuotes;
-            }else if (at == TokenConstants.CLOSE && !inQuotes) {
+            } else if (at == TokenConstants.CLOSE && !inQuotes) {
                 end = cursor += 1;
                 break;
             }
@@ -55,6 +64,8 @@ public class Tokenizer {
         TokenType tokenType;
         if (string.charAt(start + 1) == TokenConstants.CLOSE_DENOTE) {
             tokenType = TokenType.CLOSE;
+        } else if (string.charAt(start + 1) == TokenConstants.REPLACE_DENOTE) {
+            tokenType = TokenType.REPLACE;
         } else {
             tokenType = TokenType.OPEN;
         }

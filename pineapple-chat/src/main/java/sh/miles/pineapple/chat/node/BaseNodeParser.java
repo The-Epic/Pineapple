@@ -1,9 +1,12 @@
 package sh.miles.pineapple.chat.node;
 
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.chat.parse.PineappleParserContext;
 import sh.miles.pineapple.chat.token.Token;
 import sh.miles.pineapple.chat.token.TokenType;
 import sh.miles.pineapple.chat.token.Tokenizer;
+
+import java.util.Map;
 
 public final class BaseNodeParser {
 
@@ -11,7 +14,7 @@ public final class BaseNodeParser {
         throw new UnsupportedOperationException("no");
     }
 
-    public static BaseNode parseTree(@NotNull final String source) {
+    public static BaseNode parseTree(@NotNull final String source, PineappleParserContext context) {
         final Tokenizer tokenizer = new Tokenizer(source);
         final BaseNode root = new BaseNode(null, null, source);
 
@@ -21,11 +24,13 @@ public final class BaseNodeParser {
             BaseNode child;
             if (token.tokenType() == TokenType.OPEN || token.tokenType() == TokenType.CLOSE) {
                 child = new TagNode(parent, token, source);
+            } else if (token.tokenType() == TokenType.REPLACE) {
+                child = new ReplaceNode(parent, token, source, context.getReplacement(token.detail(source)).toString());
             } else {
                 child = new TextNode(parent, token, source);
             }
 
-            if (child instanceof TextNode) {
+            if (child instanceof TextNode || child instanceof ReplaceNode) {
                 parent.addChild(child);
             } else if (token.tokenType() == TokenType.OPEN) {
                 parent.addChild(child);

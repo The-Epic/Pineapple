@@ -4,7 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
-import sh.miles.pineapple.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.PineappleComponentBuilder;
 
 /**
  * Represents CommandSettings that can be applied to a command for enhanced feature sets

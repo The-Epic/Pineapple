@@ -9,12 +9,16 @@ public class TextNode extends BaseNode {
 
     private final String text;
 
-    public TextNode(@NotNull final BaseNode parent, @NotNull final Token token, final @NotNull String source) {
+    public TextNode(@NotNull final BaseNode parent, @NotNull final Token token, @NotNull final String source, @NotNull final String text) {
         super(parent, token, source);
-        this.text = token.detail(source);
+        this.text = text;
         if (parent instanceof TagNode tagNode) {
             tagNode.appendChildTextLength(this.text.length());
         }
+    }
+
+    public TextNode(@NotNull final BaseNode parent, @NotNull final Token token, final @NotNull String source) {
+        this(parent, token, source, token.detail(source));
     }
 
     public String getText() {
