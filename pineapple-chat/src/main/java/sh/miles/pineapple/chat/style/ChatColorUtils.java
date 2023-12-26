@@ -40,7 +40,6 @@ public final class ChatColorUtils {
     @NotNull
     public static ChatColor from(@NotNull final String string) {
         if (string.charAt(0) == '#') {
-            System.out.println(fromHexString(string).getName());
             return fromHexString(string);
         } else {
             return fromNamedColor(string);

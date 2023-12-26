@@ -14,7 +14,6 @@ public class PineappleChatTest {
     @Test
     public void test_Should_Not_Throw() {
         BaseComponent component = assertDoesNotThrow(this::testNiceMix);
-        System.out.println(ComponentSerializer.toString(component));
     }
 
     public BaseComponent testNiceMix() {
