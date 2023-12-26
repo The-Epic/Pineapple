@@ -15,9 +15,14 @@ public class GradientTag extends ColorTag implements IteratingTag {
     int index;
 
     GradientTag(final @NotNull Queue<String> arguments, final int childTextLength) {
-        super(arguments, childTextLength);
+        super(arguments, childTextLength, initFirstColor(arguments));
         endColor = ChatColorUtils.from(arguments.poll());
         this.colors = ChatColorUtils.createLinearGradient(super.color.getColor(), this.endColor.getColor(), childTextLength);
+    }
+
+    private static ChatColor initFirstColor(@NotNull final Queue<String> arguments) {
+        arguments.poll();
+        return ChatColorUtils.from(arguments.poll());
     }
 
     @Override

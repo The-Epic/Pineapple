@@ -9,11 +9,14 @@ import java.util.Queue;
 
 public class DecorationTag extends AbstractTag {
 
-    protected Decoration decoration;
-    protected boolean flag;
+    protected final Decoration decoration;
+    protected final boolean flag;
 
     DecorationTag(final @NotNull Queue<String> arguments, final int childTextLength) {
-        this(arguments, childTextLength, Decoration.valueOf(arguments.poll().toUpperCase()), hasFlag(arguments));
+        super(arguments, childTextLength);
+        arguments.poll();
+        this.decoration = Decoration.valueOf(arguments.poll().toUpperCase());
+        this.flag = hasFlag(arguments);
     }
 
     DecorationTag(final @NotNull Queue<String> arguments, final int childTextLength, @NotNull final Decoration decoration, final boolean flag) {

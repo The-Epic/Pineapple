@@ -13,8 +13,8 @@ public abstract class AbstractTag {
     protected final int childTextLength;
 
     protected AbstractTag(@NotNull final Queue<String> arguments, final int childTextLength) {
-        this.namespace = arguments.poll();
         this.arguments = arguments;
+        this.namespace = arguments.peek();
         this.childTextLength = childTextLength;
     }
 

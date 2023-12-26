@@ -31,7 +31,6 @@ public final class PineappleParser {
 
     static BaseComponent parse(@NotNull final String message, @NotNull final ParserContext context) {
         final BaseNode root = BaseNodeParser.parseTree(message, context);
-        System.out.println(root);
         final PineappleComponentBuilder builder = PineappleComponentBuilder.empty();
         parse(root, builder, context);
         return builder.build();

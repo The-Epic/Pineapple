@@ -13,6 +13,7 @@ public class ClickEventTag extends AbstractTag {
 
     protected ClickEventTag(final @NotNull Queue<String> arguments, final int childTextLength) {
         super(arguments, childTextLength);
+        arguments.poll();
         ClickEvent.Action action = ClickEvent.Action.valueOf(arguments.poll().toUpperCase());
         String text = arguments.poll();
         this.clickEvent = new ClickEvent(action, text);

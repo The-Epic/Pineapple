@@ -37,6 +37,7 @@ public final class ChatColorUtils {
         }
     }
 
+    @NotNull
     public static ChatColor from(@NotNull final String string) {
         if (string.charAt(0) == '#') {
             return fromHexString(string);
@@ -54,7 +55,7 @@ public final class ChatColorUtils {
     }
 
     public static ChatColor fromNamedColor(@NotNull final String string) {
-        return BY_NAME.get(string);
+        return BY_NAME.get(string.toUpperCase());
     }
 
     @NotNull

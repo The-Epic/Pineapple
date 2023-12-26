@@ -8,7 +8,6 @@ import java.util.Queue;
 public class NamedColorTag extends ColorTag {
 
     NamedColorTag(@NotNull final Queue<String> arguments, int childTextLength) {
-        super(arguments, childTextLength, null);
-        color = ChatColorUtils.fromNamedColor(super.namespace);
+        super(arguments, childTextLength);
     }
 }
