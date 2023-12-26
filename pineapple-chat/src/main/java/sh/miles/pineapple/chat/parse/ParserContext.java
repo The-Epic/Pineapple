@@ -9,17 +9,17 @@ import sh.miles.pineapple.chat.tag.IteratingTag;
 
 import java.util.Map;
 
-public class PineappleParserContext {
+public class ParserContext {
 
     private final Map<String, Object> replacements;
     private final StyleStack styleStack;
 
-    public PineappleParserContext(@NotNull final Map<String, Object> replacements, StyleStack styleStack) {
+    public ParserContext(@NotNull final Map<String, Object> replacements, StyleStack styleStack) {
         this.replacements = replacements;
         this.styleStack = styleStack;
     }
 
-    public BaseComponent parse(@NotNull final String message, @NotNull final PineappleParserContext context) {
+    public BaseComponent parse(@NotNull final String message, @NotNull final ParserContext context) {
         return PineappleParser.parse(message, context);
     }
 
@@ -35,7 +35,7 @@ public class PineappleParserContext {
         return styleStack;
     }
 
-    public void applyStyle(@NotNull final PineappleComponentBuilder builder, @NotNull final String text, PineappleParserContext context) {
+    public void applyStyle(@NotNull final PineappleComponentBuilder builder, @NotNull final String text, ParserContext context) {
         final ColorTag color = styleStack.peekColors();
         if (color instanceof IteratingTag iteratingTag) {
             for (int i = 0; i < text.length(); i++) {
@@ -59,3 +59,4 @@ public class PineappleParserContext {
         }
     }
 }
+

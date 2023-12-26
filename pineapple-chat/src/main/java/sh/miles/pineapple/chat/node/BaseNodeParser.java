@@ -1,45 +1,40 @@
 package sh.miles.pineapple.chat.node;
 
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.chat.parse.PineappleParserContext;
+import sh.miles.pineapple.chat.parse.ParserContext;
 import sh.miles.pineapple.chat.token.Token;
 import sh.miles.pineapple.chat.token.TokenType;
 import sh.miles.pineapple.chat.token.Tokenizer;
 
-import java.util.Map;
-
 public final class BaseNodeParser {
 
     private BaseNodeParser() {
-        throw new UnsupportedOperationException("no");
+        throw new UnsupportedOperationException("can not instantiate utility class");
     }
 
-    public static BaseNode parseTree(@NotNull final String source, PineappleParserContext context) {
-        final Tokenizer tokenizer = new Tokenizer(source);
-        final BaseNode root = new BaseNode(null, null, source);
-
+    public static BaseNode parseTree(@NotNull final String string, ParserContext context) {
+        final BaseNode root = new BaseNode(null, null, string);
+        final Tokenizer tokenizer = new Tokenizer(string);
         BaseNode parent = root;
-        Token token;
-        while ((token = tokenizer.next()) != null) {
-            BaseNode child;
-            if (token.tokenType() == TokenType.OPEN || token.tokenType() == TokenType.CLOSE) {
-                child = new TagNode(parent, token, source);
-            } else if (token.tokenType() == TokenType.REPLACE) {
-                child = new ReplaceNode(parent, token, source, context.getReplacement(token.detail(source)).toString());
-            } else {
-                child = new TextNode(parent, token, source);
+        BaseNode current = null;
+        Token next;
+        while ((next = tokenizer.next()) != null) {
+            switch (next.tokenType()) {
+                case OPEN, CLOSE -> current = new TagNode(parent, next, string);
+                case REPLACE ->
+                        current = new TextNode(parent, next, string, context.getReplacement(next.detail(string)).toString());
+                case CONTENT -> current = new TextNode(parent, next, string);
             }
 
-            if (child instanceof TextNode || child instanceof ReplaceNode) {
-                parent.addChild(child);
-            } else if (token.tokenType() == TokenType.OPEN) {
-                parent.addChild(child);
-                parent = child;
+            if (current instanceof TextNode) {
+                parent.addChild(current);
+            } else if (next.tokenType() == TokenType.OPEN) {
+                parent.addChild(current);
+                parent = current;
             } else {
-                parent = findParentOfClosed((TagNode) parent, (TagNode) child);
+                parent = findParentOfClosed((TagNode) parent, (TagNode) current);
             }
         }
-
         return root;
     }
 

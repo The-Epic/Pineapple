@@ -10,8 +10,8 @@ import java.util.Queue;
 public final class TagBuilder {
 
     private static final ExecutorTrie<AbstractTagBuilderFunction> executorTrie;
-    private static final AbstractTagBuilderFunction NAMED_COLOR = NamedColorTag::new;
-    private static final AbstractTagBuilderFunction NAMED_DECOR = NamedDecorationTag::new;
+    private static final AbstractTagBuilderFunction NAMED_COLOR = ColorTag::new;
+    private static final AbstractTagBuilderFunction NAMED_DECOR = ColorTag::new;
 
     static {
         executorTrie = new ExecutorTrie<>();
@@ -26,7 +26,7 @@ public final class TagBuilder {
         executorTrie.insert("obfuscated", NAMED_DECOR);
         executorTrie.insert("reset", NAMED_DECOR);
         executorTrie.insert("strike_through", NAMED_DECOR);
-        executorTrie.insert("underline", NAMED_DECOR);
+        executorTrie.insert("underlined", NAMED_DECOR);
         // NamedColorTags
         executorTrie.insert("aqua", NAMED_COLOR);
         executorTrie.insert("red", NAMED_COLOR);
@@ -54,10 +54,10 @@ public final class TagBuilder {
     public static AbstractTag build(@NotNull final TagNode tagNode) {
         Optional<AbstractTagBuilderFunction> possibleBuilder = executorTrie.findExecutor(tagNode.getNamespace());
         AbstractTagBuilderFunction builder = possibleBuilder.orElseThrow(() -> new IllegalStateException("unable to parse unknown tag %s".formatted(tagNode.getNamespace())));
-        return builder.create(tagNode.getNamespace(), tagNode.getArguments(), tagNode.getFullChildTextLength());
+        return builder.create(tagNode.getArguments(), tagNode.getFullChildTextLength());
     }
 
     private interface AbstractTagBuilderFunction {
-        AbstractTag create(@NotNull final String namespace, @NotNull final Queue<String> arguments, int childStringLength);
+        AbstractTag create(@NotNull final Queue<String> arguments, int childStringLength);
     }
 }

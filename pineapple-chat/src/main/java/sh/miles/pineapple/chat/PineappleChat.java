@@ -20,4 +20,7 @@ public final class PineappleChat {
         return PineappleParser.parse(string, replacements);
     }
 
+    public static PineappleComponent component(@NotNull final String source) {
+        return new PineappleComponent(source);
+    }
 }

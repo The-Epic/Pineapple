@@ -3,20 +3,39 @@ plugins {
     id "me.champeau.jmh" version "0.7.2"
 }
 
-compileJava.options.encoding = 'UTF-8'
-
 dependencies {
-    compileOnly(project(":pineapple-utils"))
-    testImplementation(project(":pineapple-utils"))
-    // Bundled with Spigot should be synced
+    compileOnly project(":pineapple-utils")
     // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/browse/Bukkit-Patches/0010-BungeeCord-Chat-API.patch#15-21
     compileOnly("net.md-5:bungeecord-chat:1.20-R0.1")
-    testImplementation("net.md-5:bungeecord-chat:1.20-R0.1")
-    // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/browse/pom.xml#42-47
-    compileOnly("com.google.code.gson:gson:2.10.1")
-    testImplementation("com.google.code.gson:gson:2.10.1")
 
     jmh 'org.openjdk.jmh:jmh-core:0.9'
     jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
-    jmhImplementation project(':pineapple-utils')
+}
+
+configurations {
+    testImplementation.extendsFrom(compileOnly)
+    jmhImplementation.extendsFrom(compileOnly)
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'me.champeau.jmh'
+
+    dependencies {
+        compileOnly project(":pineapple-utils")
+
+        jmh 'org.openjdk.jmh:jmh-core:0.9'
+        jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
+    }
+
+    configurations {
+        testImplementation.extendsFrom(compileOnly)
+        jmhImplementation.extendsFrom(compileOnly)
+    }
+}
+
+dependencies {
+    for (final def subproject in subprojects) {
+        implementation(subproject as Project)
+    }
 }

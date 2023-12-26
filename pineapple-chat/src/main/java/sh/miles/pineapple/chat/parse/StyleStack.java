@@ -51,21 +51,21 @@ public class StyleStack {
         return decorations.peek();
     }
 
-    public void applyTopColor(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
+    public void applyTopColor(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
         ColorTag tag = colors.peek();
         if (tag != null) {
             tag.apply(builder, context);
         }
     }
 
-    public void applyTopClick(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
+    public void applyTopClick(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
         ClickEventTag tag = clickEvents.peek();
         if (tag != null) {
             tag.apply(builder, context);
         }
     }
 
-    public void applyTopHover(@NotNull final PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
+    public void applyTopHover(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
         HoverEventTag tag = hoverEvents.peek();
         if (tag != null) {
             tag.apply(builder, context);

@@ -21,26 +21,27 @@ public final class PineappleParser {
 
     @NotNull
     public static BaseComponent parse(@NotNull final String message) {
-        return parse(message, new PineappleParserContext(new HashMap<>(), new StyleStack()));
+        return parse(message, new ParserContext(new HashMap<>(), new StyleStack()));
     }
 
     @NotNull
     public static BaseComponent parse(@NotNull final String message, @NotNull final Map<String, Object> replacements) {
-        return parse(message, new PineappleParserContext(replacements, new StyleStack()));
+        return parse(message, new ParserContext(replacements, new StyleStack()));
     }
 
-    static BaseComponent parse(@NotNull final String message, @NotNull final PineappleParserContext context) {
+    static BaseComponent parse(@NotNull final String message, @NotNull final ParserContext context) {
         final BaseNode root = BaseNodeParser.parseTree(message, context);
+        System.out.println(root);
         final PineappleComponentBuilder builder = PineappleComponentBuilder.empty();
         parse(root, builder, context);
         return builder.build();
     }
 
-    private static void parse(@NotNull final BaseNode root, @NotNull final PineappleComponentBuilder builder, PineappleParserContext context) {
+    private static void parse(@NotNull final BaseNode root, @NotNull final PineappleComponentBuilder builder, ParserContext context) {
         parse(root, null, builder, context);
     }
 
-    private static void parse(@NotNull final BaseNode root, @Nullable AbstractTag rootTag, @NotNull final PineappleComponentBuilder builder, PineappleParserContext context) {
+    private static void parse(@NotNull final BaseNode root, @Nullable AbstractTag rootTag, @NotNull final PineappleComponentBuilder builder, ParserContext context) {
         for (final BaseNode child : root.getChildren()) {
             AbstractTag tag = null;
             if (child instanceof TagNode tagNode) {

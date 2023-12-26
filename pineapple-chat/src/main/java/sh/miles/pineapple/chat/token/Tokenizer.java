@@ -5,7 +5,6 @@ public class Tokenizer {
     private final String string;
     private int cursor = 0;
 
-
     public Tokenizer(String string) {
         this.string = string;
     }
@@ -15,56 +14,58 @@ public class Tokenizer {
     }
 
     public Token next() {
-        boolean inQuotes = false;
         boolean escaped = false;
         if (!hasNext()) {
             return null;
         }
 
-        char at;
-        int lastTokenEnd = cursor;
+        char current;
+        int lastTokenEnd = this.cursor;
         int start = -1;
-        for (; cursor < string.length(); cursor++) {
-            at = string.charAt(cursor);
-            if (at == TokenConstants.ESCAPE) {
+        for (; cursor < string.length(); ++cursor) {
+            current = string.charAt(this.cursor);
+            if (current == TokenConstants.ESCAPE) {
                 escaped = true;
                 continue;
-            } else if (at == TokenConstants.OPEN && !escaped) {
+            }
+
+            if (current == TokenConstants.OPEN && !escaped) {
                 start = cursor;
                 break;
             }
 
-            if (escaped) {
-                escaped = false;
-            }
+            escaped = false;
         }
 
-        if (cursor == string.length()) {
+        if (this.cursor == string.length()) {
             return new Token(lastTokenEnd, string.length(), TokenType.CONTENT);
-        } else if (start > lastTokenEnd) {
-            TokenType tokenType;
+        }
+
+        if (start > lastTokenEnd) {
             return new Token(lastTokenEnd, start, TokenType.CONTENT);
         }
 
         int end = -1;
-        for (; cursor < string.length(); cursor++) {
-            at = string.charAt(cursor);
-            if (at == TokenConstants.QUOTE_ESCAPE) {
-                inQuotes = !inQuotes;
-            } else if (at == TokenConstants.CLOSE && !inQuotes) {
+        for (; cursor < string.length(); ++cursor) {
+            current = string.charAt(this.cursor);
+            if (current == TokenConstants.QUOTE_ESCAPE) {
+                escaped = !escaped;
+            } else if (current == TokenConstants.CLOSE && !escaped) {
                 end = cursor += 1;
                 break;
             }
         }
+
 
         if (end == -1) {
             throw new IllegalStateException("the token that started a capture at index %d never ended. Capturing: %s".formatted(start, string.substring(start)));
         }
 
         TokenType tokenType;
-        if (string.charAt(start + 1) == TokenConstants.CLOSE_DENOTE) {
+        current = string.charAt(start + 1);
+        if (current == TokenConstants.CLOSE_DENOTE) {
             tokenType = TokenType.CLOSE;
-        } else if (string.charAt(start + 1) == TokenConstants.REPLACE_DENOTE) {
+        } else if (current == TokenConstants.REPLACE_DENOTE) {
             tokenType = TokenType.REPLACE;
         } else {
             tokenType = TokenType.OPEN;
@@ -72,6 +73,5 @@ public class Tokenizer {
 
         return new Token(start, end, tokenType);
     }
-
 
 }

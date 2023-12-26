@@ -2,9 +2,9 @@ package sh.miles.pineapple.chat.tag;
 
 import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.chat.parse.ParserContext;
 import sh.miles.pineapple.chat.PineappleComponentBuilder;
-import sh.miles.pineapple.chat.parse.ColorUtil;
-import sh.miles.pineapple.chat.parse.PineappleParserContext;
+import sh.miles.pineapple.chat.style.ChatColorUtils;
 
 import java.util.Queue;
 
@@ -14,10 +14,10 @@ public class GradientTag extends ColorTag implements IteratingTag {
     protected ChatColor[] colors;
     int index;
 
-    GradientTag(final @NotNull String namespace, final @NotNull Queue<String> arguments, final int childTextLength) {
-        super(namespace, arguments, childTextLength);
-        endColor = nextColor(arguments);
-        this.colors = ColorUtil.createGradient(super.color.getColor(), this.endColor.getColor(), childTextLength);
+    GradientTag(final @NotNull Queue<String> arguments, final int childTextLength) {
+        super(arguments, childTextLength);
+        endColor = ChatColorUtils.from(arguments.poll());
+        this.colors = ChatColorUtils.createLinearGradient(super.color.getColor(), this.endColor.getColor(), childTextLength);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class GradientTag extends ColorTag implements IteratingTag {
     }
 
     @Override
-    public void apply(final @NotNull PineappleComponentBuilder builder, @NotNull final PineappleParserContext context) {
+    public void apply(@NotNull final PineappleComponentBuilder builder, @NotNull final ParserContext context) {
         if (index > colors.length) {
             throw new IllegalStateException("Issue while applying gradient! Gradient application extends beyond expected range of %d".formatted(super.childTextLength));
         }

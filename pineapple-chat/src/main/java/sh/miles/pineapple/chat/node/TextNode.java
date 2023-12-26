@@ -1,3 +1,4 @@
+
 package sh.miles.pineapple.chat.node;
 
 import org.jetbrains.annotations.NotNull;

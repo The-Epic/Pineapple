@@ -7,7 +7,9 @@ import java.util.Queue;
 
 public class NamedDecorationTag extends DecorationTag {
 
-    NamedDecorationTag(@NotNull final String namespace, final @NotNull Queue<String> arguments, final int childTextLength) {
-        super(namespace, arguments, childTextLength, Decoration.valueOf(namespace.toUpperCase()), !arguments.poll().startsWith("!"));
+    NamedDecorationTag(@NotNull final Queue<String> arguments, final int childTextLength) {
+        super(arguments, childTextLength, null, false);
+        super.decoration = Decoration.valueOf(namespace);
+        super.flag = hasFlag(arguments);
     }
 }

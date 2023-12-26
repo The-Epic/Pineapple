@@ -12,6 +12,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+import sh.miles.pineapple.chat.PineappleComponent;
 import sh.miles.pineapple.collection.WeightedRandom;
 import sh.miles.pineapple.config.adapter.*;
 import sh.miles.pineapple.config.annotation.ConfigMappable;
@@ -40,6 +41,7 @@ public class ConfigurationManager {
         registerTypeAdapter(Boolean.class, new PrimitiveAdapter<>(Boolean::parseBoolean));
 
         registerTypeAdapter(String.class, new StringTypeAdapter());
+        registerTypeAdapter(PineappleComponent.class, new PineappleComponentAdapter());
         registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter());
         registerTypeAdapter(Material.class, new MaterialAdapter());
 
