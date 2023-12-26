@@ -10,8 +10,8 @@ import java.util.Queue;
 public final class TagBuilder {
 
     private static final ExecutorTrie<AbstractTagBuilderFunction> executorTrie;
-    private static final AbstractTagBuilderFunction NAMED_COLOR = ColorTag::new;
-    private static final AbstractTagBuilderFunction NAMED_DECOR = DecorationTag::new;
+    private static final AbstractTagBuilderFunction NAMED_COLOR = NamedColorTag::new;
+    private static final AbstractTagBuilderFunction NAMED_DECOR = NamedDecorationTag::new;
 
     static {
         executorTrie = new ExecutorTrie<>();

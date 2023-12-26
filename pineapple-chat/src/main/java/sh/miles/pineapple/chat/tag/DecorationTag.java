@@ -32,6 +32,6 @@ public class DecorationTag extends AbstractTag {
 
     protected static boolean hasFlag(Queue<String> argument) {
         String string;
-        return (string = argument.poll()) != null && string.startsWith("!");
+        return !((string = argument.poll()) != null && string.startsWith("!"));
     }
 }

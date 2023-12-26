@@ -29,8 +29,8 @@ public final class ChatColorUtils {
 
     @NotNull
     public static ChatColor create(@NotNull final Color color) {
-        String string = color.toString();
         try {
+            String string = "#" + Integer.toHexString(color.getRGB() & 0xffffff);
             return (ChatColor) CHAT_COLOR_CONSTRUCTOR.invokeExact(string, string, color.getRGB());
         } catch (Throwable e) {
             throw new IllegalArgumentException(e);
@@ -40,6 +40,7 @@ public final class ChatColorUtils {
     @NotNull
     public static ChatColor from(@NotNull final String string) {
         if (string.charAt(0) == '#') {
+            System.out.println(fromHexString(string).getName());
             return fromHexString(string);
         } else {
             return fromNamedColor(string);

@@ -19,7 +19,7 @@ public class PineappleChatTest {
 
     public BaseComponent testNiceMix() {
         Map<String, Object> replacements = Map.of("name", "JeryTheCarry");
-        final String input = "<yellow>random <gradient:red:blue><bold><$name></gradient></bold> <click:run_command:/weather clear><underlined><red>click here</click><blue> to <bold>FEEL</underlined> it";
+        final String input = "<yellow>random <gradient:red:blue><bold><$name></gradient></bold> <click:run_command:/weather clear><underlined><red>click here</click><blue> to <bold>FEEL it";
         return PineappleChat.parse(input, replacements);
     }
 

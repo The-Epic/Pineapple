@@ -22,7 +22,7 @@ public enum Decoration {
             component.setStrikethrough(flag);
         }
     },
-    UNDERLINE {
+    UNDERLINED {
         @Override
         public void apply(final @NotNull BaseComponent component, final boolean flag) {
             component.setUnderlined(flag);
