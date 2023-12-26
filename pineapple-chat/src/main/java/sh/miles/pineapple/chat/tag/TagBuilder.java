@@ -11,7 +11,7 @@ public final class TagBuilder {
 
     private static final ExecutorTrie<AbstractTagBuilderFunction> executorTrie;
     private static final AbstractTagBuilderFunction NAMED_COLOR = ColorTag::new;
-    private static final AbstractTagBuilderFunction NAMED_DECOR = ColorTag::new;
+    private static final AbstractTagBuilderFunction NAMED_DECOR = DecorationTag::new;
 
     static {
         executorTrie = new ExecutorTrie<>();
