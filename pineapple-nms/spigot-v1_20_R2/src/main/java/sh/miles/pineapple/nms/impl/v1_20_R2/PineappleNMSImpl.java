@@ -8,6 +8,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -23,9 +24,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.N;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import sh.miles.pineapple.ReflectionUtils;
 import sh.miles.pineapple.collection.registry.FrozenRegistry;
 import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.PineappleNMS;
@@ -37,23 +38,16 @@ import sh.miles.pineapple.nms.impl.v1_20_R2.registry.PineappleNmsRegistry;
 import sh.miles.pineapple.nms.impl.v1_20_R2.world.damagesource.PineappleDamageType;
 
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.List;
 
 public class PineappleNMSImpl implements PineappleNMS {
 
     private static final MethodHandle itemStackHandle;
+    private static final MethodHandle livingEntityLastDamageSourceHandle;
 
     static {
-        try {
-            final Field handleField = CraftItemStack.class.getDeclaredField("handle");
-            handleField.setAccessible(true);
-            MethodHandles.Lookup lookup = MethodHandles.lookup();
-            itemStackHandle = lookup.unreflectGetter(handleField);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        itemStackHandle = ReflectionUtils.getFieldAsGetter(CraftItemStack.class, "handle");
+        livingEntityLastDamageSourceHandle = ReflectionUtils.getFieldAsGetter(net.minecraft.world.entity.LivingEntity.class, "ce");
     }
 
     @Nullable
@@ -104,7 +98,16 @@ public class PineappleNMSImpl implements PineappleNMS {
     @Nullable
     @Override
     public DamageType getEntityLastDamageType(@NotNull final LivingEntity entity) {
-        return PineappleDamageType.minecraftToPineapple(((CraftLivingEntity) entity).getHandle().getLastDamageSource().type());
+        final net.minecraft.world.entity.LivingEntity livingEntity = ((CraftLivingEntity) entity).getHandle();
+        try {
+            final DamageSource source = (DamageSource) livingEntityLastDamageSourceHandle.bindTo(livingEntity).invoke();
+            if (source == null) {
+                return null;
+            }
+            return PineappleDamageType.minecraftToPineapple(source.type());
+        } catch (Throwable e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @SuppressWarnings("unchecked")
