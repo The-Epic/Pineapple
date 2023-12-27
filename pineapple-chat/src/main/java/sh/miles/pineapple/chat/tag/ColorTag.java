@@ -14,6 +14,7 @@ public class ColorTag extends AbstractTag {
 
     ColorTag(final @NotNull Queue<String> arguments, final int childTextLength) {
         super(arguments, childTextLength);
+        arguments.poll();
         this.color = ChatColorUtils.from(arguments.poll());
     }
 
