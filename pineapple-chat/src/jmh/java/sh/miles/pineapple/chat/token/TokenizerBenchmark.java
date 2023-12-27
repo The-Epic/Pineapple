@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SampleTime)
 @Fork(value = 1, warmups = 1)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
 public class TokenizerBenchmark {
 
     @Benchmark
@@ -26,7 +26,6 @@ public class TokenizerBenchmark {
     public List<Token> fewTokens() {
         String fewTokens = "<yellow>Simplicity is the <italic>keynote</italic> of all <bold>true</bold> elegance.</yellow>";
         return getTokens(fewTokens);
-
     }
 
     @Benchmark
