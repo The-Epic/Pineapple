@@ -1,10 +1,10 @@
 package sh.miles.pineapple.chat.node;
 
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.StringUtils;
 import sh.miles.pineapple.chat.token.Token;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -16,7 +16,7 @@ public class TagNode extends BaseNode {
 
     public TagNode(@NotNull final BaseNode parent, @NotNull final Token token, final @NotNull String source) {
         super(parent, token, source);
-        this.arguments = new ArrayDeque<>(Arrays.asList(token.detail(source).split(":")));
+        this.arguments = new ArrayDeque<>(StringUtils.split(token.detail(source), ':'));
         this.namespace = arguments.peek();
     }
 

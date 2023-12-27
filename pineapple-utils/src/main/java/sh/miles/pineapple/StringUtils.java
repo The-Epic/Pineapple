@@ -15,7 +15,7 @@ public final class StringUtils {
      * @param character the character to split over
      * @return the split string
      */
-    public static String[] split(String string, char character) {
+    public static List<String> split(String string, char character) {
         List<String> split = new ArrayList<>();
         char at;
         int last = 0;
@@ -31,6 +31,6 @@ public final class StringUtils {
             split.add(string.substring(last));
         }
 
-        return split.toArray(String[]::new);
+        return split;
     }
 }

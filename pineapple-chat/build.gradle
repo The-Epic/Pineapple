@@ -17,25 +17,6 @@ configurations {
     jmhImplementation.extendsFrom(compileOnly)
 }
 
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'me.champeau.jmh'
-
-    dependencies {
-        compileOnly project(":pineapple-utils")
-
-        jmh 'org.openjdk.jmh:jmh-core:0.9'
-        jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
-    }
-
-    configurations {
-        testImplementation.extendsFrom(compileOnly)
-        jmhImplementation.extendsFrom(compileOnly)
-    }
-}
-
-dependencies {
-    for (final def subproject in subprojects) {
-        implementation(subproject as Project)
-    }
+jmh {
+    excludes = ["ChatColorBenchmark", "TokenizerBenchmark"]
 }
