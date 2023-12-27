@@ -4,6 +4,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.resources.ResourceKey;
@@ -37,6 +38,11 @@ import sh.miles.pineapple.nms.impl.v1_20_R3.internal.ComponentUtils;
 import sh.miles.pineapple.nms.impl.v1_20_R3.registry.PineappleNmsRegistry;
 import sh.miles.pineapple.nms.impl.v1_20_R3.world.damagesource.PineappleDamageType;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.invoke.MethodHandle;
 import java.util.List;
 
@@ -143,6 +149,33 @@ public class PineappleNMSImpl implements PineappleNMS {
 
         displayTag.put(net.minecraft.world.item.ItemStack.TAG_LORE, loreTag);
         return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
+    @NotNull
+    @Override
+    public byte[] itemToBytes(@NotNull final ItemStack itemStack) {
+        CraftItemStack craft = ensureCraftItemStack(itemStack);
+        CompoundTag tag = getItemStackHandle(craft).getOrCreateTag();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            try (DataOutputStream dos = new DataOutputStream(baos)) {
+                NbtIo.write(tag, dos);
+            }
+            return baos.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @NotNull
+    @Override
+    public ItemStack itemFromBytes(@NotNull final byte[] bytes) {
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
+            try (DataInputStream dis = new DataInputStream(bais)) {
+                return CraftItemStack.asCraftMirror(net.minecraft.world.item.ItemStack.of(NbtIo.read(dis)));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private <T> Registry<T> getRegistry(ResourceKey<? extends Registry<T>> registryKey) {

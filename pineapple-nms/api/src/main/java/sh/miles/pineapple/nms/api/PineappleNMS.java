@@ -107,4 +107,10 @@ public interface PineappleNMS {
     @NotNull
     <T extends RegistryKey<NamespacedKey>> FrozenRegistry<T, NamespacedKey> getRegistry(Class<? super T> clazz);
 
+    @NotNull
+    byte[] itemToBytes(@NotNull final ItemStack itemStack);
+
+    @NotNull
+    ItemStack itemFromBytes(@NotNull final byte[] bytes);
+
 }
