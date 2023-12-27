@@ -3,7 +3,7 @@ package sh.miles.pineapple.chat.parse;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import sh.miles.pineapple.chat.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
 import sh.miles.pineapple.chat.node.BaseNode;
 import sh.miles.pineapple.chat.node.BaseNodeParser;
 import sh.miles.pineapple.chat.node.TagNode;

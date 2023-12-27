@@ -1,4 +1,4 @@
-package sh.miles.pineapple.chat;
+package sh.miles.pineapple.chat.bungee;
 
 
 import com.google.common.base.Preconditions;
@@ -80,12 +80,7 @@ public final class PineappleComponentBuilder {
 
     private BaseComponent getDummy() {
         if (dummy == null) {
-            dummy = new BaseComponent() {
-                @Override
-                public BaseComponent duplicate() {
-                    return this;
-                }
-            };
+            dummy = new DummyBaseComponent();
         }
         return dummy;
     }

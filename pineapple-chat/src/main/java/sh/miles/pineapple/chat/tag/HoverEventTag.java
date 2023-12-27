@@ -8,7 +8,7 @@ import net.md_5.bungee.api.chat.hover.content.Item;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.chat.parse.ParserContext;
-import sh.miles.pineapple.chat.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
 
 import java.util.Queue;
 

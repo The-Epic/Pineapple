@@ -2,7 +2,7 @@ package sh.miles.pineapple.chat.parse;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.chat.PineappleComponentBuilder;
+import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
 import sh.miles.pineapple.chat.tag.ColorTag;
 import sh.miles.pineapple.chat.tag.DecorationTag;
 import sh.miles.pineapple.chat.tag.IteratingTag;
