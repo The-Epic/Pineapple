@@ -16,12 +16,14 @@ import java.util.Map;
  */
 public final class CommandRegistry {
 
+    private final Plugin plugin;
     private final CommandMap commandMap;
     private final Map<String, org.bukkit.command.Command> knownCommands;
     private final MethodHandle constructor;
 
     @SuppressWarnings("unchecked")
-    public CommandRegistry() {
+    public CommandRegistry(@NotNull final Plugin plugin) {
+        this.plugin = plugin;
         this.commandMap = ReflectionUtils.getField(Bukkit.getPluginManager(), "commandMap", CommandMap.class);
         this.knownCommands = (Map<String, org.bukkit.command.Command>) ReflectionUtils.getField(commandMap, "knownCommands", Map.class);
         this.constructor = ReflectionUtils.getConstructor(PluginCommand.class, new Class[]{String.class, Plugin.class});
@@ -30,10 +32,9 @@ public final class CommandRegistry {
     /**
      * Registers a command to the server by using spigot's internal {@link PluginCommand} class
      *
-     * @param plugin  the plugin to register the command with
      * @param command the command to register
      */
-    public void register(@NotNull final Plugin plugin, @NotNull final Command command) {
+    public void register(@NotNull final Command command) {
         final CommandLabel label = command.getCommandLabel();
         final PluginCommand pluginCommand = (PluginCommand) ReflectionUtils.safeInvoke(this.constructor, label.getName(), plugin);
         if (pluginCommand == null) {

@@ -6,7 +6,6 @@ import sh.miles.pineapple.config.ConfigurationManager;
 import sh.miles.pineapple.json.JsonAdapter;
 import sh.miles.pineapple.json.JsonHelper;
 import sh.miles.pineapple.menu.MenuManager;
-import sh.miles.pineapple.task.work.ServerThreadTicker;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,13 +16,11 @@ public class PineappleLib {
     private final Plugin plugin;
     private final ConfigurationManager configManager;
     private final MenuManager menuManager;
-    private final ServerThreadTicker threadTicker;
 
     private PineappleLib(Plugin plugin) {
         this.plugin = plugin;
         this.configManager = new ConfigurationManager(plugin);
         this.menuManager = new MenuManager(plugin);
-        this.threadTicker = new ServerThreadTicker(plugin);
     }
 
     public static void initialize(Plugin plugin) {
@@ -62,11 +59,6 @@ public class PineappleLib {
     @NotNull
     public static MenuManager getMenuManager() {
         return getInstance().menuManager;
-    }
-
-    @NotNull
-    public static ServerThreadTicker getThreadTicker() {
-        return getInstance().threadTicker;
     }
 
     @NotNull
