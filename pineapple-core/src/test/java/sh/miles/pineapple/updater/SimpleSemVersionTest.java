@@ -13,13 +13,7 @@ public class SimpleSemVersionTest {
     private static final MethodHandle MAJOR = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "major");
     private static final MethodHandle MINOR = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "minor");
     private static final MethodHandle PATCH = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "patch");
-
-    private static final MethodHandle ALPHA = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "alpha");
-    private static final MethodHandle BETA = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "beta");
-    private static final MethodHandle SNAPSHOT = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "snapshot");
-    private static final MethodHandle HOTFIX = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "hotfix");
-    private static final MethodHandle RELEASE = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "release");
-
+    private static final MethodHandle MODIFIER = ReflectionUtils.getFieldAsGetter(SimpleSemVersion.class, "modifier");
 
     @Test
     public void test_No_Suffix() {
@@ -27,36 +21,37 @@ public class SimpleSemVersionTest {
         assertEquals(1, ReflectionUtils.safeInvoke(MAJOR.bindTo(version)));
         assertEquals(2, ReflectionUtils.safeInvoke(MINOR.bindTo(version)));
         assertEquals(3, ReflectionUtils.safeInvoke(PATCH.bindTo(version)));
+        assertEquals(SimpleSemVersion.RELEASE, ReflectionUtils.safeInvoke(MODIFIER.bindTo(version)));
     }
 
     @Test
     public void test_Alpha() {
         SimpleSemVersion version = SimpleSemVersion.fromString("1.2.3-alpha");
-        assertTrue(((Boolean) ReflectionUtils.safeInvoke(ALPHA.bindTo(version))));
+        assertEquals(SimpleSemVersion.ALPHA, ReflectionUtils.safeInvoke(MODIFIER.bindTo(version)));
     }
 
     @Test
     public void test_Beta() {
         SimpleSemVersion version = SimpleSemVersion.fromString("1.2.3-beta");
-        assertTrue(((Boolean) ReflectionUtils.safeInvoke(BETA.bindTo(version))));
+        assertEquals(SimpleSemVersion.BETA, ReflectionUtils.safeInvoke(MODIFIER.bindTo(version)));
     }
 
     @Test
     public void test_Snapshot() {
         SimpleSemVersion version = SimpleSemVersion.fromString("1.2.3-snapshot");
-        assertTrue(((Boolean) ReflectionUtils.safeInvoke(SNAPSHOT.bindTo(version))));
+        assertEquals(SimpleSemVersion.SNAPSHOT, ReflectionUtils.safeInvoke(MODIFIER.bindTo(version)));
     }
 
     @Test
     public void test_Hotfix() {
         SimpleSemVersion version = SimpleSemVersion.fromString("1.2.3-hotfix");
-        assertTrue(((Boolean) ReflectionUtils.safeInvoke(HOTFIX.bindTo(version))));
+        assertEquals(SimpleSemVersion.HOTFIX, ReflectionUtils.safeInvoke(MODIFIER.bindTo(version)));
     }
 
     @Test
     public void test_Release() {
         SimpleSemVersion version = SimpleSemVersion.fromString("1.2.3-release");
-        assertTrue(((Boolean) ReflectionUtils.safeInvoke(RELEASE.bindTo(version))));
+        assertEquals(SimpleSemVersion.RELEASE, ReflectionUtils.safeInvoke(MODIFIER.bindTo(version)));
     }
 
     @Test
@@ -97,5 +92,19 @@ public class SimpleSemVersionTest {
         SimpleSemVersion other = SimpleSemVersion.fromString("1.2.3-release");
 
         assertFalse(version.isNewerThan(other));
+    }
+
+    @Test
+    public void test_Newer_Than_ReleaseHotFix_Higher_ThanRelease() {
+        SimpleSemVersion version = SimpleSemVersion.fromString("1.2.2-release");
+        SimpleSemVersion other = SimpleSemVersion.fromString("1.2.4-hotfix");
+        assertTrue(version.isNewerThan(other));
+    }
+
+    @Test
+    public void test_Older_Than_ReleaseHotFix_Lower_ThanRelease() {
+        SimpleSemVersion version = SimpleSemVersion.fromString("1.2.4-beta");
+        SimpleSemVersion other = SimpleSemVersion.fromString("1.2.5-hotfix");
+        assertTrue(other.isNewerThan(version));
     }
 }

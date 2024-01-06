@@ -1,30 +1,40 @@
 package sh.miles.pineapple;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
+
+import java.util.Map;
+import java.util.Objects;
+
 public class SimpleSemVersion {
 
-    private int major;
-    private int minor;
-    private int patch;
+    public static final byte RELEASE = 4;
+    public static final byte HOTFIX = 3;
+    public static final byte SNAPSHOT = 2;
+    public static final byte BETA = 1;
+    public static final byte ALPHA = 0;
+    private static final BiMap<Byte, String> MODIFIER_LABEL = ImmutableBiMap.of(
+            (byte) 0b100, "release",
+            (byte) 0b11, "hotfix",
+            (byte) 0b10, "snapshot",
+            (byte) 0b01, "beta",
+            (byte) 0b00, "alpha"
+    );
 
-    private boolean alpha;
-    private boolean beta;
-    private boolean snapshot;
-    private boolean hotfix;
-    private boolean release;
+    private final int major;
+    private final int minor;
+    private final int patch;
+    private byte modifier;
 
-    public SimpleSemVersion(int major, int minor, int patch, boolean alpha, boolean beta, boolean snapshot, boolean hotfix, boolean release) {
+    public SimpleSemVersion(int major, int minor, int patch, byte modifier) {
         this.major = major;
         this.minor = minor;
         this.patch = patch;
-        this.alpha = alpha;
-        this.beta = beta;
-        this.snapshot = snapshot;
-        this.hotfix = hotfix;
-        this.release = release;
+        this.modifier = modifier;
     }
 
     public SimpleSemVersion(int major, int minor, int patch) {
-        this(major, minor, patch, false, false, false, false, false);
+        this(major, minor, patch, RELEASE);
     }
 
     /**
@@ -52,16 +62,7 @@ public class SimpleSemVersion {
         }
 
         if (!suffix.isEmpty()) {
-            suffix.toLowerCase();
-            switch (suffix) {
-                case "alpha" -> semVer.alpha = true;
-                case "beta" -> semVer.beta = true;
-                case "snapshot" -> semVer.snapshot = true;
-                case "hotfix" -> semVer.hotfix = true;
-                case "release" -> semVer.release = true;
-                default -> throw new IllegalArgumentException(
-                        "Invalid suffix, must be alpha, beta, snapshot, hotfix, or release");
-            }
+            semVer.modifier = MODIFIER_LABEL.inverse().get(suffix);
         }
 
         return semVer;
@@ -74,47 +75,30 @@ public class SimpleSemVersion {
      * @return Returns true if the current version is newer, false otherwise.
      */
     public boolean isNewerThan(SimpleSemVersion other) {
-        if (this.major != other.major) {
-            return this.major > other.major;
-        } else if (this.minor != other.minor) {
-            return this.minor > other.minor;
-        } else if (this.patch != other.patch) {
-            return this.patch > other.patch;
-        }
-
-        // ALPHA -> BETA -> SNAPSHOT -> HOTFIX -> RELEASE
-        if (this.release && !other.release) {
-            return true;
-        } else if (this.hotfix && !other.release && !other.hotfix) {
-            return true;
-        } else if (this.snapshot && !other.release && !other.hotfix && !other.snapshot) {
-            return true;
-        } else if (this.beta && !other.release && !other.hotfix && !other.snapshot && !other.beta) {
-            return true;
-        } else if (this.alpha && !other.release && !other.hotfix && !other.snapshot && !other.beta && !other.alpha) {
+        // 1.0.0-BETA is lower than 1.0.0-SNAPSHOT
+        if (this.modifier < other.modifier) {
+            return false;
+        } else if (this.modifier > other.modifier) {
             return true;
         }
 
-        return false;
+        return !equals(other) && (this.major >= other.major && this.minor >= other.minor && this.patch >= other.patch);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof final SimpleSemVersion that)) return false;
+        return major == that.major && minor == that.minor && patch == that.patch && modifier == that.modifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(major, minor, patch, modifier);
     }
 
     @Override
     public String toString() {
-        return this.major + "." + this.minor + "." + this.patch + getSuffix();
-    }
-
-    private String getSuffix() {
-        if (alpha) {
-            return "-ALPHA";
-        } else if (beta) {
-            return "-BETA";
-        } else if (snapshot) {
-            return "-SNAPSHOT";
-        } else if (hotfix) {
-            return "-HOTFIX";
-        } else if (release) {
-            return "-RELEASE";
-        }
-        return "";
+        return this.major + "." + this.minor + "." + this.patch + MODIFIER_LABEL.get(this.modifier);
     }
 }
