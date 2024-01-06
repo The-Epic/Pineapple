@@ -90,4 +90,12 @@ public class SimpleSemVersionTest {
 
         assertTrue(version.isNewerThan(other));
     }
+
+    @Test
+    public void test_Newer_Than_ReleaseHotFix() {
+        SimpleSemVersion version = SimpleSemVersion.fromString("1.2.3-hotfix");
+        SimpleSemVersion other = SimpleSemVersion.fromString("1.2.3-release");
+
+        assertFalse(version.isNewerThan(other));
+    }
 }
