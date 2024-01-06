@@ -1,15 +1,40 @@
 package sh.miles.pineapple;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
+
+import java.util.Map;
+import java.util.Objects;
+
 public class SimpleSemVersion {
 
-    private int major;
-    private int minor;
-    private int patch;
+    public static final byte RELEASE = 4;
+    public static final byte HOTFIX = 3;
+    public static final byte SNAPSHOT = 2;
+    public static final byte BETA = 1;
+    public static final byte ALPHA = 0;
+    private static final BiMap<Byte, String> MODIFIER_LABEL = ImmutableBiMap.of(
+            (byte) 0b100, "release",
+            (byte) 0b11, "hotfix",
+            (byte) 0b10, "snapshot",
+            (byte) 0b01, "beta",
+            (byte) 0b00, "alpha"
+    );
 
-    public SimpleSemVersion(int major, int minor, int patch) {
+    private final int major;
+    private final int minor;
+    private final int patch;
+    private byte modifier;
+
+    public SimpleSemVersion(int major, int minor, int patch, byte modifier) {
         this.major = major;
         this.minor = minor;
         this.patch = patch;
+        this.modifier = modifier;
+    }
+
+    public SimpleSemVersion(int major, int minor, int patch) {
+        this(major, minor, patch, RELEASE);
     }
 
     /**
@@ -19,21 +44,28 @@ public class SimpleSemVersion {
      * @return the parsed SimpleSemVersion object
      */
     public static SimpleSemVersion fromString(String version) {
-        version = version.replaceAll("[^\\d.]", "");
-        String[] parts = version.split("\\.");
+        String[] split = version.split("-");
+        String[] numParts = split[0].split("\\.");
+        String suffix = split.length > 1 ? split[1] : "";
 
-        if (parts.length != 3) {
+        if (numParts.length != 3) {
             throw new IllegalArgumentException("String must be in the format major.minor.patch");
         }
 
-        SimpleSemVersion semVersion = null;
+        SimpleSemVersion semVer;
+
         try {
-            semVersion = new SimpleSemVersion(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]),
-                    Integer.parseInt(parts[2]));
+            semVer = new SimpleSemVersion(Integer.parseInt(numParts[0]), Integer.parseInt(numParts[1]),
+                    Integer.parseInt(numParts[2]));
         } catch (NumberFormatException ex) {
-            throw new IllegalArgumentException("String must be in the format major.minor.patch");
+            throw new IllegalArgumentException("String must be in the format major.minor.patch-SUFFIX (optional suffix)");
         }
-        return semVersion;
+
+        if (!suffix.isEmpty()) {
+            semVer.modifier = MODIFIER_LABEL.inverse().get(suffix);
+        }
+
+        return semVer;
     }
 
     /**
@@ -43,19 +75,30 @@ public class SimpleSemVersion {
      * @return Returns true if the current version is newer, false otherwise.
      */
     public boolean isNewerThan(SimpleSemVersion other) {
-        if (this.major != other.major) {
-            return this.major > other.major;
-        } else if (this.minor != other.minor) {
-            return this.minor > other.minor;
-        } else if (this.patch != other.patch) {
-            return this.patch > other.patch;
+        // 1.0.0-BETA is lower than 1.0.0-SNAPSHOT
+        if (this.modifier < other.modifier) {
+            return false;
+        } else if (this.modifier > other.modifier) {
+            return true;
         }
-        return false;
+
+        return !equals(other) && (this.major >= other.major && this.minor >= other.minor && this.patch >= other.patch);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof final SimpleSemVersion that)) return false;
+        return major == that.major && minor == that.minor && patch == that.patch && modifier == that.modifier;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(major, minor, patch, modifier);
     }
 
     @Override
     public String toString() {
-        return this.major + "." + this.minor + "." + this.patch;
+        return this.major + "." + this.minor + "." + this.patch + MODIFIER_LABEL.get(this.modifier);
     }
-
 }
