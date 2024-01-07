@@ -3,9 +3,13 @@ package sh.miles.pineapple;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 
-import java.util.Map;
 import java.util.Objects;
 
+/**
+ * SimpleSemVer represents a semantic version
+ *
+ * @since 1.0.0-SNAPSHOT
+ */
 public class SimpleSemVersion {
 
     public static final byte RELEASE = 4;
@@ -26,14 +30,14 @@ public class SimpleSemVersion {
     private final int patch;
     private byte modifier;
 
-    public SimpleSemVersion(int major, int minor, int patch, byte modifier) {
+    private SimpleSemVersion(int major, int minor, int patch, byte modifier) {
         this.major = major;
         this.minor = minor;
         this.patch = patch;
         this.modifier = modifier;
     }
 
-    public SimpleSemVersion(int major, int minor, int patch) {
+    private SimpleSemVersion(int major, int minor, int patch) {
         this(major, minor, patch, RELEASE);
     }
 
@@ -42,6 +46,7 @@ public class SimpleSemVersion {
      *
      * @param version the string representation of the SimpleSemVersion
      * @return the parsed SimpleSemVersion object
+     * @since 1.0.0-SNAPSHOT
      */
     public static SimpleSemVersion fromString(String version) {
         String[] split = version.split("-");
@@ -73,6 +78,7 @@ public class SimpleSemVersion {
      *
      * @param other The SimpleSemVersion object to compare against.
      * @return Returns true if the current version is newer, false otherwise.
+     * @since 1.0.0-SNAPSHOT
      */
     public boolean isNewerThan(SimpleSemVersion other) {
         // 1.0.0-BETA is lower than 1.0.0-SNAPSHOT

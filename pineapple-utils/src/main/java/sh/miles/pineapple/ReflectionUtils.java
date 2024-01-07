@@ -1,9 +1,9 @@
 package sh.miles.pineapple;
 
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import sh.miles.pineapple.function.ThrowingSupplier;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -16,8 +16,9 @@ import java.util.Objects;
 
 /**
  * Provides a handful of utilities for reflection
+ *
+ * @since 1.0.0-SNAPSHOT
  */
-@ApiStatus.Internal
 public final class ReflectionUtils {
 
     private static final MethodHandles.Lookup lookup;

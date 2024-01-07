@@ -5,6 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+/**
+ * A PineappleComponent wraps a BaseComponent and provides extra useful functionality
+ *
+ * @since 1.0.0-SNAPSHOT
+ */
 public class PineappleComponent {
 
     private final String source;
@@ -15,6 +20,12 @@ public class PineappleComponent {
         this.parsed = null;
     }
 
+    /**
+     * Converts
+     *
+     * @param replacements
+     * @return
+     */
     public BaseComponent component(@NotNull final Map<String, Object> replacements) {
         return PineappleChat.parse(this.source, replacements);
     }

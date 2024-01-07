@@ -18,6 +18,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
+/**
+ * A Simple paginated Menu Implementation to be extended by a plugin
+ *
+ * @param <T> the type of MenuScene
+ * @since 1.0.0-SNAPSHOT
+ */
 public abstract class SimplePaginatedMenu<T extends MenuScene> implements Menu<T> {
 
     private final T scene;
@@ -63,60 +69,120 @@ public abstract class SimplePaginatedMenu<T extends MenuScene> implements Menu<T
         }
     }
 
+    /**
+     * Changes the page to the next page
+     *
+     * @param wrap true if it should wrap back to 0 given the page is the max page.
+     * @since 1.0.0-SNAPSHOT
+     */
     protected void nextPage(boolean wrap) {
         if (this.currentPageIndex + 1 > pages.size()) {
             if (!wrap) {
                 throw new IllegalStateException("Can not navigate to next page if one does not exist");
             }
             currentPageIndex = 0;
-            return;
+        } else {
+            currentPageIndex += 1;
         }
 
-        currentPageIndex += 1;
+        updatePage();
     }
 
+    /**
+     * Changes the page to the previous page
+     *
+     * @param wrap true if it should wrap back to max given the page is the 0th page.
+     * @since 1.0.0-SNAPSHOT
+     */
     protected void previousPage(boolean wrap) {
         if (this.currentPageIndex == 0) {
             if (!wrap) {
                 throw new IllegalStateException("Can not navigate to previous page if you are one one exist");
             }
             currentPageIndex = this.pages.size() - 1;
-            return;
+        } else {
+            currentPageIndex -= 1;
         }
 
-        currentPageIndex -= 1;
+        updatePage();
     }
 
-    protected void setItem(int index, MenuItem item, int page) {
+    /**
+     * Sets an item on the given page
+     *
+     * @param index the index in which the item should be set
+     * @param item  the item to set
+     * @param page  the page to set the item on
+     * @since 1.0.0-SNAPSHOT
+     */
+    protected void setItem(final int index, @NotNull final MenuItem item, final int page) {
         Preconditions.checkArgument(index > 0 && index < inventory.getSize(), "The given index must be within the bounds of the inventories size, %d", inventory.getSize());
         Preconditions.checkArgument(page >= 0 && page < pages.size(), "The given page index must be within the bounds of the pages size, %d", pages.size());
         this.pages.get(page)[index] = item;
     }
 
+    /**
+     * Sets the backdrop of the given page
+     *
+     * @param item the item to set as the backdrop
+     * @param page the page number
+     * @since 1.0.0-SNAPSHOT
+     */
+    protected void setBackDrop(@NotNull final ItemStack item, final int page) {
+        Preconditions.checkArgument(page >= 0 && page < pages.size(), "The given page index must be within the bounds of the pages size, %d", pages.size());
+        this.backdrop.set(page, item);
+    }
+
+    /**
+     * Adds a new page
+     */
     protected void addPage() {
         this.pages.add(new MenuItem[this.inventory.getSize()]);
     }
 
+    /**
+     * Gets an item at the given slot of the current page
+     *
+     * @param slot the slot the slot
+     * @return the optional MenuItem
+     * @since 1.0.0-SNAPSHOT
+     */
     @NotNull
     @Override
     public Optional<MenuItem> getItem(final int slot) {
         return Optional.ofNullable(this.currentPage.get(slot));
     }
 
+    /**
+     * Gets the current scene
+     *
+     * @return the scene
+     */
     @NotNull
     @Override
     public T getScene() {
         return this.scene;
     }
 
+    /**
+     * Opens the page for the given player
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     @Override
-    public void open() {
+    public final void open() {
         updatePage();
         viewer.openInventory(inventory);
     }
 
+    /**
+     * Closes the Inventory for the given player
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     @Override
-    public void close() {
+    public final void close() {
+        viewer.closeInventory();
     }
 
     @Override

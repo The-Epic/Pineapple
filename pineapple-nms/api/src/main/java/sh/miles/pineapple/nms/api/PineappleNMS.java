@@ -95,6 +95,14 @@ public interface PineappleNMS {
     ItemStack setItemLore(@NotNull final ItemStack item, List<BaseComponent> lore);
 
     /**
+     * Gets the lore of the given item stack and returns the component list
+     *
+     * @param item the item to get the lore of
+     * @return the lore
+     */
+    List<BaseComponent> getItemLore(@NotNull final ItemStack item);
+
+    /**
      * Gets the last DamageType that an entity experienced
      *
      * @param entity the entity
@@ -107,9 +115,21 @@ public interface PineappleNMS {
     @NotNull
     <T extends RegistryKey<NamespacedKey>> FrozenRegistry<T, NamespacedKey> getRegistry(Class<? super T> clazz);
 
+    /**
+     * Converts the given ItemStack into bytes
+     *
+     * @param itemStack the item stack to convert to bytes
+     * @return the bytes
+     */
     @NotNull
     byte[] itemToBytes(@NotNull final ItemStack itemStack);
 
+    /**
+     * Converts teh given bytes into an ItemStack
+     *
+     * @param bytes the bytes to convert into an ItemStack
+     * @return the ItemStack
+     */
     @NotNull
     ItemStack itemFromBytes(@NotNull final byte[] bytes);
 

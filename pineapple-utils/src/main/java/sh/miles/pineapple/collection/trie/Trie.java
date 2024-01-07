@@ -6,6 +6,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The classic Trie implementation which works well with mass string comparison
+ *
+ * @since 1.0.0-SNAPSHOT
+ */
 public class Trie {
 
     private static final char END = '$';
@@ -16,6 +21,11 @@ public class Trie {
         this.root = new TrieNode();
     }
 
+    /**
+     * Creates a new Trie
+     *
+     * @param input the trie inputs
+     */
     public Trie(Collection<String> input) {
         this();
         for (final String s : input) {
@@ -23,6 +33,12 @@ public class Trie {
         }
     }
 
+    /**
+     * Creates a new Trie
+     *
+     * @param input the trie inputs
+     * @since 1.0.0-SNAPSHOT
+     */
     public Trie(String... input) {
         this();
         for (final String s : input) {
@@ -30,6 +46,12 @@ public class Trie {
         }
     }
 
+    /**
+     * Inserts a string into the Trie
+     *
+     * @param string the string
+     * @since 1.0.0-SNAPSHOT
+     */
     public void insert(String string) {
         string = string + END;
         TrieNode current = root;
@@ -44,6 +66,13 @@ public class Trie {
         }
     }
 
+    /**
+     * Checks if the given string is within the Trie
+     *
+     * @param string the string to check
+     * @return true if the string is in the trie
+     * @since 1.0.0-SNAPSHOT
+     */
     public boolean contains(String string) {
         string = string + END;
         TrieNode current = root;
@@ -58,6 +87,15 @@ public class Trie {
         return current.hasNoEdges();
     }
 
+    /**
+     * Checks if the given string is within the Trie
+     *
+     * @param string  the string to check
+     * @param partial if true the Trie will only check if the suffix of the string is inside and pays no mind to any
+     *                other details.
+     * @return true if the string is in the trie
+     * @since 1.0.0-SNAPSHOT
+     */
     public boolean contains(String string, boolean partial) {
         if (!partial) {
             return contains(string);

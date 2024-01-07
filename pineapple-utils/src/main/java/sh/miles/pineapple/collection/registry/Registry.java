@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 
 /**
  * Represents a basic registry object which contained {@link RegistryKey} objects
+ *
+ * @since 1.0.0-SNAPSHOT
  */
 public interface Registry<T extends RegistryKey<K>, K> {
 
@@ -18,6 +20,7 @@ public interface Registry<T extends RegistryKey<K>, K> {
      *
      * @param key the key to use to fetch the entry
      * @return an optional wrapping the nullable result
+     * @since 1.0.0-SNAPSHOT
      */
     Optional<T> get(@NotNull final K key);
 
@@ -26,6 +29,7 @@ public interface Registry<T extends RegistryKey<K>, K> {
      *
      * @param key the key to use to fetch the entry
      * @return the resulting object at that key, or null if it doesn't exist
+     * @since 1.0.0-SNAPSHOT
      */
     @Nullable
     T getOrNull(@NotNull final K key);
@@ -34,6 +38,7 @@ public interface Registry<T extends RegistryKey<K>, K> {
      * Retrieves a set of all keys from the registry
      *
      * @return a set of string keys
+     * @since 1.0.0-SNAPSHOT
      */
     Set<K> keys();
 

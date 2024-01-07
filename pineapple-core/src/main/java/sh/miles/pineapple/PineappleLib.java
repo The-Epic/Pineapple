@@ -1,15 +1,20 @@
 package sh.miles.pineapple;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.config.ConfigurationManager;
-import sh.miles.pineapple.json.JsonAdapter;
-import sh.miles.pineapple.json.JsonHelper;
 import sh.miles.pineapple.menu.MenuManager;
 
-import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * The main library class for PineappleLib. That should be loaded using {@link PineappleLib#initialize(Plugin)}
+ * <p>
+ * Provides ease of access to many features of PineappleLib and puts them all into one place.
+ *
+ * @since 1.0.0
+ */
 public class PineappleLib {
     private static PineappleLib instance;
 
@@ -21,29 +26,6 @@ public class PineappleLib {
         this.plugin = plugin;
         this.configManager = new ConfigurationManager(plugin);
         this.menuManager = new MenuManager(plugin);
-    }
-
-    public static void initialize(Plugin plugin) {
-        instance = new PineappleLib(plugin);
-        // Add inv events
-    }
-
-    public static void cleanup() {
-        instance = null;
-    }
-
-    @NotNull
-    public static PineappleLib getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("Not initialized");
-        }
-
-        return instance;
-    }
-
-    @NotNull
-    public static Plugin getPluginInstance() {
-        return getInstance().plugin;
     }
 
     @NotNull
@@ -61,8 +43,36 @@ public class PineappleLib {
         return getInstance().menuManager;
     }
 
+    /**
+     * Initializes PineappleLib using the provided plugin
+     *
+     * @param plugin the plugin to initialize PineappleLib
+     */
+    public static void initialize(Plugin plugin) {
+        Preconditions.checkArgument(instance == null, "PineappleLib is already initialized");
+        instance = new PineappleLib(plugin);
+    }
+
+    /**
+     * Cleans up PineappleLib by setting the underlying instance to null
+     */
+    public static void cleanup() {
+        Preconditions.checkArgument(instance != null, "PineappleLib is not initialized so it can not be cleaned up");
+        instance = null;
+    }
+
+    /**
+     * Gets the current PineappleLib instance or throws if one does not exist
+     *
+     * @return the PineappleLib instance
+     * @throws IllegalStateException throws if {@link PineappleLib#initialize(Plugin)} has not yet been called
+     */
     @NotNull
-    public static JsonHelper createNewJsonHelper(List<JsonAdapter<?>> adapters) {
-        return new JsonHelper(adapters);
+    public static PineappleLib getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Not initialized");
+        }
+
+        return instance;
     }
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * A class that represents a minecraft version
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class MinecraftVersion {
 
@@ -63,6 +63,7 @@ public class MinecraftVersion {
      * Gets major number
      *
      * @return the major number
+     * @since 1.0.0-SNAPSHOT
      */
     public int getMajor() {
         return major;
@@ -72,6 +73,7 @@ public class MinecraftVersion {
      * gets minor number
      *
      * @return the minor number
+     * @since 1.0.0-SNAPSHOT
      */
     public int getMinor() {
         return minor;
@@ -81,6 +83,7 @@ public class MinecraftVersion {
      * gets patch number or 0 if none
      *
      * @return patch number or 0
+     * @since 1.0.0-SNAPSHOT
      */
     public int getPatch() {
         return patch;
@@ -90,6 +93,7 @@ public class MinecraftVersion {
      * Gets the relocation version of bukkit
      *
      * @return the relocation version of bukkit
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public String getProtocolVersion() {
@@ -100,6 +104,7 @@ public class MinecraftVersion {
      * Gets the standard name of the version e.g. 1.19.4
      *
      * @return the name of the version
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public String getName() {
@@ -110,12 +115,19 @@ public class MinecraftVersion {
      * Gets the internal name used in Pineapple
      *
      * @return the internal name in format vMajor_Minor_Patch
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public String getInternalName() {
         return "v%d_%d%s".formatted(major, minor, patch == 0 ? "" : "_" + patch);
     }
 
+    /**
+     * Turns the version into an integer array
+     *
+     * @return the int array
+     * @since 1.0.0-SNAPSHOT
+     */
     @NotNull
     public int[] toArray() {
         return patch == 0 ? new int[]{major, minor} : new int[]{major, minor, patch};
@@ -138,6 +150,15 @@ public class MinecraftVersion {
         return Objects.hash(major, minor, patch);
     }
 
+    /**
+     * Creates a MinecraftVersion from an int array
+     *
+     * @param majorMinorPatch the majorMinorPatch array
+     * @param protocolVersion the protocolVersion string e.g. 1.20.1's protocol version is v1_20_R1 and 1.20.4's is
+     *                        v1_20_R3
+     * @return the MinecraftVersion
+     * @throws IllegalArgumentException if the majorMinorPatch length is not at least 2 or 3 entries
+     */
     @NotNull
     public static MinecraftVersion fromArray(int[] majorMinorPatch, String protocolVersion) throws IllegalArgumentException {
         Preconditions.checkArgument(majorMinorPatch.length > 1, "This method must be provided an array with 2 or 3 entries in the format. Major,Minor,Patch or Major,Minor");

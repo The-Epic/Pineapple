@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * ArrayList wrapper that prevents null value
+ *
+ * @param <T> the type of the list
+ * @since 1.0.0-SNAPSHOT
+ */
 public class NonNullList<T> extends AbstractList<T> {
 
     private final List<T> list = new ArrayList<>();

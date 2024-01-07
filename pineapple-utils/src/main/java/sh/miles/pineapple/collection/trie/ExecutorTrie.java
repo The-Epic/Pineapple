@@ -7,6 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Special Trie Implementation which capitalizes on the strength of mass comparison with the Trie data structure. At the
+ * end of each Node their is a possible insertion for a function to be execute.
+ *
+ * @param <F> the function type
+ * @since 1.0.0-SNAPSHOT
+ */
 public class ExecutorTrie<F> {
 
     private static final char END = '$';
@@ -17,6 +24,13 @@ public class ExecutorTrie<F> {
         this.root = new TrieNode<>();
     }
 
+    /**
+     * Inserts a given function into the Trie
+     *
+     * @param string   the string
+     * @param function the function
+     * @since 1.0.0-SNAPSHOT
+     */
     public void insert(String string, F function) {
         string = string + END;
         TrieNode<F> current = root;
@@ -35,6 +49,13 @@ public class ExecutorTrie<F> {
         }
     }
 
+    /**
+     * Attempts to find the executor within the string
+     *
+     * @param string the string to check
+     * @return the possible function
+     * @since 1.0.0-SNAPSHOT
+     */
     public Optional<F> findExecutor(@NotNull String string) {
         string = string + END;
         TrieNode<F> current = root;

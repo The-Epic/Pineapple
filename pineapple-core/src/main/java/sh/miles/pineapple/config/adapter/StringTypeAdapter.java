@@ -9,7 +9,6 @@ public class StringTypeAdapter implements StringAdapter<String> {
 
     @Override
     public String fromString(String value) {
-        // TODO formatting
-        return null;
+        return value;
     }
 }

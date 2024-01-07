@@ -10,6 +10,12 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 // From: https://www.spigotmc.org/wiki/creating-an-update-checker-that-checks-for-updates
+
+/**
+ * Checks Updates for your plugin
+ *
+ * @since 1.0.0-SNAPSHOT
+ */
 public class UpdateChecker {
 
     private final JavaPlugin plugin;
@@ -24,6 +30,7 @@ public class UpdateChecker {
      * Retrieves the version information from the given URL and invokes the provided consumer with the version string.
      *
      * @param consumer the consumer to be invoked with the version string
+     * @since 1.0.0-SNAPSHOT
      */
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {

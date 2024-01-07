@@ -1,13 +1,11 @@
-package sh.miles.pineapple;
-
-import org.jetbrains.annotations.ApiStatus;
+package sh.miles.pineapple.function;
 
 /**
  * A supplier that can throw a checked exception
  *
  * @param <R> the type to be supplied
+ * @since 1.0.0-SNAPSHOT
  */
-@ApiStatus.Internal
 @FunctionalInterface
 public interface ThrowingSupplier<R> {
 
@@ -16,6 +14,7 @@ public interface ThrowingSupplier<R> {
      *
      * @return the return type
      * @throws Exception the checked exception thrown
+     * @since 1.0.0-SNAPSHOT
      */
     R get() throws Exception;
 }

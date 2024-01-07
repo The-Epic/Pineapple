@@ -9,11 +9,15 @@ public interface ServerThreadWorker {
 
     /**
      * Does the necessary computation
+     *
+     * @since 1.0.0-SNAPSHOT
      */
     void compute() throws Throwable;
 
     /**
      * Run when an exception occurs and output is needed
+     *
+     * @since 1.0.0-SNAPSHOT
      */
     default void exceptionally(Throwable throwable) {
         Bukkit.getLogger().throwing("ServerThreadWorker", "exceptionally", throwable);

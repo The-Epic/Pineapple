@@ -19,6 +19,7 @@ import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftContainer;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R3.util.CraftMagicNumbers;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -44,6 +45,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.invoke.MethodHandle;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PineappleNMSImpl implements PineappleNMS {
@@ -149,6 +151,34 @@ public class PineappleNMSImpl implements PineappleNMS {
 
         displayTag.put(net.minecraft.world.item.ItemStack.TAG_LORE, loreTag);
         return CraftItemStack.asBukkitCopy(nmsItem);
+    }
+
+    @Override
+    public List<BaseComponent> getItemLore(@NotNull final ItemStack item) {
+        final CraftItemStack craftItem = ensureCraftItemStack(item);
+        final net.minecraft.world.item.ItemStack nmsItem = getItemStackHandle(craftItem);
+
+        final CompoundTag tag = nmsItem.getTag();
+        if (tag == null) {
+            return List.of();
+        }
+
+        final CompoundTag displayTag = tag.getCompound(net.minecraft.world.item.ItemStack.TAG_DISPLAY);
+        if (displayTag == null) {
+            return List.of();
+        }
+
+        final ListTag loreTag = displayTag.getList(net.minecraft.world.item.ItemStack.TAG_LORE, CraftMagicNumbers.NBT.TAG_LIST);
+        if (loreTag == null) {
+            return List.of();
+        }
+
+        final List<BaseComponent> lore = new ArrayList<>();
+        for (int i = 0; i < loreTag.size(); i++) {
+            lore.add(ComponentUtils.toBungeeChat(loreTag.getString(i)));
+        }
+
+        return lore;
     }
 
     @NotNull

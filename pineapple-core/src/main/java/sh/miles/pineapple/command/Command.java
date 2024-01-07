@@ -13,6 +13,8 @@ import java.util.function.BiFunction;
 /**
  * Command class that wraps the normal {@link BukkitCommand} and provides extra functionality without exposing necessary
  * access to command features
+ *
+ * @since 1.0.0-SNAPSHOT
  */
 public class Command implements CommandExecutor, CommandCompleter {
 
@@ -30,6 +32,7 @@ public class Command implements CommandExecutor, CommandCompleter {
      *
      * @param label    label
      * @param settings settings
+     * @since 1.0.0-SNAPSHOT
      */
     public Command(@NotNull final CommandLabel label, @NotNull final CommandSettings.Settings settings) {
         Preconditions.checkNotNull(label);
@@ -44,6 +47,7 @@ public class Command implements CommandExecutor, CommandCompleter {
      * Creates SCommand
      *
      * @param label label
+     * @since 1.0.0-SNAPSHOT
      */
     public Command(@NotNull final CommandLabel label) {
         this(label, CommandSettings.DEFAULT_COMMAND_SETTINGS);
@@ -98,6 +102,7 @@ public class Command implements CommandExecutor, CommandCompleter {
      * Registers a command under this command. (sub-command)
      *
      * @param command the command to register
+     * @since 1.0.0-SNAPSHOT
      */
     public void registerSubcommand(@NotNull Command command) {
         this.subcommands.put(command.getCommandLabel().getName(), command);
@@ -107,6 +112,7 @@ public class Command implements CommandExecutor, CommandCompleter {
      * The command label
      *
      * @return command label
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public CommandLabel getCommandLabel() {

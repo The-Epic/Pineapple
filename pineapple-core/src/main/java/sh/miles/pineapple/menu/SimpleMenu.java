@@ -18,6 +18,9 @@ import java.util.function.Function;
 
 /**
  * Simple Menu implementation with more specific details
+ *
+ * @param <T> the MenuScene instance type
+ * @since 1.0.0-SNAPSHOT
  */
 public abstract class SimpleMenu<T extends MenuScene> implements Menu<T> {
 

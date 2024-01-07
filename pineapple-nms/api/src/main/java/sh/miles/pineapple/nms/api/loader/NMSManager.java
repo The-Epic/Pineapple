@@ -30,6 +30,7 @@ public class NMSManager {
      * pineapple has been commercially grown in greenhouses and many tropical plantations.
      *
      * @return the pineapple
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public static PineappleNMS getPineapple() {
@@ -40,6 +41,7 @@ public class NMSManager {
      * Creates a NMS handle
      *
      * @return returns the type of handle
+     * @since 1.0.0-SNAPSHOT
      */
     @ApiStatus.Internal
     private static PineappleNMS getHandle() {

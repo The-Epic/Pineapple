@@ -13,6 +13,8 @@ import java.util.Map;
 /**
  * A Command Registry for registering all commands to. This clas plays an important middle man role in-between, the
  * Bukkit command registration system and Pineapple's command system.
+ *
+ * @since @since 1.0.0-SNAPSHOT
  */
 public final class CommandRegistry {
 
@@ -33,6 +35,7 @@ public final class CommandRegistry {
      * Registers a command to the server by using spigot's internal {@link PluginCommand} class
      *
      * @param command the command to register
+     * @since 1.0.0-SNAPSHOT
      */
     public void register(@NotNull final Command command) {
         final CommandLabel label = command.getCommandLabel();

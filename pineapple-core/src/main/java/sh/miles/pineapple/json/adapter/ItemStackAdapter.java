@@ -13,6 +13,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.chat.PineappleChat;
@@ -25,6 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * ItemStackAdapter implementation for JsonAdapters
+ * <p>
+ * Note if you need to reflect this class you are doing something wrong.
+ *
+ * @since 1.0.0-SNAPSHOT
+ */
+@ApiStatus.Internal
 class ItemStackAdapter implements JsonAdapter<ItemStack> {
 
     public static final String ITEM_TYPE = "item_type";
