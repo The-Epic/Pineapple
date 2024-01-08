@@ -48,7 +48,7 @@ public final class ChatColorUtils {
 
     public static ChatColor fromHexString(@NotNull final String string) {
         if (string.length() > 7) {
-            throw new IllegalArgumentException("Unable to parse malformed hex string");
+            throw new IllegalArgumentException("Unable to parse malformed hex string %s".formatted(string));
         }
 
         return create(string, Integer.parseInt(string.substring(1), 16));

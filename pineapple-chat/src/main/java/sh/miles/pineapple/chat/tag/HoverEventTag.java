@@ -29,7 +29,7 @@ public class HoverEventTag extends AbstractTag {
                 case SHOW_TEXT ->
                         event = new HoverEvent(action, new Text(new BaseComponent[]{context.parse(dequoteArgument(arguments.poll()), context)}));
                 case SHOW_ITEM ->
-                        event = new HoverEvent(action, new Item(arguments.poll(), Integer.parseInt(arguments.poll()), ItemTag.ofNbt(arguments.poll())));
+                        event = new HoverEvent(action, new Item(dequoteArgument(arguments.poll()), Integer.parseInt(arguments.poll()), ItemTag.ofNbt(arguments.poll())));
                 case SHOW_ENTITY ->
                         event = new HoverEvent(action, new Entity(arguments.poll(), arguments.poll(), context.parse(arguments.poll(), context)));
                 default -> throw new IllegalStateException("Unable to parse action %s".formatted(action));

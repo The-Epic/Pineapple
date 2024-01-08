@@ -17,6 +17,38 @@ public final class StringUtils {
     /**
      * Splits over a character instead of using regex
      *
+     * @param character    the character to split over
+     * @param ignoreQuotes whether or not to ignore the split character in single quotes
+     * @return the split string
+     * @since 1.0.0-SNAPSHOT
+     */
+    public static List<String> split(String string, char character, boolean ignoreQuotes) {
+        List<String> split = new ArrayList<>();
+        char at;
+        int last = 0;
+        boolean escaped = false;
+        for (int i = 0; i < string.length(); i++) {
+            at = string.charAt(i);
+            if (at == character && !escaped) {
+                split.add(string.substring(last, i));
+                last = i + 1;
+            }
+
+            if (at == '\'') {
+                escaped = !escaped;
+            }
+        }
+
+        if (last < string.length()) {
+            split.add(string.substring(last));
+        }
+
+        return split;
+    }
+
+    /**
+     * Splits over a character instead of using regex
+     *
      * @param character the character to split over
      * @return the split string
      * @since 1.0.0-SNAPSHOT

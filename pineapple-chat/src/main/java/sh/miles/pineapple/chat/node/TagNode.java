@@ -16,7 +16,7 @@ public class TagNode extends BaseNode {
 
     public TagNode(@NotNull final BaseNode parent, @NotNull final Token token, final @NotNull String source) {
         super(parent, token, source);
-        this.arguments = new ArrayDeque<>(StringUtils.split(token.detail(source), ':'));
+        this.arguments = new ArrayDeque<>(StringUtils.split(token.detail(source), ':', true));
         this.namespace = arguments.peek();
     }
 
