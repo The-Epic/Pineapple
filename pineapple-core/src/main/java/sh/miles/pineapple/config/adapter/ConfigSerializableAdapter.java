@@ -1,14 +1,16 @@
 package sh.miles.pineapple.config.adapter;
 
+import sh.miles.pineapple.ReflectionUtils;
 import sh.miles.pineapple.config.ConfigType;
 
-import java.lang.reflect.Method;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Type;
 
 public class ConfigSerializableAdapter<S, R extends ConfigSerializable<S>> implements TypeAdapter<S, R> {
 
     private final Class<R> clazz;
     private Class<S> savedClass;
+    private final MethodHandle deserializeMethod;
 
     @SuppressWarnings("unchecked")
     public ConfigSerializableAdapter(ConfigType<?> type) {
@@ -21,6 +23,7 @@ public class ConfigSerializableAdapter<S, R extends ConfigSerializable<S>> imple
                 break;
             }
         }
+        this.deserializeMethod = ReflectionUtils.getMethod(this.clazz, "deserialize", new Class[]{this.savedClass});
     }
 
     @Override
@@ -35,12 +38,7 @@ public class ConfigSerializableAdapter<S, R extends ConfigSerializable<S>> imple
 
     @Override
     public R read(S value) {
-        try {
-            Method deserializeMethod = this.clazz.getDeclaredMethod("deserialize", this.savedClass);
-            return this.clazz.cast(deserializeMethod.invoke(null, value));
-        } catch (ReflectiveOperationException | ClassCastException e) {
-            return null;
-        }
+        return (R) ReflectionUtils.safeInvoke(this.deserializeMethod, value);
     }
 
     @Override
