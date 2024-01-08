@@ -3,10 +3,7 @@ package sh.miles.pineapple.command;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import org.junit.jupiter.api.Test;
 import sh.miles.pineapple.BukkitTest;
-import sh.miles.pineapple.PineappleLib;
-import sh.miles.pineapple.config.ReloadableObject;
 
-import java.io.File;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,5 +53,4 @@ class CommandTest extends BukkitTest {
         };
         return command;
     }
-
 }
