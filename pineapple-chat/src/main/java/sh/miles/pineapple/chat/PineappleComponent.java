@@ -4,6 +4,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A PineappleComponent wraps a BaseComponent and provides extra useful functionality
@@ -41,5 +42,22 @@ public class PineappleComponent {
 
     public String getSource() {
         return source;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        PineappleComponent that = (PineappleComponent) o;
+        return Objects.equals(source, that.source) && Objects.equals(parsed, that.parsed);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, parsed);
     }
 }

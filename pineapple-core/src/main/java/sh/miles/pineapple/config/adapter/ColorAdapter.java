@@ -13,7 +13,7 @@ public class ColorAdapter implements GenericStringAdapter<ChatColor> {
 
     @Override
     public String toString(ChatColor value) {
-        return "#" + Integer.toHexString(value.getColor().getRGB());
+        return "#" + Integer.toHexString(value.getColor().getRGB()).substring(2);
     }
 
     @Override
