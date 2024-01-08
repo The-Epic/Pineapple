@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import sh.miles.pineapple.chat.PineappleComponent;
 import sh.miles.pineapple.collection.WeightedRandom;
@@ -45,6 +46,7 @@ public class ConfigurationManager {
         registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter());
         registerTypeAdapter(Material.class, new MaterialAdapter());
         registerTypeAdapter(ChatColor.class, new ColorAdapter());
+        registerTypeAdapter(ItemStack.class, new ItemStackAdapter());
         registerTypeAdapter(PineappleComponent.class, new PineappleComponentAdapter());
 
     }

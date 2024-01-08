@@ -223,13 +223,26 @@ public class ItemBuilder {
     /**
      * Applies every enchantment in the map to the item
      *
-     * @param enchantmentAndLevel the enchantment level
+     * @param enchantmentAndLevel the enchantment level map
      * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder enchantments(Map<Enchantment, Integer> enchantmentAndLevel) {
         for (Map.Entry<Enchantment, Integer> entry : enchantmentAndLevel.entrySet()) {
             this.meta.addEnchant(entry.getKey(), entry.getValue(), true);
+        }
+        return this;
+    }
+
+    /**
+     * Applies every enchantment to the item given its an EnchantmentBOok
+     * @param enchantmentAndLevel the enchantment level map
+     * @return the ItemBuilder
+     * @since 1.0.0-SNAPSHOT
+     */
+    public ItemBuilder storedEnchantments(Map<Enchantment, Integer> enchantmentAndLevel) {
+        for (final Map.Entry<Enchantment, Integer> entry : enchantmentAndLevel.entrySet()) {
+            storedEnchantment(entry.getKey(), entry.getValue());
         }
         return this;
     }
@@ -351,17 +364,15 @@ public class ItemBuilder {
     /**
      * Sets hte potionColor on the given item
      *
-     * @param red   red value
-     * @param green green value
-     * @param blue  blue value
+     * @param color the color
      * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
      */
-    public ItemBuilder potionColor(int red, int green, int blue) {
+    public ItemBuilder potionColor(Color color) {
         if (!(this.meta instanceof PotionMeta))
             return this;
 
-        ((PotionMeta) this.meta).setColor(Color.fromRGB(red, green, blue));
+        ((PotionMeta) this.meta).setColor(color);
         return this;
     }
 
