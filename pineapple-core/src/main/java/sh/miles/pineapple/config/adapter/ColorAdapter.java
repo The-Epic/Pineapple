@@ -1,25 +1,27 @@
 package sh.miles.pineapple.config.adapter;
 
-import org.bukkit.Color;
+import net.md_5.bungee.api.ChatColor;
 
-public class ColorAdapter implements GenericStringAdapter<Color> {
+import java.awt.Color;
+
+public class ColorAdapter implements GenericStringAdapter<ChatColor> {
 
     @Override
-    public Class<Color> getRuntimeType() {
-        return Color.class;
+    public Class<ChatColor> getRuntimeType() {
+        return ChatColor.class;
     }
 
     @Override
-    public String toString(Color value) {
-        return "#" + Integer.toHexString(value.asRGB());
+    public String toString(ChatColor value) {
+        return "#" + Integer.toHexString(value.getColor().getRGB());
     }
 
     @Override
-    public Color fromString(String value) {
+    public ChatColor fromString(String value) {
         if (value.startsWith("#")) {
             value = value.substring(1);
         }
 
-        return Color.fromRGB(Integer.parseInt(value, 16));
+        return ChatColor.of(new Color(Integer.parseInt(value, 16)));
     }
 }

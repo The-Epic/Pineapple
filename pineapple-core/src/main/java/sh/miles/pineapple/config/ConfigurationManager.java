@@ -1,5 +1,6 @@
 package sh.miles.pineapple.config;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -43,7 +44,7 @@ public class ConfigurationManager {
         registerTypeAdapter(String.class, new StringAdapter());
         registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter());
         registerTypeAdapter(Material.class, new MaterialAdapter());
-        registerTypeAdapter(Color.class, new ColorAdapter());
+        registerTypeAdapter(ChatColor.class, new ColorAdapter());
         registerTypeAdapter(PineappleComponent.class, new PineappleComponentAdapter());
 
     }
