@@ -1,108 +1,120 @@
 package sh.miles.pineapple.config;
 
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import sh.miles.pineapple.chat.PineappleComponent;
+import sh.miles.pineapple.collection.WeightedRandom;
+import sh.miles.pineapple.config.adapter.*;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-
-import sh.miles.pineapple.chat.PineappleComponent;
-import sh.miles.pineapple.collection.WeightedRandom;
-import sh.miles.pineapple.config.adapter.*;
-import sh.miles.pineapple.config.annotation.ConfigMappable;
-
 public class ConfigurationManager {
 
-    private final Map<ConfigType<?>, TypeAdapter<?>> adapters = new HashMap<>();
+    private final Map<ConfigType<?>, TypeAdapter<?, ?>> adapters = new HashMap<>();
     private final Logger logger;
 
     public ConfigurationManager(Plugin plugin) {
         this.logger = plugin.getLogger();
 
-        registerTypeAdapter(long.class, new PrimitiveAdapter<>(Long::parseLong));
-        registerTypeAdapter(Long.class, new PrimitiveAdapter<>(Long::parseLong));
+        registerTypeAdapter(long.class, new PrimitiveAdapter<>(Long.class, Long::parseLong));
+        registerTypeAdapter(Long.class, new PrimitiveAdapter<>(Long.class, Long::parseLong));
 
-        registerTypeAdapter(int.class, new PrimitiveAdapter<>(Integer::parseInt));
-        registerTypeAdapter(Integer.class, new PrimitiveAdapter<>(Integer::parseInt));
+        registerTypeAdapter(int.class, new PrimitiveAdapter<>(Integer.class, Integer::parseInt));
+        registerTypeAdapter(Integer.class, new PrimitiveAdapter<>(Integer.class, Integer::parseInt));
 
-        registerTypeAdapter(double.class, new PrimitiveAdapter<>(Double::parseDouble));
-        registerTypeAdapter(Double.class, new PrimitiveAdapter<>(Double::parseDouble));
+        registerTypeAdapter(double.class, new PrimitiveAdapter<>(Double.class, Double::parseDouble));
+        registerTypeAdapter(Double.class, new PrimitiveAdapter<>(Double.class, Double::parseDouble));
 
-        registerTypeAdapter(float.class, new PrimitiveAdapter<>(Float::parseFloat));
-        registerTypeAdapter(Float.class, new PrimitiveAdapter<>(Float::parseFloat));
+        registerTypeAdapter(float.class, new PrimitiveAdapter<>(Float.class, Float::parseFloat));
+        registerTypeAdapter(Float.class, new PrimitiveAdapter<>(Float.class, Float::parseFloat));
 
-        registerTypeAdapter(boolean.class, new PrimitiveAdapter<>(Boolean::parseBoolean));
-        registerTypeAdapter(Boolean.class, new PrimitiveAdapter<>(Boolean::parseBoolean));
+        registerTypeAdapter(boolean.class, new PrimitiveAdapter<>(Boolean.class, Boolean::parseBoolean));
+        registerTypeAdapter(Boolean.class, new PrimitiveAdapter<>(Boolean.class, Boolean::parseBoolean));
 
-        registerTypeAdapter(String.class, new StringTypeAdapter());
-        registerTypeAdapter(PineappleComponent.class, new PineappleComponentAdapter());
+        registerTypeAdapter(char.class, new PrimitiveAdapter<>(Character.class, s -> s.charAt(0)));
+        registerTypeAdapter(Character.class, new PrimitiveAdapter<>(Character.class, s -> s.charAt(0)));
+
+        registerTypeAdapter(String.class, new StringAdapter());
         registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter());
         registerTypeAdapter(Material.class, new MaterialAdapter());
-
+        registerTypeAdapter(ChatColor.class, new ColorAdapter());
         registerTypeAdapter(ItemStack.class, new ItemStackAdapter());
+        registerTypeAdapter(PineappleComponent.class, new PineappleComponentAdapter());
 
     }
 
-    public <T> void registerTypeAdapter(Class<T> clazz, TypeAdapter<T> adapter) {
-        this.adapters.put(new ConfigType<>(clazz), adapter);
+    public <S, R> void registerTypeAdapter(Class<R> clazz, TypeAdapter<S, R> adapter) {
+        adapters.put(new ConfigType<>(clazz), adapter);
     }
 
     public <T> ReloadableObject<T> createReloadable(File file, T target) {
-        return new ReloadableObject<>(this, file, target);
+        return new ReloadableObject<>(file, target);
     }
 
     public <T> ReloadableClass<T> createStaticReloadable(File file, Class<T> target) {
-        return new ReloadableClass<>(this, file, target);
+        return new ReloadableClass<>(file, target);
     }
 
-    public <T> StringAdapter<T> getStringAdapter(ConfigType<T> type) {
-        TypeAdapter<T> adapter = getAdapter(type);
-
-        if (adapter instanceof StringAdapter<T> stringAdapter) {
-            return stringAdapter;
-        }
-        return null;
+    public <S, R> TypeAdapterString<S, R> getStringAdapter(Class<R> clazz) {
+        return getStringAdapter(new ConfigType<>(clazz));
     }
 
     @SuppressWarnings("unchecked")
-    public <T> TypeAdapter<T> getAdapter(ConfigType<T> type) {
-        TypeAdapter<T> adapter = (TypeAdapter<T>) this.adapters.get(type);
+    public <S, R> TypeAdapterString<S, R> getStringAdapter(ConfigType<R> type) {
+        TypeAdapter<?, R> adapter = getAdapter(type);
 
-        if (adapter != null) {
-            return adapter;
+        if (adapter instanceof TypeAdapterString<?, ?> stringAdapter) {
+            return (TypeAdapterString<S, R>) stringAdapter;
         }
 
-        adapter = (TypeAdapter<T>) createAdapter(type);
-        this.adapters.put(type, adapter);
-        return adapter;
+        return null;
     }
 
-    private TypeAdapter<?> createAdapter(ConfigType<?> type) {
-        if (Enum.class.isAssignableFrom(type.getType())) {
-            return new EnumAdapter<>(type.getType());
-        }
-        if (Collection.class.isAssignableFrom(type.getType())) {
-            return new CollectionAdapter<>(this, type);
+    public <S, R> TypeAdapter<S, R> getAdapter(Class<R> clazz) {
+        return getAdapter(new ConfigType<>(clazz));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <S, R> TypeAdapter<S, R> getAdapter(ConfigType<R> type) {
+        TypeAdapter<?, ?> adapter = this.adapters.get(type);
+        if (adapter == null) {
+            adapter = createAdapter(type);
+            this.adapters.put(type, adapter);
         }
 
-        if (Map.class.isAssignableFrom(type.getType())) {
-            return new MapAdapter<>(this, type);
+        return (TypeAdapter<S, R>) adapter;
+    }
+
+    private TypeAdapter<?, ?> createAdapter(ConfigType<?> type) {
+        if (ConfigSerializable.class.isAssignableFrom(type.getType())) {
+            return new ConfigSerializableAdapter<>(type);
         }
 
         if (WeightedRandom.class.isAssignableFrom(type.getType())) {
-            return new WeightedRandomAdapter<>(this, type);
+            return new WeightedRandomAdapter<>(type);
         }
 
-        if (type.getType().isAnnotationPresent(ConfigMappable.class)) {
-            return new ConfigMappableAdapter<>(this, type);
+        if (Enum.class.isAssignableFrom(type.getType())) {
+            return new EnumAdapter<>(type.getType());
         }
-        return null;
+
+        if (Collection.class.isAssignableFrom(type.getType())) {
+            return new CollectionAdapter<>(type);
+        }
+
+        if (Map.class.isAssignableFrom(type.getType())) {
+            return new MapAdapter<>(type);
+        }
+
+        return new NativeAdapter<>(type.getType());
     }
 
     public Logger getLogger() {

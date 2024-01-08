@@ -1,56 +1,57 @@
-package sh.miles.pineapple.config;
+package sh.miles.pineapple.config.adapter;
 
 import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import sh.miles.pineapple.PineappleLib;
-import sh.miles.pineapple.config.adapter.TypeAdapter;
+import sh.miles.pineapple.config.ConfigField;
+import sh.miles.pineapple.config.ConfigReflectionHelper;
+import sh.miles.pineapple.config.ConfigType;
 import sh.miles.pineapple.config.annotation.ConfigEntry;
-import sh.miles.pineapple.config.annotation.PostLoad;
 
-import java.io.File;
-import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-public abstract class ConfigReloadable<T> {
-    protected final File file;
-    protected final List<ConfigField> fields = new ArrayList<>();
-    private final Method postLoadMethod;
+public class NativeAdapter<T> implements TypeAdapter<Map<String, Object>, T> {
+    private final Class<T> clazz;
+    private final List<ConfigField> fields = new ArrayList<>();
 
-    protected ConfigReloadable(File file, Class<T> clazz) {
-        this.file = file;
-        this.postLoadMethod = findPostLoadMethod(clazz);
+    public NativeAdapter(Class<T> clazz) {
+        this.clazz = clazz;
 
         cacheFields(clazz);
     }
 
-    public ConfigReloadable<T> load() {
-        load(true);
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<Map<String, Object>> getSavedType() {
+        return (Class<Map<String, Object>>) (Object) Map.class;
+    }
 
-        return this;
+    @Override
+    public Class<T> getRuntimeType() {
+        return this.clazz;
     }
 
     @SuppressWarnings("unchecked")
-    public ConfigReloadable<T> load(boolean includeStatic) {
-        if (!prepareFile()) {
-            // File error
-            return this;
+    @Override
+    public T read(Map<String, Object> value) {
+        T object;
+        try {
+            Constructor<T> constructor = this.clazz.getDeclaredConstructor();
+            object = constructor.newInstance();
+        } catch (ReflectiveOperationException e) {
+            PineappleLib.getLogger().log(Level.WARNING, "Failed to create instance");
+            return null;
         }
 
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(this.file);
-
         for (ConfigField field : this.fields) {
-            if (field.isStatic() && !includeStatic) {
-                continue;
-            }
-
             String path = field.getPath();
 
-            if (!config.isSet(path)) {
+            if (!value.containsKey(path)) {
                 PineappleLib.getLogger().log(Level.WARNING, "No configuration entry found for {0}", path);
                 continue;
             }
@@ -63,7 +64,7 @@ public abstract class ConfigReloadable<T> {
             }
 
             Class<Object> saved = adapter.getSavedType();
-            Object savedValue = getSavedValue(config, path, saved);
+            Object savedValue = getSavedValue(value, path, saved);
             if (!saved.isInstance(savedValue)) {
                 PineappleLib.getLogger().log(Level.WARNING, "Wrong saved type for {0}, {1} != {2}", new Object[] { path, savedValue.getClass(), saved });
                 continue;
@@ -77,46 +78,25 @@ public abstract class ConfigReloadable<T> {
             }
 
             try {
-                setField(field, readValue);
+                ConfigReflectionHelper.setField(field, readValue, object);
             } catch (ReflectiveOperationException ex) {
                 PineappleLib.getLogger().log(Level.WARNING, "Failed to read value for {0} of type {1}", new Object[] { path, type.getType() });
                 ex.printStackTrace();
             }
         }
 
-        if (this.postLoadMethod != null) {
-            this.postLoad(this.postLoadMethod);
-        }
-        return this;
-    }
-
-    public ConfigReloadable<T> saveDefaults() {
-        save(false);
-
-        return this;
-    }
-
-    public ConfigReloadable<T> save() {
-        save(true);
-
-        return this;
+        return object;
     }
 
     @SuppressWarnings("unchecked")
-    public ConfigReloadable<T> save(boolean replace) {
-        if (!prepareFile()) {
-            // File error
-            return this;
+    @Override
+    public Map<String, Object> write(T value, Map<String, Object> map, boolean replace) {
+        if (map == null) {
+            map = new LinkedHashMap<>();
         }
-
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(this.file);
 
         for (ConfigField field : this.fields) {
             String path = field.getPath();
-
-            if (!path.isEmpty()) {
-                config.setComments(path, field.getComments());
-            }
 
             ConfigType<?> type = ConfigType.get(field.getField());
             TypeAdapter<Object, Object> adapter = (TypeAdapter<Object, Object>) PineappleLib.getConfigurationManager().getAdapter(type);
@@ -125,7 +105,7 @@ public abstract class ConfigReloadable<T> {
                 continue;
             }
 
-            Object writeValue = getField(field);
+            Object writeValue = ConfigReflectionHelper.getField(field, value);
             if (writeValue == null) {
                 PineappleLib.getLogger().log(Level.WARNING, "null");
                 continue;
@@ -138,59 +118,27 @@ public abstract class ConfigReloadable<T> {
                 continue;
             }
 
-            Object existing = getSavedValue(config, path, saved);
+            Object existing = getSavedValue(map, path, saved);
             if (existing != null && !saved.isInstance(existing)) {
                 PineappleLib.getLogger().log(Level.WARNING, "Wrong saved type for {0}, {1} != {2}", new Object[] { path, existing.getClass(), saved });
                 existing = null;
             }
 
-            Object value = adapter.write(runtime.cast(writeValue), saved.cast(existing), replace);
-            if (value != null) {
-                config.set(path, value);
-                config.setComments(path, field.getComments());
+            Object val = adapter.write(runtime.cast(writeValue), saved.cast(existing), replace);
+            if (val != null) {
+                map.put(path, val);
             }
         }
-
-        try {
-            config.save(this.file);
-        } catch (IOException ex) {
-            PineappleLib.getLogger().log(Level.WARNING, "Failed to save configuration file {0}", this.file.getName());
-            ex.printStackTrace();
-        }
-        return this;
+        return map;
     }
 
-    protected abstract void setField(ConfigField field, Object value) throws ReflectiveOperationException;
-
-    protected abstract Object getField(ConfigField field);
-
-    protected abstract void postLoad(Method postLoadMethod);
-
-    private Object getSavedValue(YamlConfiguration config, String path, Class<Object> expectedType) {
-        Object saved = config.get(path);
+    private Object getSavedValue(Map<String, Object> value, String path, Class<Object> expectedType) {
+        Object saved = value.get(path);
 
         if (saved instanceof MemorySection section && Map.class.isAssignableFrom(expectedType)) {
             return section.getValues(false);
         }
         return saved;
-    }
-
-    private boolean prepareFile() {
-        try {
-            if (!this.file.getParentFile().exists() && !this.file.getParentFile().mkdirs()) {
-                PineappleLib.getLogger().log(Level.WARNING, "Error creating file {0}", this.file.getName());
-                return false;
-            }
-
-            if (!this.file.exists()) {
-                return this.file.createNewFile();
-            }
-
-            return true;
-        } catch (IOException ex) {
-            PineappleLib.getLogger().log(Level.WARNING, "Error creating file {0}", this.file.getName());
-            return false;
-        }
     }
 
     private void cacheFields(Class<? super T> clazz) {
@@ -207,20 +155,5 @@ public abstract class ConfigReloadable<T> {
         if (superClass != null && superClass != Object.class) {
             cacheFields(superClass);
         }
-    }
-
-    private Method findPostLoadMethod(Class<? super T> clazz) {
-        for (Method method : clazz.getDeclaredMethods()) {
-            if (method.isAnnotationPresent(PostLoad.class)) {
-                return method;
-            }
-        }
-
-        Class<? super T> superClass = clazz.getSuperclass();
-        if (superClass != null && superClass != Object.class) {
-            return findPostLoadMethod(superClass);
-        }
-
-        return null;
     }
 }

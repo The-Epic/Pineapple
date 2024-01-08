@@ -1,48 +1,68 @@
 package sh.miles.pineapple.config.adapter;
 
-import java.util.Map.Entry;
-
-import org.bukkit.configuration.ConfigurationSection;
-
+import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.collection.WeightedRandom;
 import sh.miles.pineapple.config.ConfigType;
-import sh.miles.pineapple.config.ConfigurationManager;
 
-public class WeightedRandomAdapter<T> implements TypeAdapter<WeightedRandom<T>> {
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
-    private final StringAdapter<T> adapter;
+public class WeightedRandomAdapter<R> implements TypeAdapter<Map<String, Object>, WeightedRandom<R>> {
+
+    private final TypeAdapterString<Object, R> adapter;
 
     @SuppressWarnings("unchecked")
-    public WeightedRandomAdapter(ConfigurationManager manager, ConfigType<?> type) {
-        this.adapter = (StringAdapter<T>) manager.getStringAdapter(type.getComponentTypes().get(0));
+    public WeightedRandomAdapter(ConfigType<?> type) {
+        this.adapter = (TypeAdapterString<Object, R>) PineappleLib.getConfigurationManager().getStringAdapter(type.getComponentTypes().get(0));
     }
 
-    public WeightedRandom<T> read(ConfigurationSection config, String path) {
-        ConfigurationSection section = config.getConfigurationSection(path);
-        WeightedRandom<T> random = new WeightedRandom<>();
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<Map<String, Object>> getSavedType() {
+        return (Class<Map<String, Object>>) (Object) Map.class;
+    }
 
-        for (String key : section.getKeys(false)) {
-            double weight = section.getDouble(key);
-            T value = this.adapter.fromString(key);
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<WeightedRandom<R>> getRuntimeType() {
+        return (Class<WeightedRandom<R>>) (Object) WeightedRandom.class;
+    }
 
-            random.add(weight, value);
+    @Override
+    public WeightedRandom<R> read(Map<String, Object> map) {
+        WeightedRandom<R> random = new WeightedRandom<>();
+
+        for (Entry<String, Object> entry : map.entrySet()) {
+            Object value = entry.getValue();
+            if (!(value instanceof Number number)) {
+                continue;
+            }
+
+            double weight = number.doubleValue();
+            R val = this.adapter.fromString(entry.getKey());
+
+            random.add(weight, val);
         }
         return random;
     }
 
-    @SuppressWarnings("unchecked")
-    public void write(ConfigurationSection config, String path, Object value, boolean replace) {
-        ConfigurationSection section = config.getConfigurationSection(path);
-        if (config.isSet(path) && !replace) {
-            return;
-        }
-        
-        if (section == null) {
-            section = config.createSection(path);
+    @Override
+    public Map<String, Object> write(WeightedRandom<R> value, Map<String, Object> existing, boolean replace) {
+        if (existing == null) {
+            existing = new LinkedHashMap<>();
         }
 
-        for (Entry<Double, T> entry : ((WeightedRandom<T>) value).getEntries()) {
-            section.set(this.adapter.toString(entry.getValue()), entry.getKey());
+        double lastKey = 0;
+        for (Entry<Double, R> entry : value.getEntries()) {
+            String key = this.adapter.toString(entry.getValue());
+
+            if (!existing.containsKey(key) || replace) {
+                existing.put(key, entry.getKey() - lastKey);
+                lastKey = entry.getKey();
+            }
         }
+
+        return existing;
     }
 }

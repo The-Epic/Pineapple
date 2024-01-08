@@ -2,32 +2,47 @@ package sh.miles.pineapple.config.adapter;
 
 import java.util.function.Function;
 
-import org.bukkit.configuration.ConfigurationSection;
+public class PrimitiveAdapter<R> implements TypeAdapterString<R, R> {
 
-public class PrimitiveAdapter<T> implements StringAdapter<T> {
+    private final Class<R> clazz;
+    private final Function<String, R> reader;
 
-    private final Function<String, T> reader;
-
-    public PrimitiveAdapter(Function<String, T> reader) {
+    public PrimitiveAdapter(Class<R> clazz, Function<String, R> reader) {
+        this.clazz = clazz;
         this.reader = reader;
     }
 
     @Override
-    public void write(ConfigurationSection config, String path, Object value, boolean replace) {
-        if (config.isSet(path) && !replace) {
-            return;
-        }
-        
-        config.set(path, value);
+    public Class<R> getSavedType() {
+        return this.clazz;
     }
 
     @Override
-    public String toString(T value) {
+    public Class<R> getRuntimeType() {
+        return this.clazz;
+    }
+
+    @Override
+    public String toString(R value) {
         return String.valueOf(value);
     }
 
     @Override
-    public T fromString(String value) {
-        return reader.apply(value);
+    public R fromString(String value) {
+        return this.reader.apply(value);
+    }
+
+    @Override
+    public R read(R value) {
+        return value;
+    }
+
+    @Override
+    public R write(R value, R existing, boolean replace) {
+        if (existing != null && !replace) {
+            return null;
+        }
+
+        return value;
     }
 }

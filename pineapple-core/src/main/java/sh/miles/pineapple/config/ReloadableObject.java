@@ -7,8 +7,8 @@ public class ReloadableObject<T> extends ConfigReloadable<T> {
     private final T wrapped;
 
     @SuppressWarnings("unchecked")
-    public ReloadableObject(ConfigurationManager manager, File file, T object) {
-        super(manager, file, (Class<T>) object.getClass());
+    public ReloadableObject(File file, T object) {
+        super(file, (Class<T>) object.getClass());
 
         this.wrapped = object;
     }
@@ -16,7 +16,7 @@ public class ReloadableObject<T> extends ConfigReloadable<T> {
     @Override
     protected void postLoad(Method postLoadMethod) {
         try {
-            boolean access = postLoadMethod.canAccess(wrapped);
+            boolean access = postLoadMethod.canAccess(this.wrapped);
             if (!access) {
                 postLoadMethod.trySetAccessible();
             }
@@ -42,6 +42,6 @@ public class ReloadableObject<T> extends ConfigReloadable<T> {
     }
 
     public T getWrapped() {
-        return wrapped;
+        return this.wrapped;
     }
 }
