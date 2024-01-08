@@ -7,7 +7,7 @@ public class PineappleComponentAdapter implements GenericStringAdapter<Pineapple
 
     @Override
     public Class<PineappleComponent> getRuntimeType() {
-        return (Class<PineappleComponent>) (Object) PineappleComponent.class;
+        return PineappleComponent.class;
     }
 
     @Override
