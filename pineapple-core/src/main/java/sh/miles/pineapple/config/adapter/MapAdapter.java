@@ -1,56 +1,66 @@
 package sh.miles.pineapple.config.adapter;
 
+import sh.miles.pineapple.PineappleLib;
+import sh.miles.pineapple.config.ConfigType;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import org.bukkit.configuration.ConfigurationSection;
-
-import sh.miles.pineapple.config.ConfigType;
-import sh.miles.pineapple.config.ConfigurationManager;
-
-public class MapAdapter<K, V, T extends Map<K, V>> implements TypeAdapter<T> {
-    private final TypeAdapter<V> valueAdapter;
-    private final StringAdapter<K> keyAdapter;
+public class MapAdapter<K, V> implements TypeAdapter<Map<String, Object>, Map<K, V>> {
+    private final TypeAdapter<Object, V> valueAdapter;
+    private final TypeAdapterString<Object, K> keyAdapter;
 
     @SuppressWarnings("unchecked")
-    public MapAdapter(ConfigurationManager manager, ConfigType<?> type) {
-        this.keyAdapter = (StringAdapter<K>) manager.getStringAdapter(type.getComponentTypes().get(0));
-        this.valueAdapter = (TypeAdapter<V>) manager.getAdapter(type.getComponentTypes().get(1));
+    public MapAdapter(ConfigType<?> type) {
+        this.keyAdapter = (TypeAdapterString<Object, K>) PineappleLib
+                .getConfigurationManager().getStringAdapter(type.getComponentTypes().get(0));
+        this.valueAdapter = (TypeAdapter<Object, V>) PineappleLib.getConfigurationManager()
+                .getAdapter(type.getComponentTypes().get(1));
     }
 
     @SuppressWarnings("unchecked")
-    public T read(ConfigurationSection config, String path) {
-        T map = (T) new LinkedHashMap<>();
+    @Override
+    public Class<Map<String, Object>> getSavedType() {
+        return (Class<Map<String, Object>>) (Object) Map.class;
+    }
 
-        if (!config.isConfigurationSection(path)) {
-            return map;
-        }
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<Map<K, V>> getRuntimeType() {
+        return (Class<Map<K, V>>) (Object) Map.class;
+    }
 
-        ConfigurationSection section = config.getConfigurationSection(path);
-        boolean isString = (this.keyAdapter instanceof StringTypeAdapter);
+    @Override
+    public Map<K, V> read(Map<String, Object> value) {
+        Map<K, V> map = new LinkedHashMap<>();
 
-        for (String key : section.getKeys(isString)) {
-            if (isString && section.isConfigurationSection(key)) {
-                continue;
-            }
-            
-            K mapKey = this.keyAdapter.fromString(key);
-            V mapValue = this.valueAdapter.read(section, key);
+        for (Entry<String, Object> entry : value.entrySet()) {
+            K mapKey = this.keyAdapter.fromString(entry.getKey());
+            V mapValue = this.valueAdapter.read(entry.getValue());
+
             map.put(mapKey, mapValue);
-
         }
 
         return map;
     }
 
-    @SuppressWarnings("unchecked")
-    public void write(ConfigurationSection config, String path, Object value, boolean replace) {
-        ((T) value).forEach((k, v) -> {
-            String newPath = new StringBuilder(path).append(".").append(this.keyAdapter.toString(k)).toString();
-            if (!replace && config.isSet(newPath)) {
-                return;
+    @Override
+    public Map<String, Object> write(Map<K, V> value, Map<String, Object> existing, boolean replace) {
+        if (existing == null) {
+            existing = new LinkedHashMap<>();
+        }
+
+        for (Entry<K, V> entry : value.entrySet()) {
+            String key = this.keyAdapter.toString(entry.getKey());
+
+            if (!existing.containsKey(key) || replace) {
+                Object saveValue = this.valueAdapter.write(entry.getValue(), existing.get(key), replace);
+                if (saveValue != null) {
+                    existing.put(key, saveValue);
+                }
             }
-            this.valueAdapter.write(config, newPath, v, replace);
-        });
+        }
+        return existing;
     }
 }

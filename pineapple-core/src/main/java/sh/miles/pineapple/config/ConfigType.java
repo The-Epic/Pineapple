@@ -14,7 +14,7 @@ public class ConfigType<T> {
 
     public static ConfigType<?> create(Type type) {
         if (type instanceof Class) {
-            return create((Class<?>) type, new ArrayList<>());
+            return new ConfigType<>((Class<?>) type, new ArrayList<>());
         }
         return create(type.getTypeName());
     }
@@ -30,17 +30,14 @@ public class ConfigType<T> {
                 return new ConfigType<>(Class.forName(typeName));
             }
             Class<?> clazz = Class.forName(typeName.substring(0, ind));
-            List<ConfigType<?>> componentTypes = splitOnComma(typeName, ind + 1, typeName.length() - 1).stream()
-                    .map(ConfigType::create).collect(Collectors.toList());
-            return create(clazz, componentTypes);
+            List<ConfigType<?>> componentTypes = splitOnComma(typeName, ind + 1, typeName.length() - 1)
+                    .stream()
+                    .map(ConfigType::create)
+                    .collect(Collectors.toList());
+            return new ConfigType<>(clazz, componentTypes);
         } catch (ClassNotFoundException e) {
             throw new IllegalArgumentException("All parameter types for config must be known at compiletime", e);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> ConfigType<T> create(Class<?> clazz, List<ConfigType<?>> componentTypes) {
-        return new ConfigType<>((Class<T>) clazz, componentTypes);
     }
 
     private static List<String> splitOnComma(String str, int start, int end) {
@@ -50,16 +47,19 @@ public class ConfigType<T> {
         for (int i = start; i < end; i++) {
             char c = str.charAt(i);
             switch (c) {
-                case '<' -> depth++;
-                case '>' -> depth--;
-                case ',' -> {
+                case '<':
+                    depth++;
+                    break;
+                case '>':
+                    depth--;
+                    break;
+                case ',':
                     if (depth != 0) {
                         break;
                     }
                     split.add(current.toString().trim());
                     current = new StringBuilder();
                     continue;
-                }
             }
             current.append(c);
         }
@@ -80,16 +80,16 @@ public class ConfigType<T> {
     }
 
     public Class<T> getType() {
-        return clazz;
+        return this.clazz;
     }
 
     public List<ConfigType<?>> getComponentTypes() {
-        return componentTypes;
+        return this.componentTypes;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clazz, componentTypes);
+        return Objects.hash(this.clazz, this.componentTypes);
     }
 
     @Override
@@ -98,15 +98,15 @@ public class ConfigType<T> {
             return false;
         }
         ConfigType<?> type = (ConfigType<?>) o;
-        return type.clazz.equals(clazz) && type.componentTypes.equals(componentTypes);
+        return type.clazz.equals(this.clazz) && type.componentTypes.equals(this.componentTypes);
     }
 
     @Override
     public String toString() {
-        String str = clazz.getName();
-        if (componentTypes.size() > 0) {
-            str += "<" + componentTypes.stream().map(ConfigType::toString).collect(Collectors.joining(", ")) + ">";
+        StringBuilder str = new StringBuilder().append(this.clazz.getName());
+        if (!this.componentTypes.isEmpty()) {
+            str.append("<").append(this.componentTypes.stream().map(ConfigType::toString).collect(Collectors.joining(", "))).append(">");
         }
-        return str;
+        return str.toString();
     }
 }

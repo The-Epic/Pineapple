@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 
 public class ReloadableClass<T> extends ConfigReloadable<T> {
 
-    public ReloadableClass(ConfigurationManager manager, File file, Class<T> clazz) {
-        super(manager, file, clazz);
+    public ReloadableClass(File file, Class<T> clazz) {
+        super(file, clazz);
     }
 
     @Override
@@ -40,7 +40,6 @@ public class ReloadableClass<T> extends ConfigReloadable<T> {
             try {
                 return field.getField().get(null);
             } catch (ReflectiveOperationException ex) {
-                return null;
             }
         }
         return null;

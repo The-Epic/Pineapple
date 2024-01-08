@@ -1,27 +1,19 @@
 package sh.miles.pineapple.config.adapter;
 
-import org.bukkit.configuration.ConfigurationSection;
+public class StringAdapter implements GenericStringAdapter<String> {
 
-public interface StringAdapter<T> extends TypeAdapter<T> {
-    public String toString(T value);
-
-    public T fromString(String value);
-
-    default T read(ConfigurationSection config, String path) {
-        String value = config.getString(path);
-        return value == null ? null : fromString(value);
+    @Override
+    public Class<String> getRuntimeType() {
+        return String.class;
     }
 
-    @SuppressWarnings("unchecked")
-    default void write(ConfigurationSection config, String path, Object value, boolean replace) {
-        if (value == null) {
-            return;
-        }
-        
-        if (config.isSet(path) && !replace) {
-            return;
-        }
+    @Override
+    public String toString(String value) {
+        return value;
+    }
 
-        config.set(path, toString((T) value));
+    @Override
+    public String fromString(String value) {
+        return value;
     }
 }

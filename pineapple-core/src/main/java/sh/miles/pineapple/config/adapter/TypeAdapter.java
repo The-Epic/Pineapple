@@ -1,10 +1,12 @@
 package sh.miles.pineapple.config.adapter;
 
-import org.bukkit.configuration.ConfigurationSection;
+public interface TypeAdapter<S, R> {
 
-public interface TypeAdapter<T> {
+    Class<S> getSavedType();
 
-    T read(ConfigurationSection config, String path);
-    
-    void write(ConfigurationSection config, String path, Object value, boolean replace);
+    Class<R> getRuntimeType();
+
+    R read(S value);
+
+    S write(R value, S existing, boolean replace);
 }
