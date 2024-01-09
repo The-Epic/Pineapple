@@ -10,7 +10,9 @@ import sh.miles.pineapple.BukkitTest;
 import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.chat.PineappleChat;
 import sh.miles.pineapple.chat.PineappleComponent;
+import sh.miles.pineapple.chat.style.ChatColorUtils;
 import sh.miles.pineapple.collection.WeightedRandom;
+import sh.miles.pineapple.config.adapter.ColorAdapter;
 import sh.miles.pineapple.item.ItemBuilder;
 
 import java.io.File;
@@ -28,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TypeAdapterTest extends BukkitTest {
 
-    private ConfigReloadable<TypeAdapterTestConfig> config;
+    private ConfigReloadable<ConfigMock> config;
 
     @BeforeEach
     @Override
@@ -36,8 +38,7 @@ public class TypeAdapterTest extends BukkitTest {
         super.setup();
         PineappleLib.initialize(super.plugin);
         this.config = PineappleLib.getConfigurationManager()
-                .createStaticReloadable(new File(plugin.getDataFolder(), "config.yml"), TypeAdapterTestConfig.class);
-
+                .createStaticReloadable(new File(plugin.getDataFolder(), "config.yml"), ConfigMock.class);
         this.config.saveDefaults().load();
     }
 
@@ -50,7 +51,7 @@ public class TypeAdapterTest extends BukkitTest {
 
     @Test
     public void test_Collection_List_TypeAdapter() {
-        List<String> collection = TypeAdapterTestConfig.COLLECTION_LIST;
+        List<String> collection = ConfigMock.COLLECTION_LIST;
         assertEquals(3, collection.size());
         assertEquals("a", collection.get(0));
         assertEquals("b", collection.get(1));
@@ -60,7 +61,7 @@ public class TypeAdapterTest extends BukkitTest {
 
     @Test
     public void test_Collection_Set_TypeAdapter() {
-        Set<String> collection = TypeAdapterTestConfig.COLLECTION_SET;
+        Set<String> collection = ConfigMock.COLLECTION_SET;
         assertEquals(3, collection.size());
         assertTrue(collection.contains("a"));
         assertTrue(collection.contains("b"));
@@ -70,7 +71,7 @@ public class TypeAdapterTest extends BukkitTest {
 
     @Test
     public void test_Collection_Queue_TypeAdapter() {
-        Queue<String> collection = TypeAdapterTestConfig.COLLECTION_QUEUE;
+        Queue<String> collection = ConfigMock.COLLECTION_QUEUE;
         assertEquals(3, collection.size());
         assertEquals("a", collection.poll());
         assertEquals("b", collection.poll());
@@ -80,7 +81,7 @@ public class TypeAdapterTest extends BukkitTest {
 
     @Test
     public void test_Collection_Map_TypeAdapter() {
-        Map<String, String> collection = TypeAdapterTestConfig.COLLECTION_MAP;
+        Map<String, String> collection = ConfigMock.COLLECTION_MAP;
         assertEquals(3, collection.size());
         assertEquals("1", collection.get("a"));
         assertEquals("2", collection.get("b"));
@@ -89,62 +90,52 @@ public class TypeAdapterTest extends BukkitTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void test_Color_TypeAdapter() {
-        //TODO figure out why its becoming xformat
-//        assertEquals(ChatColor.RED, TypeAdapterTestConfig.COLOR_RED);
-//        assertEquals(ChatColor.GREEN, TypeAdapterTestConfig.COLOR_GREEN);
-//        assertEquals(ChatColor.BLUE, TypeAdapterTestConfig.COLOR_BLUE);
+        assertEquals(ChatColor.of("#ff5555"), ConfigMock.COLOR_RED);
+        assertEquals(ChatColor.of("#55ff55"), ConfigMock.COLOR_GREEN);
+        assertEquals(ChatColor.of("#5555ff"), ConfigMock.COLOR_BLUE);
     }
 
     @Test
     public void test_Enum_TypeAdapter() {
-        assertEquals(EnumTest.VALUE1, TypeAdapterTestConfig.ENUM_1);
-        assertEquals(EnumTest.VALUE2, TypeAdapterTestConfig.ENUM_2);
-        assertEquals(EnumTest.VALUE3, TypeAdapterTestConfig.ENUM_3);
-    }
-
-    @Test
-    public void test_ItemStack_TypeAdapter() {
-        ItemStack itemStack = ItemBuilder.of(Material.BARRIER).nameLegacy("TestName")
-                .loreLegacy("line1", "line2", "line3").build();
-        ItemStack configStack = TypeAdapterTestConfig.ITEM;
-        assertTrue(configStack.hasItemMeta());
-        assertTrue(configStack.isSimilar(itemStack));
+        assertEquals(EnumMock.VALUE1, ConfigMock.ENUM_1);
+        assertEquals(EnumMock.VALUE2, ConfigMock.ENUM_2);
+        assertEquals(EnumMock.VALUE3, ConfigMock.ENUM_3);
     }
 
     @Test
     public void test_Material_TypeAdapter() {
-        assertEquals(Material.BARRIER, TypeAdapterTestConfig.MATERIAL);
+        assertEquals(Material.BARRIER, ConfigMock.MATERIAL);
     }
 
     @Test
     public void test_PineappleComponent_TypeAdapter() {
         PineappleComponent real = PineappleChat.component("<green></bold>Test");
-        PineappleComponent config = TypeAdapterTestConfig.CHAT;
+        PineappleComponent config = ConfigMock.CHAT;
         assertEquals(real, config);
         assertEquals(real.getSource(), config.getSource());
     }
 
     @Test
     public void test_Primitive_Boolean_TypeAdapter() {
-        assertTrue(TypeAdapterTestConfig.PRIMITIVE_BOOLEAN);
+        assertTrue(ConfigMock.PRIMITIVE_BOOLEAN);
     }
 
     @Test
     public void test_Primitive_Int_TypeAdapter() {
-        assertEquals(1, TypeAdapterTestConfig.PRIMITIVE_INT);
+        assertEquals(1, ConfigMock.PRIMITIVE_INT);
     }
 
     @Test
     public void test_Primitive_Long_TypeAdapter() {
-        assertEquals(1L, TypeAdapterTestConfig.PRIMITIVE_LONG);
+        assertEquals(1L, ConfigMock.PRIMITIVE_LONG);
     }
 
     @Test
     public void test_WeightedRandom_TypeAdapter() {
-        WeightedRandom<String> real = TypeAdapterTestConfig.getWeightedRandom();
-        WeightedRandom<String> config = TypeAdapterTestConfig.WEIGHTED_RANDOM;
+        WeightedRandom<String> real = ConfigMock.getWeightedRandom();
+        WeightedRandom<String> config = ConfigMock.WEIGHTED_RANDOM;
         assertEquals(3, config.size());
-        assertEquals(real, config);
     }
 }

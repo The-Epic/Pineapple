@@ -53,14 +53,9 @@ public class WeightedRandomAdapter<R> implements TypeAdapter<Map<String, Object>
             existing = new LinkedHashMap<>();
         }
 
-        double lastKey = 0;
         for (Entry<Double, R> entry : value.getEntries()) {
             String key = this.adapter.toString(entry.getValue());
-
-            if (!existing.containsKey(key) || replace) {
-                existing.put(key, entry.getKey() - lastKey);
-                lastKey = entry.getKey();
-            }
+            existing.put(key, entry.getKey());
         }
 
         return existing;

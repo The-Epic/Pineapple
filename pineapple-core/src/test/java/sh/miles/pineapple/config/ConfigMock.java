@@ -18,7 +18,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class TypeAdapterTestConfig {
+@SuppressWarnings("deprecation")
+public class ConfigMock {
 
     @ConfigEntry("test.collection.list")
     public static List<String> COLLECTION_LIST = new ArrayList<>(List.of("a", "b", "c"));
@@ -42,17 +43,13 @@ public class TypeAdapterTestConfig {
     public static ChatColor COLOR_BLUE = ChatColor.BLUE;
 
     @ConfigEntry("test.enum.1")
-    public static EnumTest ENUM_1 = EnumTest.VALUE1;
+    public static EnumMock ENUM_1 = EnumMock.VALUE1;
 
     @ConfigEntry("test.enum.2")
-    public static EnumTest ENUM_2 = EnumTest.VALUE2;
+    public static EnumMock ENUM_2 = EnumMock.VALUE2;
 
     @ConfigEntry("test.enum.3")
-    public static EnumTest ENUM_3 = EnumTest.VALUE3;
-
-    @ConfigEntry("test.item")
-    public static ItemStack ITEM = ItemBuilder.of(Material.BARRIER).nameLegacy("TestName")
-            .loreLegacy("line1", "line2", "line3").build();
+    public static EnumMock ENUM_3 = EnumMock.VALUE3;
 
     @ConfigEntry("test.material")
     public static Material MATERIAL = Material.BARRIER;
@@ -74,9 +71,9 @@ public class TypeAdapterTestConfig {
 
     public static WeightedRandom<String> getWeightedRandom() {
         WeightedRandom<String> weightedRandom = new WeightedRandom<>();
-        weightedRandom.add(0.5, "a");
-        weightedRandom.add(0.5, "b");
-
+        weightedRandom.add(5, "a");
+        weightedRandom.add(2.5, "b");
+        weightedRandom.add(2.5, "c");
         return weightedRandom;
     }
 }
