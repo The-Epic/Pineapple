@@ -55,7 +55,9 @@ public class WeightedRandomAdapter<R> implements TypeAdapter<Map<String, Object>
 
         for (Entry<Double, R> entry : value.getEntries()) {
             String key = this.adapter.toString(entry.getValue());
-            existing.put(key, entry.getKey());
+            if (!existing.containsKey(key) || replace) {
+                existing.put(key, entry.getKey());
+            }
         }
 
         return existing;
