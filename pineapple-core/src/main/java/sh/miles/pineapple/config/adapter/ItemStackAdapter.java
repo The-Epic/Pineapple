@@ -142,20 +142,25 @@ public final class ItemStackAdapter implements TypeAdapter<Map<String, Object>, 
             existing = new LinkedHashMap<>();
         }
 
-        existing.put(ITEM_TYPE_KEY, value.getType());
-        existing.put(AMOUNT_KEY, value.getAmount());
+        if (!existing.containsKey(ITEM_TYPE_KEY) || replace) {
+            existing.put(ITEM_TYPE_KEY, value.getType());
+        }
+
+        if (!existing.containsKey(AMOUNT_KEY) || replace) {
+            existing.put(AMOUNT_KEY, value.getAmount());
+        }
 
         final ItemMeta meta = value.getItemMeta();
 
-        if (meta.hasDisplayName()) {
+        if ((!existing.containsKey(NAME_KEY) || replace) && meta.hasDisplayName()) {
             existing.put(NAME_KEY, meta.getDisplayName());
         }
 
-        if (meta.hasLore()) {
+        if ((!existing.containsKey(LORE_KEY) || replace) && meta.hasLore()) {
             existing.put(LORE_KEY, meta.getLore());
         }
 
-        if (meta.hasEnchants()) {
+        if ((!existing.containsKey(ENCHANTMENTS_KEY) || replace) && meta.hasEnchants()) {
             final Map<String, Integer> formatted = meta.getEnchants().entrySet().stream().collect(Collectors.toMap(
                     (entry) -> entry.getKey().getKey().getKey(),
                     Map.Entry::getValue
@@ -163,38 +168,44 @@ public final class ItemStackAdapter implements TypeAdapter<Map<String, Object>, 
             existing.put(ENCHANTMENTS_KEY, formatted);
         }
 
-        if (!meta.getItemFlags().isEmpty()) {
+        if ((!existing.containsKey(ITEM_FLAGS_KEY) || replace) && !meta.getItemFlags().isEmpty()) {
             existing.put(ITEM_FLAGS_KEY, meta.getItemFlags().stream().map(ItemFlag::name).toList());
         }
 
-        if (meta instanceof LeatherArmorMeta armorMeta) {
+        if (meta instanceof LeatherArmorMeta armorMeta && (!existing.containsKey(DYE_COLOR_KEY) || replace)) {
             final org.bukkit.Color color = armorMeta.getColor();
             existing.put(DYE_COLOR_KEY, "#" + Integer.toHexString(new Color(color.getRed(), color.getGreen(), color.getBlue()).getRGB()));
         }
 
         if (meta instanceof PotionMeta potionMeta) {
-            final org.bukkit.Color color = potionMeta.getColor();
-            existing.put(POTION_COLOR_KEY, "#" + Integer.toHexString(new Color(color.getRed(), color.getGreen(), color.getBlue()).getRGB()));
+            if (!existing.containsKey(POTION_COLOR_KEY) || replace) {
+                final org.bukkit.Color color = potionMeta.getColor();
+                existing.put(POTION_COLOR_KEY, "#" + Integer.toHexString(new Color(color.getRed(), color.getGreen(), color.getBlue()).getRGB()));
+            }
 
-            final Map<String, Object> data = new HashMap<>();
-            PotionData potionData = potionMeta.getBasePotionData();
-            data.put("potion_type", potionData.getType());
-            data.put("extended", potionData.isExtended());
-            data.put("upgraded", potionData.isUpgraded());
-            existing.put(POTION_DATA_KEY, data);
+            if (!existing.containsKey(POTION_DATA_KEY) || replace) {
+                final Map<String, Object> data = new HashMap<>();
+                PotionData potionData = potionMeta.getBasePotionData();
+                data.put("potion_type", potionData.getType());
+                data.put("extended", potionData.isExtended());
+                data.put("upgraded", potionData.isUpgraded());
+                existing.put(POTION_DATA_KEY, data);
+            }
 
-            existing.put(POTION_EFFECTS_KEY, potionMeta.getCustomEffects().stream().map(PotionEffect::serialize).toList());
+            if (!existing.containsKey(POTION_EFFECTS_KEY) || replace) {
+                existing.put(POTION_EFFECTS_KEY, potionMeta.getCustomEffects().stream().map(PotionEffect::serialize).toList());
+            }
         }
 
-        if (meta.isUnbreakable()) {
+        if (meta.isUnbreakable() && (!existing.containsKey(UNBREAKABLE_KEY) || replace)) {
             existing.put(UNBREAKABLE_KEY, true);
         }
 
-        if (meta instanceof SkullMeta skullMeta) {
+        if (meta instanceof SkullMeta skullMeta && (!existing.containsKey(SKULL_TEXTURE_KEY) || replace)) {
             existing.put(SKULL_TEXTURE_KEY, skullMeta.getOwnerProfile().getTextures().getSkin().toString());
         }
 
-        if (meta instanceof EnchantmentStorageMeta storageMeta) {
+        if (meta instanceof EnchantmentStorageMeta storageMeta && (!existing.containsKey(STORED_ENCHANTMENTS_KEY) || replace)) {
             final Map<String, Integer> formatted = storageMeta.getStoredEnchants().entrySet().stream().collect(Collectors.toMap(
                     (entry) -> entry.getKey().getKey().getKey(),
                     Map.Entry::getValue

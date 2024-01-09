@@ -1,7 +1,10 @@
 package sh.miles.pineapple.config;
 
+import org.jetbrains.annotations.ApiStatus;
+
 import java.lang.reflect.Field;
 
+@ApiStatus.Internal
 public class ConfigReflectionHelper {
     public static <T> void setField(ConfigField field, Object value, T wrapped) throws ReflectiveOperationException {
         Field internal = field.getField();

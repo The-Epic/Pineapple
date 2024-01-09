@@ -28,12 +28,27 @@ public abstract class ConfigReloadable<T> {
         cacheFields(clazz);
     }
 
+    /**
+     * Loads the config
+     *
+     * @return instance for chaining
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     public ConfigReloadable<T> load() {
         load(true);
 
         return this;
     }
 
+    /**
+     * Loads the config
+     *
+     * @param includeStatic should static fields be loaded
+     * @return instance for chaining
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     @SuppressWarnings("unchecked")
     public ConfigReloadable<T> load(boolean includeStatic) {
         if (!prepareFile()) {
@@ -90,18 +105,40 @@ public abstract class ConfigReloadable<T> {
         return this;
     }
 
+    /**
+     * Saves the defaults of the config
+     *
+     * @return instance for chaining
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     public ConfigReloadable<T> saveDefaults() {
         save(false);
 
         return this;
     }
 
+    /**
+     * Saves the config, replaces current values
+     *
+     * @return instance for chaining
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     public ConfigReloadable<T> save() {
         save(true);
 
         return this;
     }
 
+    /**
+     * Saves the config
+     *
+     * @param replace replace current values
+     * @return instance for chaining
+     *
+     * @since 1.0.0-SNAPSHOT
+     */
     @SuppressWarnings("unchecked")
     public ConfigReloadable<T> save(boolean replace) {
         if (!prepareFile()) {
