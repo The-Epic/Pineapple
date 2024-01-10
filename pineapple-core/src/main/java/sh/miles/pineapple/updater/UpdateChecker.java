@@ -1,7 +1,9 @@
 package sh.miles.pineapple.updater;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import sh.miles.pineapple.PineappleLib;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +20,9 @@ import java.util.function.Consumer;
  */
 public class UpdateChecker {
 
-    private final JavaPlugin plugin;
     private final int resourceId;
 
-    public UpdateChecker(JavaPlugin plugin, int resourceId) {
-        this.plugin = plugin;
+    public UpdateChecker(int resourceId) {
         this.resourceId = resourceId;
     }
 
@@ -41,7 +41,7 @@ public class UpdateChecker {
                     consumer.accept(scanner.next());
                 }
             } catch (IOException exception) {
-                plugin.getLogger().warning("Unable to check for updates: " + exception.getMessage());
+                PineappleLib.getLogger().warning("Unable to check for updates: " + exception.getMessage());
             }
         });
     }
