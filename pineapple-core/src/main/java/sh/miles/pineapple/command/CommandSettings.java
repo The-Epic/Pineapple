@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.ApiStatus;
 import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
 
 /**
@@ -97,6 +98,7 @@ public class CommandSettings {
          * @param sender the sender
          * @since 1.0.0-SNAPSHOT
          */
+        @ApiStatus.Obsolete
         public void sendInvalidSenderMessage(CommandSender sender) {
             if (invalidSenderMessage != null) {
                 sender.spigot().sendMessage(invalidSenderMessage);

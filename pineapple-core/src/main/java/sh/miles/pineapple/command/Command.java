@@ -118,4 +118,15 @@ public class Command implements CommandExecutor, CommandCompleter {
     public CommandLabel getCommandLabel() {
         return this.label;
     }
+
+    /**
+     * The command settings
+     *
+     * @return command settings
+     * @since 1.0.0-SNAPSHOT
+     */
+    @NotNull
+    public CommandSettings.Settings getSettings() {
+        return settings;
+    }
 }
