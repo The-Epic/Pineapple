@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.config.ConfigurationManager;
-import sh.miles.pineapple.menu.MenuManager;
+import sh.miles.pineapple.menu.v2.manage.MenuManager;
 
 import java.util.logging.Logger;
 

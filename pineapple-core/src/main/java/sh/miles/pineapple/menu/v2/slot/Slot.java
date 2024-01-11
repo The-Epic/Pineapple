@@ -1,4 +1,4 @@
-package sh.miles.pineapple.menu.v2;
+package sh.miles.pineapple.menu.v2.slot;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.Material;
@@ -8,11 +8,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import sh.miles.pineapple.menu.v2.ClickEvent;
 
 public class Slot {
 
-    private final Inventory inventory;
-    private final int slot;
+    protected final Inventory inventory;
+    protected final int slot;
     private ClickEvent event;
 
     public Slot(@NotNull final Inventory inventory, final int slot, @NotNull final ClickEvent event, @NotNull final ItemStack content) {
