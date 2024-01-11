@@ -18,6 +18,9 @@ import java.util.function.Function;
  */
 public record MenuItem(@NotNull Function<Player, ItemStack> item, BiConsumer<Player, InventoryClickEvent> click) {
 
+    public static BiConsumer<Player, InventoryClickEvent> EMPTY = (p, e) -> {
+    };
+
     public ItemStack item(@NotNull final Player player) {
         return item.apply(player);
     }
@@ -33,6 +36,11 @@ public record MenuItem(@NotNull Function<Player, ItemStack> item, BiConsumer<Pla
         click.accept(player, event);
     }
 
+    @NotNull
+    public static MenuItem adapt(@NotNull final Function<Player, ItemStack> item) {
+        return new MenuItem(item, EMPTY);
+    }
+
     /**
      * Builder for the MenuItem
      *
@@ -45,8 +53,7 @@ public record MenuItem(@NotNull Function<Player, ItemStack> item, BiConsumer<Pla
 
     public static class Builder {
         private Function<Player, ItemStack> item;
-        private BiConsumer<Player, InventoryClickEvent> click = (p, e) -> {
-        };
+        private BiConsumer<Player, InventoryClickEvent> click = EMPTY;
 
         /**
          * Sets the item of this MenuItem Builder
