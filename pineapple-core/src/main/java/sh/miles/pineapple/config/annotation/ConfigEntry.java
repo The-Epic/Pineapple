@@ -9,5 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(FIELD)
 public @interface ConfigEntry {
-    public String value() default "";
+    /**
+     * @return the entry path
+     */
+    String value() default "";
 }

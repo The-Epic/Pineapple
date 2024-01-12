@@ -1,11 +1,20 @@
 package sh.miles.pineapple.config;
 
+import sh.miles.pineapple.ReflectionUtils;
+
 import java.io.File;
 import java.lang.reflect.Method;
 
 public class ReloadableObject<T> extends ConfigReloadable<T> {
     private final T wrapped;
 
+    /**
+     * Creates a new ReloadableObject
+     *
+     * @param file   the file used to load the object
+     * @param object the object
+     * @since 1.0.0-SNAPSHOT
+     */
     @SuppressWarnings("unchecked")
     public ReloadableObject(File file, T object) {
         super(file, (Class<T>) object.getClass());

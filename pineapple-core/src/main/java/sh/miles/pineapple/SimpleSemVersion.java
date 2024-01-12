@@ -93,8 +93,12 @@ public class SimpleSemVersion {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final SimpleSemVersion that)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final SimpleSemVersion that)) {
+            return false;
+        }
         return major == that.major && minor == that.minor && patch == that.patch && modifier == that.modifier;
     }
 

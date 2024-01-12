@@ -9,5 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(FIELD)
 public @interface Comments {
-    public Comment[] value();
+    /**
+     * @return the comments
+     */
+    Comment[] value();
 }

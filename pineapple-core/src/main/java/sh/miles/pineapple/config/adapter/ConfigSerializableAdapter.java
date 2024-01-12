@@ -12,6 +12,11 @@ public class ConfigSerializableAdapter<S, R extends ConfigSerializable<S>> imple
     private Class<S> savedClass;
     private final MethodHandle deserializeMethod;
 
+    /**
+     * Creates a new ConfigSerializableAdapter
+     *
+     * @param type the type to adapt
+     */
     @SuppressWarnings("unchecked")
     public ConfigSerializableAdapter(ConfigType<?> type) {
         this.clazz = (Class<R>) type.getType();

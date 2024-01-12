@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'checkstyle'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -9,7 +10,10 @@ java {
 }
 
 configurations {
-    compileOnlyAndTest.extendsFrom testImplementation, compileOnly
+    compileOnlyAndTest
+    compileOnlyAndTest.transitive = false
+    testImplementation.extendsFrom(compileOnlyAndTest)
+    compileOnly.extendsFrom(compileOnlyAndTest)
 }
 
 dependencies {
@@ -23,5 +27,14 @@ dependencies {
     compileOnlyAndTest project(':pineapple-utils')
 }
 
+checkstyle {
+    toolVersion '10.12.5'
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}
+
+
+checkstyleMain {
+    source = 'src/main/java'
+}
 
 
