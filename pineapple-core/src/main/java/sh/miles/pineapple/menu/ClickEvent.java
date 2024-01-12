@@ -1,12 +1,9 @@
-package sh.miles.pineapple.menu.v2;
+package sh.miles.pineapple.menu;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.util.InventoryUtils;
-
-import java.util.List;
 
 public interface ClickEvent {
 

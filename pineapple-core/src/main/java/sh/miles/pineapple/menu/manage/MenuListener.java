@@ -1,4 +1,4 @@
-package sh.miles.pineapple.menu.v2.manage;
+package sh.miles.pineapple.menu.manage;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

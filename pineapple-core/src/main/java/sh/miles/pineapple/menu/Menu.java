@@ -6,8 +6,6 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 
-import java.util.Optional;
-
 /**
  * Represents a simple outline for a menu.
  *
@@ -36,16 +34,6 @@ public interface Menu<T extends MenuScene> {
      * @since 1.0.0-SNAPSHOT
      */
     void close();
-
-    /**
-     * Gets the item at the given slot if any
-     *
-     * @param slot the slot
-     * @return the item wrapped in an optional
-     * @since 1.0.0-SNAPSHOT
-     */
-    @NotNull
-    Optional<MenuItem> getItem(int slot);
 
     /**
      * Gets the scene associated with this menu
@@ -80,3 +68,4 @@ public interface Menu<T extends MenuScene> {
      */
     void handleClose(@NotNull final InventoryCloseEvent event);
 }
+
