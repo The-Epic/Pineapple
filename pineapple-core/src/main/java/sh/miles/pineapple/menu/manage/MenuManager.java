@@ -1,9 +1,10 @@
-package sh.miles.pineapple.menu;
+package sh.miles.pineapple.menu.manage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.menu.Menu;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,5 @@ public class MenuManager {
     public Optional<Menu<?>> getMenu(@NotNull final Inventory inventory) {
         return Optional.ofNullable(menus.get(inventory));
     }
-
 
 }
