@@ -1,18 +1,18 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id "com.github.johnrengelman.shadow" version "8.1.1"
-    id "io.freefair.aggregate-javadoc-jar" version "8.4"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'io.freefair.aggregate-javadoc-jar' version '8.4'
 }
 
 // shadowJar takes care of this
 jar.enabled = true
 
 dependencies {
-    implementation(project(":pineapple-utils"))
-    implementation(project(":pineapple-chat"))
-    implementation(project(":pineapple-core"))
-    implementation(project(":pineapple-nms"))
+    implementation project(':pineapple-utils')
+    implementation project(':pineapple-chat')
+    implementation project(':pineapple-core')
+    implementation project(':pineapple-nms')
 }
 
 subprojects {
@@ -22,26 +22,26 @@ subprojects {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-        compileOnly("org.jetbrains:annotations-java5:24.0.1")
+        compileOnly 'org.jetbrains:annotations-java5:24.0.1'
     }
 
     test {
         useJUnitPlatform()
 
         testLogging {
-            events("passed", "skipped", "failed")
+            events 'passed', 'skipped', 'failed'
         }
     }
 
     aggregateJavadocJar {
         configure {
-            exclude "sh/miles/pineapple/nms/impl/**"
+            exclude 'sh/miles/pineapple/nms/impl/**'
         }
     }
 
     javadoc {
         configure {
-            exclude "sh/miles/pineapple/nms/impl/**"
+            exclude 'sh/miles/pineapple/nms/impl/**'
         }
     }
 }
@@ -50,7 +50,7 @@ shadowJar {
     archiveClassifier.set('')
     archiveVersion.set('')
 
-    relocate('com.jeff_media.morepersistentdatatypes', 'sh.miles.pineapple.pdc.morepdc')
+    relocate 'com.jeff_media.morepersistentdatatypes', 'sh.miles.pineapple.pdc.morepdc'
 }
 
 build {

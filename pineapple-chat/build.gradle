@@ -1,12 +1,13 @@
 plugins {
     id 'java'
-    id "me.champeau.jmh" version "0.7.2"
+    id 'me.champeau.jmh' version '0.7.2'
 }
 
 dependencies {
-    compileOnly project(":pineapple-utils")
+    compileOnly project(':pineapple-utils')
+
     // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/browse/Bukkit-Patches/0010-BungeeCord-Chat-API.patch#15-21
-    compileOnly("net.md-5:bungeecord-chat:1.20-R0.1")
+    compileOnly 'net.md-5:bungeecord-chat:1.20-R0.1'
 
     jmh 'org.openjdk.jmh:jmh-core:0.9'
     jmh 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
