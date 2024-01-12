@@ -17,6 +17,7 @@ public interface ServerThreadWorker {
     /**
      * Run when an exception occurs and output is needed
      *
+     * @param throwable the error to be thrown
      * @since 1.0.0-SNAPSHOT
      */
     default void exceptionally(Throwable throwable) {

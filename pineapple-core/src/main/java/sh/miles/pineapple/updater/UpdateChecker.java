@@ -2,7 +2,6 @@ package sh.miles.pineapple.updater;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;

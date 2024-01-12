@@ -1,7 +1,5 @@
 package sh.miles.pineapple.config;
 
-import sh.miles.pineapple.ReflectionUtils;
-
 import java.io.File;
 import java.lang.reflect.Method;
 
