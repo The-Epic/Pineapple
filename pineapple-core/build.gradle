@@ -14,8 +14,6 @@ dependencies {
     testImplementation(project(":pineapple-utils"))
 
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
-    // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/craftbukkit/browse/pom.xml#161
-    compileOnly 'it.unimi.dsi:fastutil:8.5.12'
 
     implementation 'com.jeff_media:MorePersistentDataTypes:2.4.0'
     compileOnly(project(":pineapple-nms:api"))
