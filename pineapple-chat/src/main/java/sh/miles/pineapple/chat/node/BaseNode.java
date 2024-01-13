@@ -16,6 +16,13 @@ public class BaseNode {
     private final String source;
     private final List<BaseNode> children;
 
+    /**
+     * Creates a new BaseNode
+     *
+     * @param parent the parent node
+     * @param token  the token this node derives from
+     * @param source the source string
+     */
     public BaseNode(@Nullable BaseNode parent, @Nullable Token token, @NotNull final String source) {
         this.parent = parent;
         this.token = token;
@@ -74,8 +81,12 @@ public class BaseNode {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final BaseNode baseNode)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final BaseNode baseNode)) {
+            return false;
+        }
         return Objects.equals(parent, baseNode.parent) && Objects.equals(token, baseNode.token) && Objects.equals(source, baseNode.source) && Objects.equals(children, baseNode.children);
     }
 

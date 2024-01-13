@@ -12,6 +12,13 @@ public final class BaseNodeParser {
         throw new UnsupportedOperationException("can not instantiate utility class");
     }
 
+    /**
+     * Parses a string into a BaseNodeTree with the given parser context
+     *
+     * @param string  the string
+     * @param context the parser context
+     * @return the new BaseNode tree
+     */
     public static BaseNode parseTree(@NotNull final String string, ParserContext context) {
         final BaseNode root = new BaseNode(null, null, string);
         final Tokenizer tokenizer = new Tokenizer(string);
@@ -24,6 +31,7 @@ public final class BaseNodeParser {
                 case REPLACE ->
                         current = new TextNode(parent, next, string, context.getReplacement(next.detail(string)).toString());
                 case CONTENT -> current = new TextNode(parent, next, string);
+                default -> throw new IllegalStateException("the next TokenType can not be determined! This is a bug!");
             }
 
             if (current instanceof TextNode) {

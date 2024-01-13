@@ -47,8 +47,9 @@ public class WeightedRandom<T> {
      * @since 1.0.0-SNAPSHOT
      */
     public WeightedRandom<T> add(double weight, T result) {
-        if (weight <= 0)
+        if (weight <= 0) {
             return this;
+        }
 
         total += weight;
         map.put(total, result);

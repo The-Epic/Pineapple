@@ -17,6 +17,9 @@ dependencies {
 }
 
 subprojects {
+    if (!project.name.startsWith('spigot')) {
+        apply plugin: 'checkstyle'
+    }
     apply plugin: 'java'
 
     dependencies {
@@ -49,6 +52,9 @@ subprojects {
     checkstyle {
         toolVersion '10.12.5'
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+        ignoreFailures = false
+        showViolations = true
+        sourceSets = [project.sourceSets.main]
     }
 
 

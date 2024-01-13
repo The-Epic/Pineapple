@@ -27,6 +27,12 @@ public final class ChatColorUtils {
         }
     }
 
+    /**
+     * Creates anew ChatColor from a java.awt.Color
+     *
+     * @param color the java.awt.Color
+     * @return the equivalent ChatColor
+     */
     @NotNull
     public static ChatColor create(@NotNull final Color color) {
         try {
@@ -37,6 +43,12 @@ public final class ChatColorUtils {
         }
     }
 
+    /**
+     * Creates a ChatColor from a string
+     *
+     * @param string the string input
+     * @return the ChatColor
+     */
     @NotNull
     public static ChatColor from(@NotNull final String string) {
         if (string.charAt(0) == '#') {
@@ -46,6 +58,12 @@ public final class ChatColorUtils {
         }
     }
 
+    /**
+     * Creates a ChatColor from a string
+     *
+     * @param string the string input
+     * @return the ChatColor
+     */
     public static ChatColor fromHexString(@NotNull final String string) {
         if (string.length() > 7) {
             throw new IllegalArgumentException("Unable to parse malformed hex string %s".formatted(string));
@@ -58,6 +76,14 @@ public final class ChatColorUtils {
         return BY_NAME.get(string.toUpperCase());
     }
 
+    /**
+     * Creates a linear gradient
+     *
+     * @param start the start color of the gradient
+     * @param end   the end color of the gradient
+     * @param step  the steps to take
+     * @return the array of ChatColors to apply at each char in the sequence
+     */
     @NotNull
     public static ChatColor[] createLinearGradient(@NotNull final Color start, @NotNull final Color end, final int step) {
         ChatColor[] colors = new ChatColor[step];

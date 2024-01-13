@@ -4,6 +4,14 @@ import org.jetbrains.annotations.NotNull;
 
 public record Token(int start, int end, @NotNull TokenType tokenType) {
 
+    /**
+     * The inner detail of a token minus the opening and closing characters.
+     * <p>
+     * For example this method turns {@literal "<example-tag>"} into "example-tag"
+     *
+     * @param source the token source
+     * @return the detail
+     */
     @NotNull
     public String detail(String source) {
         switch (tokenType) {

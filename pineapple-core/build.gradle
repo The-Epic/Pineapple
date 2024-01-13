@@ -2,8 +2,6 @@ plugins {
     id 'java'
 }
 
-apply plugin: 'checkstyle'
-
 compileJava.options.encoding = 'UTF-8'
 
 java {
