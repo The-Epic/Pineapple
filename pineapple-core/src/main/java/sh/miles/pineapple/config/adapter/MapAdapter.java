@@ -2,12 +2,14 @@ package sh.miles.pineapple.config.adapter;
 
 import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.config.ConfigType;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
+import sh.miles.pineapple.config.adapter.base.TypeAdapterString;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class MapAdapter<K, V> implements TypeAdapter<Map<String, Object>, Map<K, V>> {
+class MapAdapter<K, V> implements TypeAdapter<Map<String, Object>, Map<K, V>> {
     private final TypeAdapter<Object, V> valueAdapter;
     private final TypeAdapterString<Object, K> keyAdapter;
 

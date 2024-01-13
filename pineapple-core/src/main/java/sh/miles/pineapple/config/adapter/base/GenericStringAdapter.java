@@ -1,4 +1,4 @@
-package sh.miles.pineapple.config.adapter;
+package sh.miles.pineapple.config.adapter.base;
 
 public interface GenericStringAdapter<R> extends TypeAdapterString<String, R> {
     @Override

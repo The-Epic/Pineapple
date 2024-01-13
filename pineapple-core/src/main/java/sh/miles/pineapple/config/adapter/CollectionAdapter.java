@@ -2,6 +2,8 @@ package sh.miles.pineapple.config.adapter;
 
 import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.config.ConfigType;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
+import sh.miles.pineapple.config.adapter.base.TypeAdapterString;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class CollectionAdapter<S, R> implements TypeAdapter<List<S>, Collection<R>> {
+class CollectionAdapter<S, R> implements TypeAdapter<List<S>, Collection<R>> {
     private static Map<Class<?>, Supplier<? extends Collection<?>>> defaults;
 
     static {

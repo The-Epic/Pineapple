@@ -2,8 +2,9 @@ package sh.miles.pineapple.config.adapter;
 
 import sh.miles.pineapple.chat.PineappleChat;
 import sh.miles.pineapple.chat.PineappleComponent;
+import sh.miles.pineapple.config.adapter.base.GenericStringAdapter;
 
-public class PineappleComponentAdapter implements GenericStringAdapter<PineappleComponent> {
+class PineappleComponentAdapter implements GenericStringAdapter<PineappleComponent> {
 
     @Override
     public Class<PineappleComponent> getRuntimeType() {

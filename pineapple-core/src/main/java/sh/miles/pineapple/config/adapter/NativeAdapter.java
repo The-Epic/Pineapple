@@ -5,6 +5,7 @@ import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.config.ConfigField;
 import sh.miles.pineapple.config.ConfigReflectionHelper;
 import sh.miles.pineapple.config.ConfigType;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
 import sh.miles.pineapple.config.annotation.ConfigEntry;
 
 import java.lang.reflect.Constructor;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class NativeAdapter<T> implements TypeAdapter<Map<String, Object>, T> {
+class NativeAdapter<T> implements TypeAdapter<Map<String, Object>, T> {
     private final Class<T> clazz;
     private final List<ConfigField> fields = new ArrayList<>();
 

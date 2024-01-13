@@ -1,8 +1,10 @@
 package sh.miles.pineapple.config.adapter;
 
+import sh.miles.pineapple.config.adapter.base.TypeAdapterString;
+
 import java.util.function.Function;
 
-public class PrimitiveAdapter<R> implements TypeAdapterString<R, R> {
+class PrimitiveAdapter<R> implements TypeAdapterString<R, R> {
 
     private final Class<R> clazz;
     private final Function<String, R> reader;

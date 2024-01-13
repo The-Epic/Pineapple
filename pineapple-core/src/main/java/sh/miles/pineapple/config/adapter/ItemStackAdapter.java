@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 import sh.miles.pineapple.chat.PineappleChat;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
 import sh.miles.pineapple.item.ItemBuilder;
 
 import java.awt.Color;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public final class ItemStackAdapter implements TypeAdapter<Map<String, Object>, ItemStack> {
+final class ItemStackAdapter implements TypeAdapter<Map<String, Object>, ItemStack> {
 
     private static final String ITEM_TYPE_KEY = "item_type";
     private static final String AMOUNT_KEY = "amount";

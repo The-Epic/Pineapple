@@ -3,12 +3,14 @@ package sh.miles.pineapple.config.adapter;
 import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.collection.WeightedRandom;
 import sh.miles.pineapple.config.ConfigType;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
+import sh.miles.pineapple.config.adapter.base.TypeAdapterString;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class WeightedRandomAdapter<R> implements TypeAdapter<Map<String, Object>, WeightedRandom<R>> {
+class WeightedRandomAdapter<R> implements TypeAdapter<Map<String, Object>, WeightedRandom<R>> {
 
     private final TypeAdapterString<Object, R> adapter;
 
