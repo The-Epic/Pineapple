@@ -10,6 +10,14 @@ public class TextNode extends BaseNode {
 
     private final String text;
 
+    /**
+     * Creates a new TextNode
+     *
+     * @param parent the parent node
+     * @param token  the token of this node
+     * @param source the original source text this node is from
+     * @param text   the text this node contains
+     */
     public TextNode(@NotNull final BaseNode parent, @NotNull final Token token, @NotNull final String source, @NotNull final String text) {
         super(parent, token, source);
         this.text = text;
@@ -36,9 +44,15 @@ public class TextNode extends BaseNode {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final TextNode textNode)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final TextNode textNode)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         return Objects.equals(text, textNode.text);
     }
 

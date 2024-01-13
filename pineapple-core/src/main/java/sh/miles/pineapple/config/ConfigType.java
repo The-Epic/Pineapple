@@ -12,64 +12,6 @@ public class ConfigType<T> {
     private Class<T> clazz;
     private List<ConfigType<?>> componentTypes;
 
-    public static ConfigType<?> create(Type type) {
-        if (type instanceof Class) {
-            return new ConfigType<>((Class<?>) type, new ArrayList<>());
-        }
-        return create(type.getTypeName());
-    }
-
-    public static ConfigType<?> get(Field field) {
-        return create(field.getGenericType());
-    }
-
-    private static ConfigType<?> create(String typeName) {
-        try {
-            int ind = typeName.indexOf('<');
-            if (ind == -1) {
-                return new ConfigType<>(Class.forName(typeName));
-            }
-            Class<?> clazz = Class.forName(typeName.substring(0, ind));
-            List<ConfigType<?>> componentTypes = splitOnComma(typeName, ind + 1, typeName.length() - 1)
-                    .stream()
-                    .map(ConfigType::create)
-                    .collect(Collectors.toList());
-            return new ConfigType<>(clazz, componentTypes);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("All parameter types for config must be known at compiletime", e);
-        }
-    }
-
-    private static List<String> splitOnComma(String str, int start, int end) {
-        int depth = 0;
-        StringBuilder current = new StringBuilder();
-        List<String> split = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            char c = str.charAt(i);
-            switch (c) {
-                case '<':
-                    depth++;
-                    break;
-                case '>':
-                    depth--;
-                    break;
-                case ',':
-                    if (depth != 0) {
-                        break;
-                    }
-                    split.add(current.toString().trim());
-                    current = new StringBuilder();
-                    continue;
-            }
-            current.append(c);
-        }
-        String last = current.toString().trim();
-        if (last.length() != 0) {
-            split.add(last);
-        }
-        return split;
-    }
-
     public ConfigType(Class<T> clazz, List<ConfigType<?>> componentTypes) {
         this.clazz = clazz;
         this.componentTypes = componentTypes;
@@ -108,5 +50,73 @@ public class ConfigType<T> {
             str.append("<").append(this.componentTypes.stream().map(ConfigType::toString).collect(Collectors.joining(", "))).append(">");
         }
         return str.toString();
+    }
+
+    /**
+     * Creates a new ConfigType for the given type
+     *
+     * @param type the type
+     * @return the config type
+     * @since 1.0.0-SNAPSHOT
+     */
+    public static ConfigType<?> create(Type type) {
+        if (type instanceof Class) {
+            return new ConfigType<>((Class<?>) type, new ArrayList<>());
+        }
+        return create(type.getTypeName());
+    }
+
+    private static ConfigType<?> create(String typeName) {
+        try {
+            int ind = typeName.indexOf('<');
+            if (ind == -1) {
+                return new ConfigType<>(Class.forName(typeName));
+            }
+            Class<?> clazz = Class.forName(typeName.substring(0, ind));
+            List<ConfigType<?>> componentTypes = splitOnComma(typeName, ind + 1, typeName.length() - 1)
+                    .stream()
+                    .map(ConfigType::create)
+                    .collect(Collectors.toList());
+            return new ConfigType<>(clazz, componentTypes);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("All parameter types for config must be known at compiletime", e);
+        }
+    }
+
+    public static ConfigType<?> get(Field field) {
+        return create(field.getGenericType());
+    }
+
+    private static List<String> splitOnComma(String str, int start, int end) {
+        int depth = 0;
+        StringBuilder current = new StringBuilder();
+        List<String> split = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            char c = str.charAt(i);
+            switch (c) {
+                case '<' -> {
+                    depth++;
+                }
+                case '>' -> {
+                    depth--;
+                }
+                case ',' -> {
+                    if (depth != 0) {
+                        break;
+                    }
+                    split.add(current.toString().trim());
+                    current = new StringBuilder();
+                    continue;
+                }
+                default -> {
+                }
+            }
+            current.append(c);
+        }
+        String last = current.toString().trim();
+        if (last.length() != 0) {
+            split.add(last);
+        }
+        return split;
     }
 }

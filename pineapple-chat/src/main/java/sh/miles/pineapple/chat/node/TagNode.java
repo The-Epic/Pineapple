@@ -14,6 +14,13 @@ public class TagNode extends BaseNode {
     private final Queue<String> arguments;
     private int fullChildTextLength;
 
+    /**
+     * Creates a new tag node
+     *
+     * @param parent the parent BaseNode
+     * @param token  the token of this node
+     * @param source the source string that this node is from
+     */
     public TagNode(@NotNull final BaseNode parent, @NotNull final Token token, final @NotNull String source) {
         super(parent, token, source);
         this.arguments = new ArrayDeque<>(StringUtils.split(token.detail(source), ':', true));
@@ -32,6 +39,11 @@ public class TagNode extends BaseNode {
         return fullChildTextLength;
     }
 
+    /**
+     * Appends the given length of a child text to this TagNode
+     *
+     * @param length the length of the string to append
+     */
     public void appendChildTextLength(int length) {
         this.fullChildTextLength += length;
         if (getParent() instanceof TagNode tagNode) {
@@ -50,9 +62,15 @@ public class TagNode extends BaseNode {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final TagNode tagNode)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final TagNode tagNode)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         return this.arguments.equals(tagNode.arguments);
     }
 

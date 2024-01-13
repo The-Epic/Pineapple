@@ -51,6 +51,12 @@ public final class TagBuilder {
         throw new UnsupportedOperationException("unable to instantiate this class");
     }
 
+    /**
+     * Builds a new Tag from the given TagNode
+     *
+     * @param tagNode the tagNode to build into an AbstractTag
+     * @return the AbstractTag created
+     */
     public static AbstractTag build(@NotNull final TagNode tagNode) {
         Optional<AbstractTagBuilderFunction> possibleBuilder = executorTrie.findExecutor(tagNode.getNamespace());
         AbstractTagBuilderFunction builder = possibleBuilder.orElseThrow(() -> new IllegalStateException("unable to parse unknown tag %s".formatted(tagNode.getNamespace())));

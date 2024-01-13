@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Equivalent to {@link TabCompleter}
+ *
  * @since 1.0.0-SNAPSHOT
  */
 @FunctionalInterface

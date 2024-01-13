@@ -1,17 +1,13 @@
 package sh.miles.pineapple.nms.api.menu;
 
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.collection.registry.RegistryKey;
-import sh.miles.pineapple.nms.api.loader.NMSManager;
 import sh.miles.pineapple.nms.api.menu.scene.AnvilScene;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
-
-import javax.naming.Name;
 
 public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey> {
 

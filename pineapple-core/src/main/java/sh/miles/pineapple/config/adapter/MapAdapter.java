@@ -11,6 +11,11 @@ public class MapAdapter<K, V> implements TypeAdapter<Map<String, Object>, Map<K,
     private final TypeAdapter<Object, V> valueAdapter;
     private final TypeAdapterString<Object, K> keyAdapter;
 
+    /**
+     * Creates a new MapAdapter
+     *
+     * @param type the type of map to adapt
+     */
     @SuppressWarnings("unchecked")
     public MapAdapter(ConfigType<?> type) {
         this.keyAdapter = (TypeAdapterString<Object, K>) PineappleLib

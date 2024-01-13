@@ -11,5 +11,8 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 @Repeatable(Comments.class)
 public @interface Comment {
-    public String value() default "";
+    /**
+     * @return the comment
+     */
+    String value() default "";
 }

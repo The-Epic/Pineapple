@@ -19,6 +19,11 @@ public class NativeAdapter<T> implements TypeAdapter<Map<String, Object>, T> {
     private final Class<T> clazz;
     private final List<ConfigField> fields = new ArrayList<>();
 
+    /**
+     * Creates a new NativeAdapter
+     *
+     * @param clazz the class
+     */
     public NativeAdapter(Class<T> clazz) {
         this.clazz = clazz;
 
@@ -66,21 +71,21 @@ public class NativeAdapter<T> implements TypeAdapter<Map<String, Object>, T> {
             Class<Object> saved = adapter.getSavedType();
             Object savedValue = getSavedValue(value, path, saved);
             if (!saved.isInstance(savedValue)) {
-                PineappleLib.getLogger().log(Level.WARNING, "Wrong saved type for {0}, {1} != {2}", new Object[] { path, savedValue.getClass(), saved });
+                PineappleLib.getLogger().log(Level.WARNING, "Wrong saved type for {0}, {1} != {2}", new Object[]{path, savedValue.getClass(), saved});
                 continue;
             }
 
             Object readValue = adapter.read(saved.cast(savedValue));
 
             if (readValue == null) {
-                PineappleLib.getLogger().log(Level.WARNING, "Failed to read value for {0} of type {1}", new Object[] { path, type.getType() });
+                PineappleLib.getLogger().log(Level.WARNING, "Failed to read value for {0} of type {1}", new Object[]{path, type.getType()});
                 continue;
             }
 
             try {
                 ConfigReflectionHelper.setField(field, readValue, object);
             } catch (ReflectiveOperationException ex) {
-                PineappleLib.getLogger().log(Level.WARNING, "Failed to read value for {0} of type {1}", new Object[] { path, type.getType() });
+                PineappleLib.getLogger().log(Level.WARNING, "Failed to read value for {0} of type {1}", new Object[]{path, type.getType()});
                 ex.printStackTrace();
             }
         }
@@ -114,13 +119,13 @@ public class NativeAdapter<T> implements TypeAdapter<Map<String, Object>, T> {
             Class<Object> saved = adapter.getSavedType();
             Class<Object> runtime = adapter.getRuntimeType();
             if (!runtime.isInstance(writeValue)) {
-                PineappleLib.getLogger().log(Level.WARNING, "Wrong runtime type for {0}, {1} != {2}", new Object[] { path, writeValue.getClass(), runtime });
+                PineappleLib.getLogger().log(Level.WARNING, "Wrong runtime type for {0}, {1} != {2}", new Object[]{path, writeValue.getClass(), runtime});
                 continue;
             }
 
             Object existing = getSavedValue(map, path, saved);
             if (existing != null && !saved.isInstance(existing)) {
-                PineappleLib.getLogger().log(Level.WARNING, "Wrong saved type for {0}, {1} != {2}", new Object[] { path, existing.getClass(), saved });
+                PineappleLib.getLogger().log(Level.WARNING, "Wrong saved type for {0}, {1} != {2}", new Object[]{path, existing.getClass(), saved});
                 existing = null;
             }
 

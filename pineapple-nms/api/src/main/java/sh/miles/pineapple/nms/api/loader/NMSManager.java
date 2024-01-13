@@ -2,10 +2,8 @@ package sh.miles.pineapple.nms.api.loader;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.nms.api.PineappleNMS;
 import sh.miles.pineapple.ReflectionUtils;
-
-import java.nio.channels.Pipe;
+import sh.miles.pineapple.nms.api.PineappleNMS;
 
 /**
  * Provides Management for NMS Classes

@@ -13,6 +13,9 @@ public class Tokenizer {
         return this.cursor < string.length();
     }
 
+    /**
+     * @return the next token
+     */
     public Token next() {
         boolean escaped = false;
         if (!hasNext()) {

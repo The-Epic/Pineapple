@@ -24,6 +24,12 @@ public class BasicSlot implements Slot {
     protected ClickEvent event;
     protected boolean autoSync;
 
+    /**
+     * Creates a new BasicSlot
+     *
+     * @param inventory the inventory
+     * @param slotIndex the slotIndex
+     */
     public BasicSlot(@NotNull final Inventory inventory, final int slotIndex) {
         this.slotIndex = slotIndex;
         this.inventory = inventory;
@@ -87,6 +93,12 @@ public class BasicSlot implements Slot {
         return this.inventory;
     }
 
+    /**
+     * Maps the size of an inventory a slot array
+     *
+     * @param inventory the inventory
+     * @return the slots
+     */
     public static Slot[] createMapping(@NotNull final Inventory inventory) {
         Slot[] slots = new Slot[inventory.getSize()];
         for (int i = 0; i < inventory.getSize(); i++) {

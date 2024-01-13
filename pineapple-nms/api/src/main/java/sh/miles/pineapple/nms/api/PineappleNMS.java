@@ -31,6 +31,7 @@ public interface PineappleNMS {
      *
      * @param human the human to open the menu for
      * @param type  the type of menu to open
+     * @param title the title of the menu to open
      * @param <T>   The ContainerScene type held by the menu
      * @return the menu scene
      * @since 1.0.0

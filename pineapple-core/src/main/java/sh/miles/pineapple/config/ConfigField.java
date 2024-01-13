@@ -15,6 +15,11 @@ public class ConfigField {
     private String path;
     private List<String> comments;
 
+    /**
+     * Creates a new ConfigField
+     *
+     * @param field the reflected field to use
+     */
     public ConfigField(Field field) {
         this.field = field;
         this.isStatic = Modifier.isStatic(field.getModifiers());

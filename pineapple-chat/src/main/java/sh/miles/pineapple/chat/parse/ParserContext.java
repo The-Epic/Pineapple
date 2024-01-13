@@ -23,6 +23,12 @@ public class ParserContext {
         return PineappleParser.parse(message, context);
     }
 
+    /**
+     * Gets a replacement from this ParserContext
+     *
+     * @param key the key
+     * @return the replacement if exists
+     */
     public Object getReplacement(String key) {
         final Object value = replacements.get(key);
         if (value == null) {
@@ -35,6 +41,13 @@ public class ParserContext {
         return styleStack;
     }
 
+    /**
+     * Applies a style to the given builder and text source
+     *
+     * @param builder the component builder
+     * @param text    the original text source
+     * @param context the parser context
+     */
     public void applyStyle(@NotNull final PineappleComponentBuilder builder, @NotNull final String text, ParserContext context) {
         final ColorTag color = styleStack.peekColors();
         if (color instanceof IteratingTag iteratingTag) {

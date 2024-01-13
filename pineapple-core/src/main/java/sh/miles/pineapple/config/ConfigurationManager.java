@@ -29,7 +29,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * The ConfigurationManager handles all config creation, loading and TypeAdapters
@@ -39,11 +38,15 @@ import java.util.logging.Logger;
 public class ConfigurationManager {
 
     private final Map<ConfigType<?>, TypeAdapter<?, ?>> adapters = new HashMap<>();
-    private final Logger logger;
 
+    /**
+     * Creates a new configuration manager
+     *
+     * @param plugin the plugin to use
+     * @since 1.0.0-SNAPSHOT
+     */
     @ApiStatus.Internal
     public ConfigurationManager(Plugin plugin) {
-        this.logger = plugin.getLogger();
 
         registerTypeAdapter(long.class, new PrimitiveAdapter<>(Long.class, Long::parseLong));
         registerTypeAdapter(Long.class, new PrimitiveAdapter<>(Long.class, Long::parseLong));
@@ -75,11 +78,10 @@ public class ConfigurationManager {
     /**
      * Register a TypeAdapter for data (de)serialization
      *
-     * @param clazz runtime class
+     * @param clazz   runtime class
      * @param adapter TypeAdapter that handles serialization/deserialization
-     * @param <S> serialized type
-     * @param <R> runtime class
-     *
+     * @param <S>     serialized type
+     * @param <R>     runtime class
      * @since 1.0.0-SNAPSHOT
      */
     public <S, R> void registerTypeAdapter(Class<R> clazz, TypeAdapter<S, R> adapter) {
@@ -89,11 +91,10 @@ public class ConfigurationManager {
     /**
      * Create an instance based config
      *
-     * @param file the file to save/load
+     * @param file   the file to save/load
      * @param target instance of config class
-     * @return ConfigReloadable<T> instance
-     * @param <T> config class
-     *
+     * @param <T>    config class
+     * @return ConfigReloadable instance
      * @since 1.0.0-SNAPSHOT
      */
     public <T> ReloadableObject<T> createReloadable(File file, T target) {
@@ -101,13 +102,10 @@ public class ConfigurationManager {
     }
 
     /**
-     *
-     *
-     * @param file the file to save/load
+     * @param file   the file to save/load
      * @param target config class
-     * @return ConfigReloadable<T> instance
-     * @param <T> config class
-     *
+     * @param <T>    config class
+     * @return ConfigReloadable instance
      * @since 1.0.0-SNAPSHOT
      */
     public <T> ReloadableClass<T> createStaticReloadable(File file, Class<T> target) {
@@ -118,10 +116,9 @@ public class ConfigurationManager {
      * Gets a TypeAdapterString for the given class
      *
      * @param clazz runtime class
+     * @param <S>   serialized type
+     * @param <R>   runtime class
      * @return TypeAdapterString instance
-     * @param <S> serialized type
-     * @param <R> runtime class
-     *
      * @since 1.0.0-SNAPSHOT
      */
     public <S, R> TypeAdapterString<S, R> getStringAdapter(Class<R> clazz) {
@@ -132,10 +129,9 @@ public class ConfigurationManager {
      * Gets a TypeAdapterString for the given type
      *
      * @param type config type
+     * @param <S>  serialized type
+     * @param <R>  runtime class
      * @return TypeAdapterString instance
-     * @param <S> serialized type
-     * @param <R> runtime class
-     *
      * @since 1.0.0-SNAPSHOT
      */
     @SuppressWarnings("unchecked")
@@ -153,10 +149,9 @@ public class ConfigurationManager {
      * Gets the type adapter for the given class
      *
      * @param clazz runtime class
+     * @param <S>   serialized type
+     * @param <R>   runtime class
      * @return TypeAdapter instance
-     * @param <S> serialized type
-     * @param <R> runtime class
-     *
      * @since 1.0.0-SNAPSHOT
      */
     public <S, R> TypeAdapter<S, R> getAdapter(Class<R> clazz) {
@@ -167,10 +162,9 @@ public class ConfigurationManager {
      * Gets the type adapter for given type
      *
      * @param type config type
+     * @param <S>  serialized type
+     * @param <R>  runtime class
      * @return TypeAdapter instance
-     * @param <S> serialized type
-     * @param <R> runtime class
-     *
      * @since 1.0.0-SNAPSHOT
      */
     @SuppressWarnings("unchecked")

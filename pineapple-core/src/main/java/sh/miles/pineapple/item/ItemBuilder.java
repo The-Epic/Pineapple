@@ -11,7 +11,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.*;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -22,7 +26,11 @@ import sh.miles.pineapple.nms.api.loader.NMSManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 /**
@@ -66,6 +74,7 @@ public class ItemBuilder {
      * Creates a new ItemBuilder from the given material
      *
      * @param material the material
+     * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
      */
     public static ItemBuilder of(Material material) {
@@ -77,6 +86,7 @@ public class ItemBuilder {
      *
      * @param material the material
      * @param amount   the amount
+     * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
      */
     public static ItemBuilder of(Material material, int amount) {
@@ -173,15 +183,8 @@ public class ItemBuilder {
      * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
      */
-    public ItemBuilder lore(@NotNull final List<BaseComponent> lore) {
-        // prep for NMS
-        this.stack.setItemMeta(meta); // set meta to prevent data loss
-
-        List<BaseComponent> itemLore = getLore();
-        itemLore.addAll(lore);
-
-        NMSManager.getPineapple().setItemLore(this.stack, itemLore);
-        return this;
+    public ItemBuilder loreLegacy(String... lore) {
+        return loreLegacy(Arrays.asList(lore));
     }
 
     /**
@@ -191,8 +194,15 @@ public class ItemBuilder {
      * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
      */
-    public ItemBuilder loreLegacy(String... lore) {
-        return loreLegacy(Arrays.asList(lore));
+    public ItemBuilder lore(@NotNull final List<BaseComponent> lore) {
+        // prep for NMS
+        this.stack.setItemMeta(meta); // set meta to prevent data loss
+
+        List<BaseComponent> itemLore = getLore();
+        itemLore.addAll(lore);
+
+        NMSManager.getPineapple().setItemLore(this.stack, itemLore);
+        return this;
     }
 
     /**
@@ -236,6 +246,7 @@ public class ItemBuilder {
 
     /**
      * Applies every enchantment to the item given its an EnchantmentBOok
+     *
      * @param enchantmentAndLevel the enchantment level map
      * @return the ItemBuilder
      * @since 1.0.0-SNAPSHOT
@@ -341,7 +352,9 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder skullTexture(Player player) {
-        if (!(this.meta instanceof SkullMeta)) return this;
+        if (!(this.meta instanceof SkullMeta)) {
+            return this;
+        }
         ((SkullMeta) this.meta).setOwningPlayer(player);
         return this;
     }
@@ -354,8 +367,9 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder dyeColor(Color color) {
-        if (!(this.meta instanceof LeatherArmorMeta))
+        if (!(this.meta instanceof LeatherArmorMeta)) {
             return this;
+        }
 
         ((LeatherArmorMeta) this.meta).setColor(color);
         return this;
@@ -369,8 +383,9 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder potionColor(Color color) {
-        if (!(this.meta instanceof PotionMeta))
+        if (!(this.meta instanceof PotionMeta)) {
             return this;
+        }
 
         ((PotionMeta) this.meta).setColor(color);
         return this;
@@ -384,8 +399,9 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder potionData(PotionData data) {
-        if (!(this.meta instanceof PotionMeta))
+        if (!(this.meta instanceof PotionMeta)){
             return this;
+        }
 
         ((PotionMeta) this.meta).setBasePotionData(data);
         return this;
@@ -399,8 +415,9 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder potionEffect(PotionEffect effect) {
-        if (!(this.meta instanceof PotionMeta))
+        if (!(this.meta instanceof PotionMeta)) {
             return this;
+        }
 
         ((PotionMeta) this.meta).addCustomEffect(effect, true);
         return this;
@@ -414,8 +431,9 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder potionEffects(PotionEffect... effects) {
-        if (!(this.meta instanceof PotionMeta potionMeta))
+        if (!(this.meta instanceof PotionMeta potionMeta)){
             return this;
+        }
 
         for (PotionEffect effect : effects) {
             potionMeta.addCustomEffect(effect, true);

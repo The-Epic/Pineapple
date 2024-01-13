@@ -140,8 +140,12 @@ public class MinecraftVersion {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MinecraftVersion that)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MinecraftVersion that)) {
+            return false;
+        }
         return major == that.major && minor == that.minor && patch == that.patch;
     }
 

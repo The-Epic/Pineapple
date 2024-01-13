@@ -22,15 +22,20 @@ public class PineappleComponent {
     }
 
     /**
-     * Converts
+     * Converts this PineappleComponent to a BaseComponent using the given replacements
      *
-     * @param replacements
-     * @return
+     * @param replacements the replacements
+     * @return the BaseComponent
      */
     public BaseComponent component(@NotNull final Map<String, Object> replacements) {
         return PineappleChat.parse(this.source, replacements);
     }
 
+    /**
+     * Converts this PineappleComponent to a BaseComponent
+     *
+     * @return the BaseComponent
+     */
     public BaseComponent component() {
         if (this.parsed != null) {
             return parsed;

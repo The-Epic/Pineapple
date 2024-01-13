@@ -17,6 +17,7 @@ public final class StringUtils {
     /**
      * Splits over a character instead of using regex
      *
+     * @param string       the string to split
      * @param character    the character to split over
      * @param ignoreQuotes whether or not to ignore the split character in single quotes
      * @return the split string
@@ -50,6 +51,7 @@ public final class StringUtils {
      * Splits over a character instead of using regex
      *
      * @param character the character to split over
+     * @param string    the string to split
      * @return the split string
      * @since 1.0.0-SNAPSHOT
      */
