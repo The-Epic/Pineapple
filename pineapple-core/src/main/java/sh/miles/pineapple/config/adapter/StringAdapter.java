@@ -1,6 +1,8 @@
 package sh.miles.pineapple.config.adapter;
 
-public class StringAdapter implements GenericStringAdapter<String> {
+import sh.miles.pineapple.config.adapter.base.GenericStringAdapter;
+
+class StringAdapter implements GenericStringAdapter<String> {
 
     @Override
     public Class<String> getRuntimeType() {

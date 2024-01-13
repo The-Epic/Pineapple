@@ -2,11 +2,13 @@ package sh.miles.pineapple.config.adapter;
 
 import sh.miles.pineapple.ReflectionUtils;
 import sh.miles.pineapple.config.ConfigType;
+import sh.miles.pineapple.config.adapter.base.ConfigSerializable;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Type;
 
-public class ConfigSerializableAdapter<S, R extends ConfigSerializable<S>> implements TypeAdapter<S, R> {
+class ConfigSerializableAdapter<S, R extends ConfigSerializable<S>> implements TypeAdapter<S, R> {
 
     private final Class<R> clazz;
     private Class<S> savedClass;

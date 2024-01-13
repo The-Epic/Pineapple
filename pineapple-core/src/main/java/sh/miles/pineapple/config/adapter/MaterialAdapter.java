@@ -1,8 +1,9 @@
 package sh.miles.pineapple.config.adapter;
 
 import org.bukkit.Material;
+import sh.miles.pineapple.config.adapter.base.GenericStringAdapter;
 
-public class MaterialAdapter implements GenericStringAdapter<Material> {
+class MaterialAdapter implements GenericStringAdapter<Material> {
 
     @Override
     public Class<Material> getRuntimeType() {

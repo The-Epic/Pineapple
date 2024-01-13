@@ -1,4 +1,4 @@
-package sh.miles.pineapple.config.adapter;
+package sh.miles.pineapple.config.adapter.base;
 
 public interface TypeAdapterString<S, R> extends TypeAdapter<S, R> {
 

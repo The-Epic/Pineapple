@@ -3,7 +3,7 @@ package sh.miles.pineapple.config;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import sh.miles.pineapple.PineappleLib;
-import sh.miles.pineapple.config.adapter.TypeAdapter;
+import sh.miles.pineapple.config.adapter.base.TypeAdapter;
 import sh.miles.pineapple.config.annotation.ConfigEntry;
 import sh.miles.pineapple.config.annotation.PostLoad;
 

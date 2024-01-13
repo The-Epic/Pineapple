@@ -3,7 +3,7 @@ package sh.miles.pineapple;
 import com.google.common.base.Preconditions;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.config.ConfigurationManager;
+import sh.miles.pineapple.config.adapter.ConfigurationManager;
 import sh.miles.pineapple.menu.manage.MenuManager;
 
 import java.util.logging.Logger;
@@ -24,7 +24,7 @@ public class PineappleLib {
 
     private PineappleLib(Plugin plugin) {
         this.plugin = plugin;
-        this.configManager = new ConfigurationManager(plugin);
+        this.configManager = new ConfigurationManager();
         this.menuManager = new MenuManager(plugin);
     }
 

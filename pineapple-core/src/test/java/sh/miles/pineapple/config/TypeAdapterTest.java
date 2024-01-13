@@ -2,7 +2,6 @@ package sh.miles.pineapple.config;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,10 +9,7 @@ import sh.miles.pineapple.BukkitTest;
 import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.chat.PineappleChat;
 import sh.miles.pineapple.chat.PineappleComponent;
-import sh.miles.pineapple.chat.style.ChatColorUtils;
 import sh.miles.pineapple.collection.WeightedRandom;
-import sh.miles.pineapple.config.adapter.ColorAdapter;
-import sh.miles.pineapple.item.ItemBuilder;
 
 import java.io.File;
 import java.util.ArrayDeque;
@@ -25,8 +21,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TypeAdapterTest extends BukkitTest {
 

@@ -1,4 +1,4 @@
-package sh.miles.pineapple.config.adapter;
+package sh.miles.pineapple.config.adapter.base;
 
 /**
  * A static deserialize(type) method is needed for this to function
