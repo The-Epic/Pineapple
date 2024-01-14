@@ -1,4 +1,4 @@
-package sh.miles.pineapple.chat.tag;
+package sh.miles.pineapple.chat.tag.base;
 
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.chat.parse.ParserContext;
