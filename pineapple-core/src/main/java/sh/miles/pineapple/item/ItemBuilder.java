@@ -22,6 +22,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.PineappleLib;
+import sh.miles.pineapple.nms.api.PineappleNMS;
 import sh.miles.pineapple.nms.api.loader.NMSManager;
 
 import java.net.MalformedURLException;
@@ -44,6 +46,8 @@ public class ItemBuilder {
 
     private ItemStack stack;
     private ItemMeta meta;
+    private BaseComponent name = null;
+    private List<BaseComponent> lore = null;
 
     private ItemBuilder() {
     }
@@ -155,9 +159,7 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder name(@NotNull final BaseComponent name) {
-        // prep for NMS
-        this.stack.setItemMeta(meta); // set meta to prevent data loss
-        this.stack = NMSManager.getPineapple().setItemDisplayName(stack, name);
+        this.name = name;
         return this;
     }
 
@@ -195,13 +197,10 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder lore(@NotNull final List<BaseComponent> lore) {
-        // prep for NMS
-        this.stack.setItemMeta(meta); // set meta to prevent data loss
-
         List<BaseComponent> itemLore = getLore();
         itemLore.addAll(lore);
 
-        NMSManager.getPineapple().setItemLore(this.stack, itemLore);
+        this.lore = itemLore;
         return this;
     }
 
@@ -399,7 +398,7 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder potionData(PotionData data) {
-        if (!(this.meta instanceof PotionMeta)){
+        if (!(this.meta instanceof PotionMeta)) {
             return this;
         }
 
@@ -431,7 +430,7 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemBuilder potionEffects(PotionEffect... effects) {
-        if (!(this.meta instanceof PotionMeta potionMeta)){
+        if (!(this.meta instanceof PotionMeta potionMeta)) {
             return this;
         }
 
@@ -457,7 +456,16 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemStack build() {
+        PineappleNMS nms = NMSManager.getPineapple();
         stack.setItemMeta(meta);
+        if (this.name != null) {
+            stack = nms.setItemDisplayName(this.stack, this.name);
+        }
+
+        if (this.lore != null) {
+            stack = nms.setItemLore(this.stack, this.lore);
+        }
+
         return stack;
     }
 }
