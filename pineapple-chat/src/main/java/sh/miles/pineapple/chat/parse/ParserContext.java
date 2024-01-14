@@ -71,5 +71,22 @@ public class ParserContext {
             }
         }
     }
+
+    /**
+     * Applies the style stack to the given component, besides iterating tags which can not be applied to components
+     *
+     * @param builder the builder
+     * @param component the component
+     * @param context the context
+     */
+    public void applyStyle(@NotNull final PineappleComponentBuilder builder, @NotNull final BaseComponent component, ParserContext context) {
+        builder.append(component, PineappleComponentBuilder.FormatRetention.NONE);
+        styleStack.applyTopColor(builder, context);
+        styleStack.applyTopClick(builder, context);
+        styleStack.applyTopHover(builder, context);
+        for (final DecorationTag decoration : styleStack.getDecorations()) {
+            decoration.apply(builder, context);
+        }
+    }
 }
 

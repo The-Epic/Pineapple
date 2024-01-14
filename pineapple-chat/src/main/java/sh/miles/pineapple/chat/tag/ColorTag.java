@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
 import sh.miles.pineapple.chat.parse.ParserContext;
 import sh.miles.pineapple.chat.style.ChatColorUtils;
+import sh.miles.pineapple.chat.tag.base.AbstractTag;
 
 import java.util.Queue;
 

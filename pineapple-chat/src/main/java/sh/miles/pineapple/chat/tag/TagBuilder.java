@@ -2,6 +2,7 @@ package sh.miles.pineapple.chat.tag;
 
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.chat.node.TagNode;
+import sh.miles.pineapple.chat.tag.base.AbstractTag;
 import sh.miles.pineapple.collection.trie.ExecutorTrie;
 
 import java.util.Optional;
@@ -19,6 +20,7 @@ public final class TagBuilder {
         executorTrie.insert("gradient", GradientTag::new);
         executorTrie.insert("click", ClickEventTag::new);
         executorTrie.insert("hover", HoverEventTag::new);
+        executorTrie.insert("lang", TranslatableTag::new);
 
         // NamedDecorations
         executorTrie.insert("bold", NAMED_DECOR);

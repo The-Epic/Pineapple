@@ -8,8 +8,9 @@ import sh.miles.pineapple.chat.node.BaseNode;
 import sh.miles.pineapple.chat.node.BaseNodeParser;
 import sh.miles.pineapple.chat.node.TagNode;
 import sh.miles.pineapple.chat.node.TextNode;
-import sh.miles.pineapple.chat.tag.AbstractTag;
+import sh.miles.pineapple.chat.tag.base.AbstractTag;
 import sh.miles.pineapple.chat.tag.TagBuilder;
+import sh.miles.pineapple.chat.tag.base.TextSupplierTag;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,12 @@ public final class PineappleParser {
         for (final BaseNode child : root.getChildren()) {
             AbstractTag tag = null;
             if (child instanceof TagNode tagNode) {
-                context.getStyleStack().push((tag = TagBuilder.build(tagNode)));
+                tag = TagBuilder.build(tagNode);
+                if (tag instanceof TextSupplierTag) {
+                    tag.apply(builder, context);
+                } else {
+                    context.getStyleStack().push(tag);
+                }
             }
 
             if (child instanceof TextNode textNode) {

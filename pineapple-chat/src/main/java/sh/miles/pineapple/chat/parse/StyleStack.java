@@ -2,7 +2,7 @@ package sh.miles.pineapple.chat.parse;
 
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
-import sh.miles.pineapple.chat.tag.AbstractTag;
+import sh.miles.pineapple.chat.tag.base.AbstractTag;
 import sh.miles.pineapple.chat.tag.ClickEventTag;
 import sh.miles.pineapple.chat.tag.ColorTag;
 import sh.miles.pineapple.chat.tag.DecorationTag;
