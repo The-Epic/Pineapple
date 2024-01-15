@@ -137,6 +137,17 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
         this.slots[slot].setContent(content);
     }
 
+    /**
+     * Forcefully triggers the given slot with the event provided
+     *
+     * @param slot  the slot to trigger
+     * @param event the event
+     */
+    protected void forceTrigger(final int slot, @NotNull final InventoryClickEvent event) {
+        Preconditions.checkArgument(event != null, "The given event must not be null");
+        this.slots[slot].click(this.viewer, event);
+    }
+
     @Override
     public void handleClick(@NotNull final InventoryClickEvent event) {
         if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
