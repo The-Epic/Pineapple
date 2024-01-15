@@ -108,15 +108,19 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      *
      * @param slot    the slot to set the content at
      * @param content the content to set
+     * @return true if the content was set, otherwise false
      * @since 1.0.0-SNAPSHOT
      */
-    protected void setContentAtIfAbsent(final int slot, @Nullable ItemStack content) {
+    protected boolean setContentAtIfAbsent(final int slot, @Nullable ItemStack content) {
         Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, "The given slot must be within the inventory size range");
 
         Slot target = this.slots[slot];
         if (!target.hasContent()) {
             target.setContent(content);
+            return true;
         }
+
+        return false;
     }
 
     /**

@@ -125,6 +125,10 @@ public class PineappleNMSImpl implements PineappleNMS {
         return (FrozenRegistry<T, NamespacedKey>) PineappleNmsRegistry.makeRegistry(clazz);
     }
 
+    private <T> Registry<T> getRegistry(ResourceKey<? extends Registry<T>> registryKey) {
+        return ((CraftServer) Bukkit.getServer()).getHandle().getServer().registryAccess().registryOrThrow(registryKey);
+    }
+
     @Override
     public ItemStack setItemDisplayName(@NotNull final ItemStack item, final BaseComponent displayName) {
         final CraftItemStack craftItem = ensureCraftItemStack(item);
@@ -206,10 +210,6 @@ public class PineappleNMSImpl implements PineappleNMS {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private <T> Registry<T> getRegistry(ResourceKey<? extends Registry<T>> registryKey) {
-        return ((CraftServer) Bukkit.getServer()).getHandle().getServer().registryAccess().registryOrThrow(registryKey);
     }
 
     private CraftItemStack ensureCraftItemStack(ItemStack item) {
