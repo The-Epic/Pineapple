@@ -135,7 +135,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
 
     @Override
     public void handleClick(@NotNull final InventoryClickEvent event) {
-        if (event.getClickedInventory().equals(event.getView().getTopInventory())) {
+        if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
             event.setCancelled(true);
             final int index = event.getSlot();
             this.slots[index].click((Player) event.getWhoClicked(), event);
