@@ -32,8 +32,8 @@ public class JsonHelper {
     public JsonHelper(@NotNull final Consumer<GsonBuilder> build) {
         final GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
-        build.accept(builder);
         JsonAdapters.registerAll(builder);
+        build.accept(builder);
         this.gson = builder.create();
     }
 

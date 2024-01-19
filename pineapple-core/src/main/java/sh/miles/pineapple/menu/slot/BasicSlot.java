@@ -78,6 +78,12 @@ public class BasicSlot implements Slot {
     }
 
     @Override
+    public void setDetail(@Nullable final ItemStack content, @Nullable final ClickEvent event) {
+        setContent(content);
+        setEvent(event);
+    }
+
+    @Override
     public void setEvent(@Nullable final ClickEvent event) {
         this.event = event == null ? ClickEvent.EMPTY : event;
     }

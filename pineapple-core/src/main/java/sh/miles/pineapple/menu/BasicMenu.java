@@ -133,19 +133,19 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      */
     protected void setSlotDetail(final int slot, @Nullable ItemStack content, @Nullable ClickEvent event) {
         Preconditions.checkArgument(slot < slots.length && slot > -1, "The given slot must be within the inventory size range");
-        this.slots[slot].setEvent(event);
-        this.slots[slot].setContent(content);
+        this.slots[slot].setDetail(content, event);
     }
 
     /**
-     * Forcefully triggers the given slot with the event provided
+     * Gets a slot at the specified slot
      *
-     * @param slot  the slot to trigger
-     * @param event the event
+     * @param slot the slot to get
+     * @return the slot at the specified slot
      */
-    protected void forceTrigger(final int slot, @NotNull final InventoryClickEvent event) {
-        Preconditions.checkArgument(event != null, "The given event must not be null");
-        this.slots[slot].click(this.viewer, event);
+    @NotNull
+    protected Slot getSlot(final int slot) {
+        Preconditions.checkArgument(slot < slots.length && slot > -1, "The given slot must be within the inventory size range");
+        return this.slots[slot];
     }
 
     @Override

@@ -91,6 +91,14 @@ public interface Slot {
     void setContent(@Nullable ItemStack content);
 
     /**
+     * Sets the details of this slot
+     *
+     * @param content the content
+     * @param event   the click event
+     */
+    void setDetail(@Nullable ItemStack content, @Nullable ClickEvent event);
+
+    /**
      * Sets whether or not this slot should auto sync.
      *
      * @param autoSync true to auto sync, otherwise false
