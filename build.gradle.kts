@@ -33,9 +33,9 @@ subprojects {
 
     dependencies {
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-        testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 
-        compileOnly ("org.jetbrains:annotations-java5:24.0.1")
+        compileOnly("org.jetbrains:annotations-java5:24.0.1")
     }
 
     tasks.compileJava {
@@ -63,6 +63,10 @@ tasks.withType<Javadoc> {
         "https://hub.spigotmc.org/javadocs/spigot/",
         "https://javadoc.io/doc/org.jetbrains/annotations-java5/24.0.1",
         "https://repo.jeff-media.com/javadoc/public/com/jeff_media/MorePersistentDataTypes/2.4.0/raw/"
+    )
+    options.tags(
+        "NMS:a:Requires NMS",
+        "PullRequested:a:A Pull Request is open"
     )
 }
 

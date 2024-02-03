@@ -214,9 +214,11 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
 
     @Override
     public void handleClick(@NotNull final InventoryClickEvent event) {
-        event.setCancelled(true);
-        final int index = event.getSlot();
-        this.pages.get(this.currentPageIndex)[index].click((Player) event.getWhoClicked(), event);
+        if (event.getClickedInventory() != null && event.getClickedInventory().equals(event.getView().getTopInventory())) {
+            event.setCancelled(true);
+            final int index = event.getSlot();
+            this.pages.get(this.currentPageIndex)[index].click((Player) event.getWhoClicked(), event);
+        }
     }
 
     @Override
