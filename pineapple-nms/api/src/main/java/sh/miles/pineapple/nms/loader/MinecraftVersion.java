@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * A class that represents a minecraft version
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class MinecraftVersion {
 
@@ -23,8 +23,6 @@ public class MinecraftVersion {
 
     static {
         final Map<String, MinecraftVersion> temp = new HashMap<>();
-        temp.put("1.20.1", new MinecraftVersion("1.20.1", "v1_20_R1"));
-        temp.put("1.20.2", new MinecraftVersion("1.20.2", "v1_20_R2"));
         temp.put("1.20.4", new MinecraftVersion("1.20.4", "v1_20_R3"));
         protocolMap = ImmutableMap.copyOf(temp);
 

@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import sh.miles.pineapple.nms.annotations.PullRequested;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public interface PineappleNMS {
      * @since 1.0.0
      */
     @Nullable
+    @PullRequested
     InventoryView openInventory(@NotNull final Player player, @NotNull final Inventory inventory, @NotNull BaseComponent title);
 
     /**
@@ -39,6 +41,8 @@ public interface PineappleNMS {
      * @return the item with its display name changed
      * @since 1.0.0
      */
+    @NotNull
+    @PullRequested
     ItemStack setItemDisplayName(@NotNull final ItemStack item, BaseComponent displayName);
 
     /**
@@ -49,6 +53,8 @@ public interface PineappleNMS {
      * @return the item with its lore changed
      * @since 1.0.0
      */
+    @NotNull
+    @PullRequested
     ItemStack setItemLore(@NotNull final ItemStack item, List<BaseComponent> lore);
 
     /**
@@ -58,6 +64,8 @@ public interface PineappleNMS {
      * @return the lore
      * @since 1.0.0
      */
+    @NotNull
+    @PullRequested
     List<BaseComponent> getItemLore(@NotNull final ItemStack item);
 
     /**

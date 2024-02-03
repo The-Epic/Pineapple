@@ -71,6 +71,7 @@ public class PineappleNMSImpl implements PineappleNMS {
         return nms.containerMenu.getBukkitView();
     }
 
+    @NotNull
     @Override
     public ItemStack setItemDisplayName(@NotNull final ItemStack item, final BaseComponent displayName) {
         final CraftItemStack craftItem = ensureCraftItemStack(item);
@@ -79,6 +80,7 @@ public class PineappleNMSImpl implements PineappleNMS {
         return CraftItemStack.asBukkitCopy(nmsItem);
     }
 
+    @NotNull
     @Override
     public ItemStack setItemLore(@NotNull ItemStack item, @NotNull List<BaseComponent> lore) {
         final CraftItemStack craftItem = ensureCraftItemStack(item);
@@ -100,7 +102,7 @@ public class PineappleNMSImpl implements PineappleNMS {
     }
 
     @Override
-    public List<BaseComponent> getItemLore(@NotNull final ItemStack item) {
+    public @NotNull List<BaseComponent> getItemLore(@NotNull final ItemStack item) {
         final CraftItemStack craftItem = ensureCraftItemStack(item);
         final net.minecraft.world.item.ItemStack nmsItem = getItemStackHandle(craftItem);
 

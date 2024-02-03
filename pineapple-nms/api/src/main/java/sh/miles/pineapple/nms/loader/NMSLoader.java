@@ -11,7 +11,7 @@ import sh.miles.pineapple.nms.api.PineappleNMS;
 public class NMSLoader {
 
     private static final String PATH = "sh.miles.pineapple.nms.impl.%s.%s";
-    private static PineappleNMS handle = getHandle();
+    private static final PineappleNMS handle = getHandle();
 
     private NMSLoader() {
         throw new UnsupportedOperationException("That isn't very fresh of you sneaky boy ;)");
@@ -28,7 +28,7 @@ public class NMSLoader {
      * pineapple has been commercially grown in greenhouses and many tropical plantations.
      *
      * @return the pineapple
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     @NotNull
     public static PineappleNMS getPineapple() {
@@ -39,7 +39,7 @@ public class NMSLoader {
      * Creates a NMS handle
      *
      * @return returns the type of handle
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     @ApiStatus.Internal
     private static PineappleNMS getHandle() {

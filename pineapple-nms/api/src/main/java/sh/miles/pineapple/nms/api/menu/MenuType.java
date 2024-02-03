@@ -9,6 +9,12 @@ import sh.miles.pineapple.nms.api.menu.scene.AnvilScene;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
 
+/**
+ * Represents a Menu that can be viewed by a player
+ *
+ * @param <T> the type of scene and data associated with that view
+ * @since 1.0.0
+ */
 public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey> {
 
     MenuType<MenuScene> GENERIC_9x1 = get("generic_9x1");
@@ -42,6 +48,7 @@ public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey
      * @param player the player
      * @param title  the title
      * @return a container scene
+     * @since 1.0.0
      */
     T create(@NotNull final HumanEntity player, @NotNull final BaseComponent title);
 

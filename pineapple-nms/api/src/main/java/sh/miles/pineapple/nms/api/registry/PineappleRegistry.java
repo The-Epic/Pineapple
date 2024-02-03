@@ -6,9 +6,18 @@ import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.loader.NMSLoader;
 import sh.miles.pineapple.nms.api.menu.MenuType;
 
-public interface PineappleRegistry {
+/**
+ * A class full of different types of Registries that can used
+ *
+ * @since 1.0.0
+ */
+public final class PineappleRegistry {
 
-    Registry<MenuType<?>, NamespacedKey> MENU = make(MenuType.class);
+    public static final Registry<MenuType<?>, NamespacedKey> MENU = make(MenuType.class);
+
+    private PineappleRegistry() {
+        throw new UnsupportedOperationException("You can not instantiate a utility class");
+    }
 
     private static <T extends RegistryKey<NamespacedKey>> Registry<T, NamespacedKey> make(Class<? super T> interfaceClass) {
         return NMSLoader.getPineapple().getUnsafe().getRegistry(interfaceClass);
