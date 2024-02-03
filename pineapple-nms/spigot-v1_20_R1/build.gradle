@@ -1,8 +1,0 @@
-dependencies {
-    compileOnly 'org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT:remapped-mojang'
-    compileOnly project(':pineapple-utils')
-}
-
-remap {
-    version = '1.20.1'
-}

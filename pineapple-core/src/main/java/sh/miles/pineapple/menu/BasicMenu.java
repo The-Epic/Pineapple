@@ -25,6 +25,8 @@ import java.util.function.Supplier;
  */
 public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
 
+    private static final String OUT_OF_BOUNDS = "The given slot must be within the inventory size range";
+
     private final T scene;
     private final Player viewer;
     private final Inventory inventory;
@@ -75,7 +77,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
         Preconditions.checkArgument(index < slots.length && index > -1, "The given index must be within the inventory size range");
 
         Slot slot = slotSupplier.get();
-        Preconditions.checkArgument(slot != null, "The given slot must not be null");
+        Preconditions.checkArgument(slot != null, OUT_OF_BOUNDS);
         this.slots[index] = slot;
     }
 
@@ -87,7 +89,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      * @since 1.0.0-SNAPSHOT
      */
     protected void setEventAt(final int slot, @Nullable final ClickEvent event) {
-        Preconditions.checkArgument(slot < slots.length && slot > -1, "The given slot must be within the inventory size range");
+        Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);
         this.slots[slot].setEvent(event);
     }
 
@@ -99,7 +101,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      * @since 1.0.0-SNAPSHOT
      */
     protected void setContentAt(final int slot, @Nullable ItemStack content) {
-        Preconditions.checkArgument(slot < slots.length && slot > -1, "The given slot must be within the inventory size range");
+        Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);
         this.slots[slot].setContent(content);
     }
 
@@ -112,7 +114,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      * @since 1.0.0-SNAPSHOT
      */
     protected boolean setContentAtIfAbsent(final int slot, @Nullable ItemStack content) {
-        Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, "The given slot must be within the inventory size range");
+        Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, OUT_OF_BOUNDS);
 
         Slot target = this.slots[slot];
         if (!target.hasContent()) {
@@ -132,7 +134,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      * @since 1.0.0-SNAPSHOT
      */
     protected void setSlotDetail(final int slot, @Nullable ItemStack content, @Nullable ClickEvent event) {
-        Preconditions.checkArgument(slot < slots.length && slot > -1, "The given slot must be within the inventory size range");
+        Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);
         this.slots[slot].setDetail(content, event);
     }
 
@@ -144,7 +146,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      */
     @NotNull
     protected Slot getSlot(final int slot) {
-        Preconditions.checkArgument(slot < slots.length && slot > -1, "The given slot must be within the inventory size range");
+        Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);
         return this.slots[slot];
     }
 

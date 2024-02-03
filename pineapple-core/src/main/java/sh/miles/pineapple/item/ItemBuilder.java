@@ -22,7 +22,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.PineappleLib;
 import sh.miles.pineapple.nms.api.PineappleNMS;
 import sh.miles.pineapple.nms.api.loader.NMSManager;
 
