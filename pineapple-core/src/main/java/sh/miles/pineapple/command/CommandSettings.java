@@ -1,11 +1,9 @@
 package sh.miles.pineapple.command;
 
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.ApiStatus;
-import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
 
 /**
  * Represents CommandSettings that can be applied to a command for enhanced feature sets
@@ -14,8 +12,8 @@ import sh.miles.pineapple.chat.bungee.PineappleComponentBuilder;
  */
 public class CommandSettings {
 
-    private static final BaseComponent DEFAULT_PERMISSION_MESSAGE = PineappleComponentBuilder.unarray(TextComponent.fromLegacyText("You do not have permission for this", ChatColor.RED));
-    private static final BaseComponent DEFAULT_INVALID_SENDER_MESSAGE = PineappleComponentBuilder.unarray(TextComponent.fromLegacyText("You are not a valid sender for this command", ChatColor.RED));
+    private static final BaseComponent DEFAULT_PERMISSION_MESSAGE = new TextComponent("You do not have permission for this");
+    private static final BaseComponent DEFAULT_INVALID_SENDER_MESSAGE = new TextComponent("You are not a valid sender for this command");
     public static final Settings DEFAULT_COMMAND_SETTINGS = new Settings(DEFAULT_PERMISSION_MESSAGE, DEFAULT_INVALID_SENDER_MESSAGE);
 
     private BaseComponent permissionMessage;
