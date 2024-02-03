@@ -3,7 +3,6 @@ package sh.miles.pineapple.nms.api;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -15,7 +14,6 @@ import sh.miles.pineapple.collection.registry.FrozenRegistry;
 import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.menu.MenuType;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
-import sh.miles.pineapple.nms.api.world.damagesource.DamageType;
 
 import java.util.List;
 
@@ -102,15 +100,6 @@ public interface PineappleNMS {
      * @return the lore
      */
     List<BaseComponent> getItemLore(@NotNull final ItemStack item);
-
-    /**
-     * Gets the last DamageType that an entity experienced
-     *
-     * @param entity the entity
-     * @return the last damage type or null
-     */
-    @Nullable
-    DamageType getEntityLastDamageType(@NotNull final LivingEntity entity);
 
     @ApiStatus.Internal
     @NotNull

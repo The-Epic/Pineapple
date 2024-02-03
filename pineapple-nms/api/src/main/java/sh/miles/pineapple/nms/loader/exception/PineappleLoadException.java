@@ -1,4 +1,4 @@
-package sh.miles.pineapple.nms.api.loader.exception;
+package sh.miles.pineapple.nms.loader.exception;
 
 public class PineappleLoadException extends IllegalStateException {
 

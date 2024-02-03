@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.chat.PineappleChat;
 import sh.miles.pineapple.json.JsonAdapter;
-import sh.miles.pineapple.nms.api.loader.NMSManager;
+import sh.miles.pineapple.nms.loader.NMSLoader;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -50,12 +50,12 @@ class ItemStackAdapter implements JsonAdapter<ItemStack> {
         ItemStack item = new ItemStack(itemType);
         final BaseComponent name = parseName(parent);
         if (name != null) {
-            item = NMSManager.getPineapple().setItemDisplayName(item, name);
+            item = NMSLoader.getPineapple().setItemDisplayName(item, name);
         }
 
         final List<BaseComponent> lore = parseLore(parent);
         if (!lore.isEmpty()) {
-            item = NMSManager.getPineapple().setItemLore(item, lore);
+            item = NMSLoader.getPineapple().setItemLore(item, lore);
         }
         parseEnchantment(parent).forEach(item::addEnchantment);
         final ItemMeta meta = item.getItemMeta();

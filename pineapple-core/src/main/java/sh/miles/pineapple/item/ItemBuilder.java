@@ -23,7 +23,7 @@ import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.nms.api.PineappleNMS;
-import sh.miles.pineapple.nms.api.loader.NMSManager;
+import sh.miles.pineapple.nms.loader.NMSLoader;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -445,7 +445,7 @@ public class ItemBuilder {
     }
 
     private List<BaseComponent> getLore() {
-        return new ArrayList<>(NMSManager.getPineapple().getItemLore(this.stack));
+        return new ArrayList<>(NMSLoader.getPineapple().getItemLore(this.stack));
     }
 
     /**
@@ -455,7 +455,7 @@ public class ItemBuilder {
      * @since 1.0.0-SNAPSHOT
      */
     public ItemStack build() {
-        PineappleNMS nms = NMSManager.getPineapple();
+        PineappleNMS nms = NMSLoader.getPineapple();
         stack.setItemMeta(meta);
         if (this.name != null) {
             stack = nms.setItemDisplayName(this.stack, this.name);

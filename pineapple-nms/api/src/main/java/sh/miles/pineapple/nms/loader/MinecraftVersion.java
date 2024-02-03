@@ -1,10 +1,10 @@
-package sh.miles.pineapple.nms.api.loader;
+package sh.miles.pineapple.nms.loader;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.nms.api.loader.exception.PineappleLoadException;
+import sh.miles.pineapple.nms.loader.exception.PineappleLoadException;
 
 import java.util.HashMap;
 import java.util.Map;

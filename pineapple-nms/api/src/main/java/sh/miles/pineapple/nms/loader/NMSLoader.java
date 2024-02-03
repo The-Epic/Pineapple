@@ -1,4 +1,4 @@
-package sh.miles.pineapple.nms.api.loader;
+package sh.miles.pineapple.nms.loader;
 
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -8,12 +8,12 @@ import sh.miles.pineapple.nms.api.PineappleNMS;
 /**
  * Provides Management for NMS Classes
  */
-public class NMSManager {
+public class NMSLoader {
 
     private static final String PATH = "sh.miles.pineapple.nms.impl.%s.%s";
     private static PineappleNMS handle = getHandle();
 
-    private NMSManager() {
+    private NMSLoader() {
         throw new UnsupportedOperationException("That isn't very fresh of you sneaky boy ;)");
     }
 

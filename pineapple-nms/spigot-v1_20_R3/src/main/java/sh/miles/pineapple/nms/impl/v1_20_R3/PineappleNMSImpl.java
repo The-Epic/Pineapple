@@ -9,19 +9,16 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftContainer;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_20_R3.util.CraftMagicNumbers;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -34,10 +31,8 @@ import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.PineappleNMS;
 import sh.miles.pineapple.nms.api.menu.MenuType;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
-import sh.miles.pineapple.nms.api.world.damagesource.DamageType;
 import sh.miles.pineapple.nms.impl.v1_20_R3.internal.ComponentUtils;
 import sh.miles.pineapple.nms.impl.v1_20_R3.registry.PineappleNmsRegistry;
-import sh.miles.pineapple.nms.impl.v1_20_R3.world.damagesource.PineappleDamageType;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -101,21 +96,6 @@ public class PineappleNMSImpl implements PineappleNMS {
         nms.containerMenu = menu;
         nms.initMenu(menu);
         return nms.containerMenu.getBukkitView();
-    }
-
-    @Nullable
-    @Override
-    public DamageType getEntityLastDamageType(@NotNull final LivingEntity entity) {
-        final net.minecraft.world.entity.LivingEntity livingEntity = ((CraftLivingEntity) entity).getHandle();
-        try {
-            final DamageSource source = (DamageSource) livingEntityLastDamageSourceHandle.bindTo(livingEntity).invoke();
-            if (source == null) {
-                return null;
-            }
-            return PineappleDamageType.minecraftToPineapple(source.type());
-        } catch (Throwable e) {
-            throw new IllegalStateException(e);
-        }
     }
 
     @SuppressWarnings("unchecked")
