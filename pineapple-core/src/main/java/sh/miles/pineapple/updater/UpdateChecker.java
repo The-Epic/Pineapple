@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 /**
  * Checks Updates for your plugin
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class UpdateChecker {
 
@@ -30,7 +30,7 @@ public class UpdateChecker {
      * Retrieves the version information from the given URL and invokes the provided consumer with the version string.
      *
      * @param consumer the consumer to be invoked with the version string
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {

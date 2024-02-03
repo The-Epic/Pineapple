@@ -31,7 +31,7 @@ import java.util.Map;
  * <p>
  * Note if you need to reflect this class you are doing something wrong.
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 @ApiStatus.Internal
 class ItemStackAdapter implements JsonAdapter<ItemStack> {

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Equivalent to {@link TabCompleter}
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 @FunctionalInterface
 public interface CommandCompleter {
@@ -20,7 +20,7 @@ public interface CommandCompleter {
      * @param sender the sender to complete
      * @param args   the args
      * @return the list string
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     List<String> complete(@NotNull final CommandSender sender, @NotNull final String[] args);
 

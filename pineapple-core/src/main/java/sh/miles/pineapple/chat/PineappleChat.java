@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * The main PineappleChat access point
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public final class PineappleChat {
 
@@ -24,7 +24,7 @@ public final class PineappleChat {
      *
      * @param string the string to parse
      * @return the BaseComponent
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static BaseComponent parse(@NotNull final String string) {
         return bungeeContext.parse(string);
@@ -36,7 +36,7 @@ public final class PineappleChat {
      * @param string       the string to parse
      * @param replacements the replacements to put into the string
      * @return the BaseComponent
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static BaseComponent parse(@NotNull final String string, @NotNull final Map<String, Object> replacements) {
         return bungeeContext.parse(string, replacements);
@@ -49,7 +49,7 @@ public final class PineappleChat {
      *
      * @param source the source string to create a PineappleComponent from.
      * @return the PineappleComponent
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static PineappleComponent component(@NotNull final String source) {
         return new PineappleComponent(source);

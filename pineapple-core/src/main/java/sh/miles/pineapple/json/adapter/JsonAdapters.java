@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * Medium class used to register all TypeAdapter's provided by pineapple to a GsonBuilder
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public final class JsonAdapters {
 
@@ -25,7 +25,7 @@ public final class JsonAdapters {
      * </ul>
      *
      * @param builder the GsonBuilder to register them too
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static void registerAll(GsonBuilder builder) {
         builder.registerTypeAdapter(ItemStack.class, new ItemStackAdapter());

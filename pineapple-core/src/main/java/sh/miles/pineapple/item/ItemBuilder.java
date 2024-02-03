@@ -37,7 +37,7 @@ import java.util.function.Consumer;
 /**
  * A Useful ItemBuilder that provides a variety of methods used to build ItemStack's easily.
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class ItemBuilder {
 
@@ -55,7 +55,7 @@ public class ItemBuilder {
      * Creates a new ItemBuilder from the given material
      *
      * @param material the material
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     private ItemBuilder(Material material) {
         this(material, 1);
@@ -66,7 +66,7 @@ public class ItemBuilder {
      *
      * @param material the material
      * @param amount   the amount
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     private ItemBuilder(Material material, int amount) {
         this.stack = new ItemStack(material, amount);
@@ -78,7 +78,7 @@ public class ItemBuilder {
      *
      * @param material the material
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static ItemBuilder of(Material material) {
         return new ItemBuilder(material);
@@ -90,7 +90,7 @@ public class ItemBuilder {
      * @param material the material
      * @param amount   the amount
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static ItemBuilder of(Material material, int amount) {
         return new ItemBuilder(material, amount);
@@ -101,7 +101,7 @@ public class ItemBuilder {
      *
      * @param stack the stack to modify
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static ItemBuilder modifyStack(ItemStack stack) {
         ItemBuilder builder = new ItemBuilder();
@@ -115,7 +115,7 @@ public class ItemBuilder {
      *
      * @param stack the item stack to clone, then modify
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static ItemBuilder modifyStackClone(ItemStack stack) {
         return modifyStack(stack.clone());
@@ -128,7 +128,7 @@ public class ItemBuilder {
      * @param action   the modification to be done
      * @param <T>      the type of ItemMeta
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public <T extends ItemMeta> ItemBuilder modify(Class<T> metaType, Consumer<T> action) {
         if (!metaType.isAssignableFrom(meta.getClass())) {
@@ -155,7 +155,7 @@ public class ItemBuilder {
      *
      * @param name the name to set on the item
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder name(@NotNull final BaseComponent name) {
         this.name = name;
@@ -167,7 +167,7 @@ public class ItemBuilder {
      *
      * @param lore the lore to set on the item
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder loreLegacy(@NotNull final List<String> lore) {
         List<String> itemLore = getLoreLegacy();
@@ -182,7 +182,7 @@ public class ItemBuilder {
      *
      * @param lore the lore to set on the item
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder loreLegacy(String... lore) {
         return loreLegacy(Arrays.asList(lore));
@@ -193,7 +193,7 @@ public class ItemBuilder {
      *
      * @param lore the lore to set on the item
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder lore(@NotNull final List<BaseComponent> lore) {
         List<BaseComponent> itemLore = getLore();
@@ -209,7 +209,7 @@ public class ItemBuilder {
      * @param enchantment the enchantment
      * @param level       the level
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder enchantment(Enchantment enchantment, int level) {
         this.meta.addEnchant(enchantment, level, true);
@@ -222,7 +222,7 @@ public class ItemBuilder {
      * @param enchantment the enchantment
      * @param level       the level
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder storedEnchantment(Enchantment enchantment, int level) {
         return modify(EnchantmentStorageMeta.class, meta -> meta.addStoredEnchant(enchantment, level, true));
@@ -233,7 +233,7 @@ public class ItemBuilder {
      *
      * @param enchantmentAndLevel the enchantment level map
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder enchantments(Map<Enchantment, Integer> enchantmentAndLevel) {
         for (Map.Entry<Enchantment, Integer> entry : enchantmentAndLevel.entrySet()) {
@@ -247,7 +247,7 @@ public class ItemBuilder {
      *
      * @param enchantmentAndLevel the enchantment level map
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder storedEnchantments(Map<Enchantment, Integer> enchantmentAndLevel) {
         for (final Map.Entry<Enchantment, Integer> entry : enchantmentAndLevel.entrySet()) {
@@ -260,7 +260,7 @@ public class ItemBuilder {
      * Sets the item to unbreakable
      *
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder unbreakable() {
         this.meta.setUnbreakable(true);
@@ -272,7 +272,7 @@ public class ItemBuilder {
      *
      * @param flags the flags to add
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder flags(ItemFlag... flags) {
         this.meta.addItemFlags(flags);
@@ -288,7 +288,7 @@ public class ItemBuilder {
      * @param <T>   the complex type
      * @param <Z>   the primitive type
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public <T, Z> ItemBuilder persistentData(NamespacedKey key, PersistentDataType<T, Z> type, Z value) {
         this.meta.getPersistentDataContainer().set(key, type, value);
@@ -300,7 +300,7 @@ public class ItemBuilder {
      *
      * @param data the data
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder modelData(int data) {
         this.meta.setCustomModelData(data);
@@ -313,7 +313,7 @@ public class ItemBuilder {
      * @param attribute the attribute
      * @param modifier  the modifier
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder modifier(Attribute attribute, AttributeModifier modifier) {
         this.meta.addAttributeModifier(attribute, modifier);
@@ -325,7 +325,7 @@ public class ItemBuilder {
      *
      * @param texture the base64 string
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder skullTexture(String texture) {
         return modify(SkullMeta.class, meta -> {
@@ -347,7 +347,7 @@ public class ItemBuilder {
      *
      * @param player the player
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder skullTexture(Player player) {
         if (!(this.meta instanceof SkullMeta)) {
@@ -362,7 +362,7 @@ public class ItemBuilder {
      *
      * @param color the color
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder dyeColor(Color color) {
         if (!(this.meta instanceof LeatherArmorMeta)) {
@@ -378,7 +378,7 @@ public class ItemBuilder {
      *
      * @param color the color
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder potionColor(Color color) {
         if (!(this.meta instanceof PotionMeta)) {
@@ -394,7 +394,7 @@ public class ItemBuilder {
      *
      * @param data the PotionData
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder potionData(PotionData data) {
         if (!(this.meta instanceof PotionMeta)) {
@@ -410,7 +410,7 @@ public class ItemBuilder {
      *
      * @param effect the effect
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder potionEffect(PotionEffect effect) {
         if (!(this.meta instanceof PotionMeta)) {
@@ -426,7 +426,7 @@ public class ItemBuilder {
      *
      * @param effects the effects
      * @return the ItemBuilder
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemBuilder potionEffects(PotionEffect... effects) {
         if (!(this.meta instanceof PotionMeta potionMeta)) {
@@ -452,7 +452,7 @@ public class ItemBuilder {
      * Builds The ItemStack
      *
      * @return the item stack
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public ItemStack build() {
         PineappleNMS nms = NMSLoader.getPineapple();

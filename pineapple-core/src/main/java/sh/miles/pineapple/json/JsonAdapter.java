@@ -11,7 +11,7 @@ import java.util.function.Function;
  * An adapter for to and from json operations
  *
  * @param <T> the type
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public interface JsonAdapter<T> extends JsonSerializer<T>, JsonDeserializer<T> {
 
@@ -19,7 +19,7 @@ public interface JsonAdapter<T> extends JsonSerializer<T>, JsonDeserializer<T> {
      * Retrieves the type of the adapter
      *
      * @return the type of the adapter
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     Class<T> getAdapterType();
 
@@ -28,7 +28,7 @@ public interface JsonAdapter<T> extends JsonSerializer<T>, JsonDeserializer<T> {
      * or just a normal type adapter.
      *
      * @return true if the adapter should be used in a hierarchy, otherwise false
-     * @since @since 1.0.0-SNAPSHOT
+     * @since @since 1.0.0
      */
     default boolean isHierarchy() {
         return false;
@@ -43,7 +43,7 @@ public interface JsonAdapter<T> extends JsonSerializer<T>, JsonDeserializer<T> {
      * @param <K>        the return value that was mapped from a JsonElement
      * @return the desired value
      * @throws IllegalArgumentException throws an exception given the given key has no proper field
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     static <K> K getOrFail(String key, JsonObject parent, Function<JsonElement, K> conversion) throws IllegalArgumentException {
         return getOrFail(key, parent, conversion, "The provided key %s does not exist so the given key could not be adapted".formatted(key));
@@ -59,7 +59,7 @@ public interface JsonAdapter<T> extends JsonSerializer<T>, JsonDeserializer<T> {
      * @param <K>         the return value that was mapped from a JsonElement
      * @return the desired value
      * @throws IllegalArgumentException throws an exception given the given key has no proper field
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     static <K> K getOrFail(String key, JsonObject parent, Function<JsonElement, K> conversion, String failMessage) throws IllegalArgumentException {
         if (!parent.has(key)) {

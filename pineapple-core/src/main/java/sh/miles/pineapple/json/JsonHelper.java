@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 /**
  * A utility to help with Json read and write operations
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class JsonHelper {
 
@@ -27,7 +27,7 @@ public class JsonHelper {
      * Creates the JsonHelper by using the GsonBuilder with the provided arguments
      *
      * @param build the builder function
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public JsonHelper(@NotNull final Consumer<GsonBuilder> build) {
         final GsonBuilder builder = new GsonBuilder();
@@ -41,7 +41,7 @@ public class JsonHelper {
      * Creates a JsonAdapter from a List of JsonAdapter's and registers them according to their settings
      *
      * @param adapters the adapters to register with this JsonHelper
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public JsonHelper(@NotNull final List<JsonAdapter<?>> adapters) {
         final GsonBuilder builder = new GsonBuilder();
@@ -61,7 +61,7 @@ public class JsonHelper {
      * Creates a JsonAdapter from an Array of JsonAdapter's and registers them according to their settings
      *
      * @param adapters the adapters to register with this JsonHelper
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public JsonHelper(@NotNull final JsonAdapter<?>... adapters) {
         this(Arrays.asList(adapters));
@@ -79,7 +79,7 @@ public class JsonHelper {
      * @param <T>        the type of the array return
      * @return the array of objects
      * @throws IllegalStateException thrown under the exception where no file is found
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     @NotNull
     public <T> T[] asArray(@NotNull final Plugin plugin, @NotNull String file, Class<T[]> arrayClazz) throws IllegalStateException {
@@ -96,7 +96,7 @@ public class JsonHelper {
      * Gets the gson object associated with this JsonHelper for more fine tuned parsing
      *
      * @return the gson
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     @NotNull
     public Gson getGson() {

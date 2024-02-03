@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * The MenuManager manages general menu registration.
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class MenuManager {
 
@@ -28,7 +28,7 @@ public class MenuManager {
      * Registers the menu with the manager.
      *
      * @param menu the menu to register
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public void register(@NotNull final Menu<?> menu) {
         menus.put(menu.getScene().getBukkitView().getTopInventory(), menu);
@@ -38,7 +38,7 @@ public class MenuManager {
      * Unregisters the menu with the manager.
      *
      * @param inventory the inventory to remove
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public void unregister(@NotNull final Inventory inventory) {
         menus.remove(inventory);
@@ -49,7 +49,7 @@ public class MenuManager {
      *
      * @param inventory the inventory to get the Menu of
      * @return the possible Menu
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public Optional<Menu<?>> getMenu(@NotNull final Inventory inventory) {
         return Optional.ofNullable(menus.get(inventory));

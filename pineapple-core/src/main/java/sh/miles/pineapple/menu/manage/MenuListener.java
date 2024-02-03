@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * This class should not be registered or implemented by plugins. If you need to reflectively access this listener you
  * ARE doing something wrong.
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 @ApiStatus.Internal
 class MenuListener implements Listener {

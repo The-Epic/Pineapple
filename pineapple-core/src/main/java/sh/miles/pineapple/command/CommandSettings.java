@@ -8,7 +8,7 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * Represents CommandSettings that can be applied to a command for enhanced feature sets
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class CommandSettings {
 
@@ -23,7 +23,7 @@ public class CommandSettings {
      * Sets the permission message
      *
      * @param permissionMessage the message to set
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public void setPermissionMessage(BaseComponent permissionMessage) {
         this.permissionMessage = permissionMessage.duplicate();
@@ -33,7 +33,7 @@ public class CommandSettings {
      * Sets the invalid sender message
      *
      * @param invalidSenderMessage the invalid sender message to set
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public void setInvalidSenderMessage(BaseComponent invalidSenderMessage) {
         this.invalidSenderMessage = invalidSenderMessage.duplicate();
@@ -43,7 +43,7 @@ public class CommandSettings {
      * Builds the CommandSettings instance into a immutable {@link Settings} record which can not be modified
      *
      * @return a Settings instance
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public Settings build() {
         return new Settings(permissionMessage, invalidSenderMessage);
@@ -53,7 +53,7 @@ public class CommandSettings {
      * Gets default permission
      *
      * @return the component
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static BaseComponent getDefaultPermissionMessage() {
         return DEFAULT_PERMISSION_MESSAGE.duplicate();
@@ -63,7 +63,7 @@ public class CommandSettings {
      * Gets default invalid sender
      *
      * @return the base component
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static BaseComponent getDefaultInvalidSenderMessage() {
         return DEFAULT_INVALID_SENDER_MESSAGE.duplicate();
@@ -74,7 +74,7 @@ public class CommandSettings {
      *
      * @param permissionMessage    the permission message
      * @param invalidSenderMessage the invalid sender message
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public record Settings(BaseComponent permissionMessage, BaseComponent invalidSenderMessage) {
 
@@ -82,7 +82,7 @@ public class CommandSettings {
          * Sends the permission message
          *
          * @param sender the sender
-         * @since 1.0.0-SNAPSHOT
+         * @since 1.0.0
          */
         public void sendPermissionMessage(CommandSender sender) {
             if (permissionMessage != null) {
@@ -94,7 +94,7 @@ public class CommandSettings {
          * sends the invalid sender message
          *
          * @param sender the sender
-         * @since 1.0.0-SNAPSHOT
+         * @since 1.0.0
          */
         @ApiStatus.Obsolete
         public void sendInvalidSenderMessage(CommandSender sender) {
