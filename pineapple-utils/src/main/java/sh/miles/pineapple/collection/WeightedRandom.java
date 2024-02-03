@@ -12,7 +12,7 @@ import java.util.TreeMap;
  * Weighted random implementation
  *
  * @param <T> the type
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class WeightedRandom<T> {
     private final NavigableMap<Double, T> map = new TreeMap<>();
@@ -22,7 +22,7 @@ public class WeightedRandom<T> {
     /**
      * Creates a new weighted random
      *
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public WeightedRandom() {
         this(new Random());
@@ -32,7 +32,7 @@ public class WeightedRandom<T> {
      * Creates a new weighted random from the provided Random instance
      *
      * @param random the random instance
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public WeightedRandom(Random random) {
         this.random = random;
@@ -44,7 +44,7 @@ public class WeightedRandom<T> {
      * @param weight the weight
      * @param result the result
      * @return this WeightedRandom instance
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public WeightedRandom<T> add(double weight, T result) {
         if (weight <= 0) {
@@ -60,7 +60,7 @@ public class WeightedRandom<T> {
      * Polls a random value from the map
      *
      * @return the random value
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public T poll() {
         double value = random.nextDouble() * total;
@@ -71,7 +71,7 @@ public class WeightedRandom<T> {
      * Checks if the WeightedRandom is empty
      *
      * @return true if empty
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public boolean isEmpty() {
         return this.map.isEmpty();
@@ -81,7 +81,7 @@ public class WeightedRandom<T> {
      * Gets the size of the WeightedRandom
      *
      * @return the size
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public int size() {
         return this.map.size();
@@ -91,7 +91,7 @@ public class WeightedRandom<T> {
      * Gets all entries in WeightedRandom
      *
      * @return the entry set
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public Set<Entry<Double, T>> getEntries() {
         double prev = 0;

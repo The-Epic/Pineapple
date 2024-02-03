@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * ArrayList wrapper that prevents null value
  *
  * @param <T> the type of the list
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public class NonNullList<T> extends AbstractList<T> {
 

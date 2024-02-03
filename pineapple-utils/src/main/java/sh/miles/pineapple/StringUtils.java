@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A Collection of Utilities useful for string manipulation
  *
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public final class StringUtils {
 
@@ -21,7 +21,7 @@ public final class StringUtils {
      * @param character    the character to split over
      * @param ignoreQuotes whether or not to ignore the split character in single quotes
      * @return the split string
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static List<String> split(String string, char character, boolean ignoreQuotes) {
         List<String> split = new ArrayList<>();
@@ -53,7 +53,7 @@ public final class StringUtils {
      * @param character the character to split over
      * @param string    the string to split
      * @return the split string
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0
      */
     public static List<String> split(String string, char character) {
         List<String> split = new ArrayList<>();

@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * A basic abstract implementation of Registry
  *
  * @param <T> the type
- * @since 1.0.0-SNAPSHOT
+ * @since 1.0.0
  */
 public abstract class AbstractRegistry<T extends RegistryKey<K>, K> implements Registry<T, K> {
 
