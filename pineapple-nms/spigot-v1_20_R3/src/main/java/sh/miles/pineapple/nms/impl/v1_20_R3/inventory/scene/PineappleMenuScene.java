@@ -25,7 +25,7 @@ public class PineappleMenuScene<T extends AbstractContainerMenu> implements Menu
     }
 
     @Override
-    public void setTitle(final BaseComponent... title) {
+    public void setTitle(final BaseComponent title) {
         container.setTitle(ComponentUtils.toMinecraftChat(title));
     }
 

@@ -24,7 +24,7 @@ public interface MenuScene {
      * @param title sets the component title of the scene
      * @since 1.0.0
      */
-    void setTitle(BaseComponent... title);
+    void setTitle(BaseComponent title);
 
     /**
      * Gets the bukkit view this ContainerScene is based upon
