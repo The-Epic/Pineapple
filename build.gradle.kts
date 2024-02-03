@@ -6,6 +6,12 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
+dependencies {
+    implementation(project(":pineapple-utils"))
+    implementation(project(":pineapple-core"))
+    implementation(project(":pineapple-nms"))
+}
+
 tasks.jar {
     // shadowJar handles this
     this.enabled = false
@@ -14,6 +20,8 @@ tasks.jar {
 tasks.shadowJar {
     this.archiveClassifier.set("")
     this.archiveVersion.set("")
+
+    this.relocate("com.jeff_media.morepersistentdatatypes", "sh.miles.pineapple.pdc.morepdc")
 }
 
 tasks.build {
