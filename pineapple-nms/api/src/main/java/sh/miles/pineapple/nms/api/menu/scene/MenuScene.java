@@ -31,4 +31,9 @@ public interface MenuScene {
      */
     @NotNull
     InventoryView getBukkitView();
+
+    /**
+     * Opens the scene for the viewer
+     */
+    void open();
 }

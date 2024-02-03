@@ -34,4 +34,9 @@ public class PineappleMenuScene<T extends AbstractContainerMenu> implements Menu
     public InventoryView getBukkitView() {
         return this.view;
     }
+
+    @Override
+    public void open() {
+        this.view.getPlayer().openInventory(this.view);
+    }
 }

@@ -11,7 +11,7 @@ public interface PineappleRegistry {
     Registry<MenuType<?>, NamespacedKey> MENU = make(MenuType.class);
 
     private static <T extends RegistryKey<NamespacedKey>> Registry<T, NamespacedKey> make(Class<? super T> interfaceClass) {
-        return NMSLoader.getPineapple().getRegistry(interfaceClass);
+        return NMSLoader.getPineapple().getUnsafe().getRegistry(interfaceClass);
     }
 
 }

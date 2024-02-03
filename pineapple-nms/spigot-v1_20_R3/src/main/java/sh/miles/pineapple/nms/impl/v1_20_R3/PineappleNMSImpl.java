@@ -1,24 +1,18 @@
 package sh.miles.pineapple.nms.impl.v1_20_R3;
 
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftContainer;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_20_R3.util.CraftMagicNumbers;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -26,13 +20,9 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.ReflectionUtils;
-import sh.miles.pineapple.collection.registry.FrozenRegistry;
-import sh.miles.pineapple.collection.registry.RegistryKey;
 import sh.miles.pineapple.nms.api.PineappleNMS;
-import sh.miles.pineapple.nms.api.menu.MenuType;
-import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.PineappleUnsafe;
 import sh.miles.pineapple.nms.impl.v1_20_R3.internal.ComponentUtils;
-import sh.miles.pineapple.nms.impl.v1_20_R3.registry.PineappleNmsRegistry;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,32 +43,15 @@ public class PineappleNMSImpl implements PineappleNMS {
         livingEntityLastDamageSourceHandle = ReflectionUtils.getFieldAsGetter(net.minecraft.world.entity.LivingEntity.class, "cd");
     }
 
-    @Nullable
-    @Override
-    public <T extends MenuScene> T openContainer(@NotNull final HumanEntity human, final MenuType<T> type, final String title) {
-        final T scene = type.create(human, title);
-        this.openContainer(human, scene);
-        return scene;
+    private final PineappleUnsafeImpl unsafe;
+
+    public PineappleNMSImpl() {
+        this.unsafe = new PineappleUnsafeImpl();
     }
 
     @Nullable
     @Override
-    public <T extends MenuScene> T openContainer(@NotNull final HumanEntity human, final MenuType<T> type, final BaseComponent... title) {
-        final T scene = type.create(human, title);
-        this.openContainer(human, scene);
-        return scene;
-    }
-
-    @NotNull
-    @Override
-    public MenuScene openContainer(@NotNull final HumanEntity human, @NotNull final MenuScene scene) {
-        human.openInventory(scene.getBukkitView());
-        return scene;
-    }
-
-    @Nullable
-    @Override
-    public InventoryView openInventory(@NotNull final Player player, @NotNull final Inventory inventory, @NotNull final BaseComponent... title) {
+    public InventoryView openInventory(@NotNull final Player player, @NotNull final Inventory inventory, @NotNull final BaseComponent title) {
         ServerPlayer nms = ((CraftPlayer) player).getHandle();
         // legacy method to be replaced
         net.minecraft.world.inventory.MenuType<?> mojType = CraftContainer.getNotchInventoryType(inventory);
@@ -96,17 +69,6 @@ public class PineappleNMSImpl implements PineappleNMS {
         nms.containerMenu = menu;
         nms.initMenu(menu);
         return nms.containerMenu.getBukkitView();
-    }
-
-    @SuppressWarnings("unchecked")
-    @NotNull
-    @Override
-    public <T extends RegistryKey<NamespacedKey>> FrozenRegistry<T, NamespacedKey> getRegistry(final Class<? super T> clazz) {
-        return (FrozenRegistry<T, NamespacedKey>) PineappleNmsRegistry.makeRegistry(clazz);
-    }
-
-    private <T> Registry<T> getRegistry(ResourceKey<? extends Registry<T>> registryKey) {
-        return ((CraftServer) Bukkit.getServer()).getHandle().getServer().registryAccess().registryOrThrow(registryKey);
     }
 
     @Override
@@ -192,10 +154,15 @@ public class PineappleNMSImpl implements PineappleNMS {
         }
     }
 
+    @NotNull
+    @Override
+    public PineappleUnsafe getUnsafe() {
+        return this.unsafe;
+    }
+
     private CraftItemStack ensureCraftItemStack(ItemStack item) {
         return item instanceof CraftItemStack craftItem ? craftItem : CraftItemStack.asCraftCopy(item);
     }
-
 
     private static net.minecraft.world.item.ItemStack getItemStackHandle(CraftItemStack itemStack) {
         try {

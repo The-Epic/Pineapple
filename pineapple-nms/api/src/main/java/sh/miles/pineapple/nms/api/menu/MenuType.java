@@ -43,16 +43,7 @@ public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey
      * @param title  the title
      * @return a container scene
      */
-    T create(@NotNull final HumanEntity player, @NotNull final String title);
-
-    /**
-     * Creates a MenuScene of this container for the player with the provided title
-     *
-     * @param player the player
-     * @param title  the title
-     * @return a container scene
-     */
-    T create(@NotNull final HumanEntity player, @NotNull final BaseComponent... title);
+    T create(@NotNull final HumanEntity player, @NotNull final BaseComponent title);
 
     @SuppressWarnings("unchecked")
     private static <T extends MenuScene> MenuType<T> get(String id) {
