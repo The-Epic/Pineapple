@@ -7,7 +7,8 @@ plugins {
 }
 
 tasks.jar {
-    this.enabled = true
+    // shadowJar handles this
+    this.enabled = false
 }
 
 tasks.shadowJar {
