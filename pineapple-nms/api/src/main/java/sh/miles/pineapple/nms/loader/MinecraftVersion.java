@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import sh.miles.pineapple.nms.loader.exception.PineappleLoadException;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +31,7 @@ public class MinecraftVersion {
         final int minor = Integer.parseInt(split[1]);
         boolean hasPatch = split.length == 3;
         final int patch = hasPatch ? Integer.parseInt(split[2]) : 0;
-        CURRENT = protocolMap.get("%d.%d.%d".formatted(major, minor, patch));
-        if (CURRENT == null) {
-            throw new PineappleLoadException(major, minor, patch);
-        }
+        CURRENT = protocolMap.getOrDefault("%d.%d.%d".formatted(major, minor, patch), new MinecraftVersion(major, minor, hasPatch ? patch : 0, null));
     }
 
     private final int major;
@@ -42,7 +39,7 @@ public class MinecraftVersion {
     private final int patch;
     private final String protocolVersion;
 
-    private MinecraftVersion(@NotNull final String version, @NotNull final String protocolVersion) {
+    private MinecraftVersion(@NotNull final String version, @Nullable final String protocolVersion) {
         String[] split = version.split("\\.");
         this.major = Integer.parseInt(split[0]);
         this.minor = Integer.parseInt(split[1]);
@@ -93,7 +90,7 @@ public class MinecraftVersion {
      * @return the relocation version of bukkit
      * @since 1.0.0-SNAPSHOT
      */
-    @NotNull
+    @Nullable
     public String getProtocolVersion() {
         return protocolVersion;
     }

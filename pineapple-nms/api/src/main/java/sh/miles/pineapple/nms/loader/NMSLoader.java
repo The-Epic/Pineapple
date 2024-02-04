@@ -1,19 +1,22 @@
 package sh.miles.pineapple.nms.loader;
 
-import org.jetbrains.annotations.NotNull;
+import com.google.common.base.Preconditions;
 import sh.miles.pineapple.ReflectionUtils;
+import sh.miles.pineapple.nms.annotations.NMS;
 import sh.miles.pineapple.nms.api.PineappleNMS;
+import sh.miles.pineapple.nms.loader.exception.VersionNotSupportedException;
 
 /**
  * Provides Management for NMS Classes
  */
+@NMS
 public final class NMSLoader {
 
     public static final NMSLoader INSTANCE = new NMSLoader();
     private static final String PATH = "sh.miles.pineapple.nms.impl.%s.%s";
 
     private PineappleNMS handler;
-    private byte active = (byte) 0;
+    private boolean active = false;
 
     private NMSLoader() {
     }
@@ -21,26 +24,28 @@ public final class NMSLoader {
     /**
      * Activates PineappleNMS and supplies a loader to the NMSLoader
      *
+     * @throws IllegalStateException        if PineappleNMS is already active
+     * @throws VersionNotSupportedException given the server is on is not supported
      * @since 1.0.0
      */
-    public void activate() {
-        this.handler = ReflectionUtils.newInstance(PATH.formatted(MinecraftVersion.CURRENT.getProtocolVersion(), PineappleNMS.class.getSimpleName() + "Impl"), new Object[0]);
-        this.active = (byte) 1;
+    @NMS
+    public void activate() throws IllegalStateException, VersionNotSupportedException {
+        Preconditions.checkState(!this.active, "You can not active PineappleNMS while it is active");
+        try {
+            var clazz = Class.forName(PATH.formatted(MinecraftVersion.CURRENT.getProtocolVersion(), PineappleNMS.class.getSimpleName() + "Impl"));
+            this.handler = (PineappleNMS) ReflectionUtils.safeInvoke(ReflectionUtils.getConstructor(clazz, new Class[0]));
+        } catch (ClassNotFoundException e) {
+            throw new VersionNotSupportedException(MinecraftVersion.CURRENT);
+        }
+        this.active = true;
     }
 
     /**
-     * Disables PineappleNMS and suppliers a backup loader to the NMSLoader
-     *
-     * @param fallbackHandler the fallback handler
+     * Disables PineappleNMS and fails all other interactions
      */
-    public void fallback(@NotNull final PineappleNMS fallbackHandler) {
-        this.handler = fallbackHandler;
-        this.active = (byte) 2;
-    }
-
     public void disable() {
         this.handler = null;
-        this.active = (byte) 0;
+        this.active = false;
     }
 
     /**
@@ -56,20 +61,17 @@ public final class NMSLoader {
      * @return the pineapple
      * @since 1.0.0
      */
+    @NMS
     public PineappleNMS getPineapple() {
         return this.handler;
     }
 
     /**
      * Gets whether or not the NMSLoader is active.
-     * <p>
-     * value of 0 indicates the NMSLoader is disabled
-     * value of 1 indicates the NMSLoader is enabled
-     * value of 2 indicates the NMSLoader is enabled, but working off of fallback
      *
-     * @return the byte
+     * @return the boolean
      */
-    public byte isActive() {
+    public boolean isActive() {
         return this.active;
     }
 

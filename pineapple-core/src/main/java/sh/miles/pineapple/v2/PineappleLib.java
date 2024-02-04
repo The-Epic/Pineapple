@@ -1,11 +1,11 @@
 package sh.miles.pineapple.v2;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.nms.annotations.NMS;
 import sh.miles.pineapple.nms.api.PineappleNMS;
 import sh.miles.pineapple.nms.loader.NMSLoader;
-import sh.miles.pineapple.v2.nms.fallback.PineappleNMSFallback;
 
 /**
  * The main library class for PineappleLib. That should be loaded using {@link PineappleLib#initialize(Plugin)}
@@ -27,8 +27,6 @@ public final class PineappleLib {
         this.useNms = useNms;
         if (useNms) {
             NMSLoader.INSTANCE.activate();
-        } else {
-            NMSLoader.INSTANCE.fallback(PineappleNMSFallback.INSTANCE);
         }
         this.nmsProvider = NMSLoader.INSTANCE.getPineapple();
     }
@@ -36,13 +34,14 @@ public final class PineappleLib {
     /**
      * Gets the PineappleNMS provider
      * <p>
-     * Given That NMS was disabled when enabling PineappleLib this returns {@link PineappleNMSFallback} instead of  the
-     * normal PineappleNMS instance
+     * Given That NMS was disabled this will throw an error
      *
      * @return PineappleNMS
      */
+    @NMS
     public static PineappleNMS getNmsProvider() {
-        return getInstance().nmsProvider;
+        Preconditions.checkArgument(NMSLoader.INSTANCE.isActive(), "PineappleNMS must be loaded to be accessed");
+        return instance.nmsProvider;
     }
 
     /**
@@ -63,9 +62,5 @@ public final class PineappleLib {
      */
     public static void initialize(@NotNull final Plugin plugin, final boolean useNms) {
         instance = new PineappleLib(plugin, useNms);
-    }
-
-    public static PineappleLib getInstance() {
-        return instance;
     }
 }
