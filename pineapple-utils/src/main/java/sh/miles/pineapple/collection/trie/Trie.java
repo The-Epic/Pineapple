@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * The classic Trie implementation which works well with mass string comparison
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class Trie {
 
@@ -37,7 +37,7 @@ public class Trie {
      * Creates a new Trie
      *
      * @param input the trie inputs
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public Trie(String... input) {
         this();
@@ -50,7 +50,7 @@ public class Trie {
      * Inserts a string into the Trie
      *
      * @param string the string
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public void insert(String string) {
         string = string + END;
@@ -71,7 +71,7 @@ public class Trie {
      *
      * @param string the string to check
      * @return true if the string is in the trie
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public boolean contains(String string) {
         string = string + END;
@@ -94,7 +94,7 @@ public class Trie {
      * @param partial if true the Trie will only check if the suffix of the string is inside and pays no mind to any
      *                other details.
      * @return true if the string is in the trie
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public boolean contains(String string, boolean partial) {
         if (!partial) {

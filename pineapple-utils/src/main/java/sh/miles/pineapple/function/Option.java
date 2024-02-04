@@ -42,6 +42,27 @@ public sealed class Option<E> permits Option.None, Option.Some {
     }
 
     /**
+     * Creates Some Option
+     *
+     * @param value the value
+     * @param <E>   the entry type
+     * @return the Option
+     */
+    public static <E> Option<E> some(@NotNull final E value) {
+        return new Some<>(value);
+    }
+
+    /**
+     * Creates None Option
+     *
+     * @param <E> the entry type
+     * @return the Option
+     */
+    public static <E> Option<E> none() {
+        return new None<>();
+    }
+
+    /**
      * Represents some value
      *
      * @param <E> the entry type
@@ -50,7 +71,7 @@ public sealed class Option<E> permits Option.None, Option.Some {
 
         private final E some;
 
-        public Some(E some) {
+        Some(E some) {
             this.some = Objects.requireNonNull(some);
         }
 

@@ -10,7 +10,7 @@ import java.util.function.Supplier;
  * An Updatable registry that can have contents added arbitrarily.
  *
  * @param <T> the type
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class WriteableRegistry<T extends RegistryKey<K>, K> extends AbstractRegistry<T, K> {
 
@@ -27,7 +27,7 @@ public class WriteableRegistry<T extends RegistryKey<K>, K> extends AbstractRegi
      *
      * @param object the object to register
      * @return true if the value was successfully registered, otherwise false.
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public boolean register(@NotNull final T object) {
         final T value = registry.get(object.getKey());

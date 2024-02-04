@@ -26,7 +26,7 @@ public final class NMSLoader {
      *
      * @throws IllegalStateException        if PineappleNMS is already active
      * @throws VersionNotSupportedException given the server is on is not supported
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NMS
     public void activate() throws IllegalStateException, VersionNotSupportedException {
@@ -49,6 +49,26 @@ public final class NMSLoader {
     }
 
     /**
+     * Verifies whether or not NMS active
+     *
+     * @throws IllegalStateException thrown if NMS is not active
+     */
+    public void verifyNMS() throws IllegalArgumentException {
+        if (!this.active) {
+            throw new IllegalStateException("This method can not be accessed when NMS is disabled");
+        }
+    }
+
+    /**
+     * Gets whether or not the NMSLoader is active.
+     *
+     * @return the boolean
+     */
+    public boolean isActive() {
+        return this.active;
+    }
+
+    /**
      * Gets the Pineapple
      * <p>
      * The pineapple(Ananas comosus) is a tropical plant with an edible fruit; it is the most economically significant
@@ -59,20 +79,11 @@ public final class NMSLoader {
      * pineapple has been commercially grown in greenhouses and many tropical plantations.
      *
      * @return the pineapple
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NMS
     public PineappleNMS getPineapple() {
         return this.handler;
-    }
-
-    /**
-     * Gets whether or not the NMSLoader is active.
-     *
-     * @return the boolean
-     */
-    public boolean isActive() {
-        return this.active;
     }
 
 }

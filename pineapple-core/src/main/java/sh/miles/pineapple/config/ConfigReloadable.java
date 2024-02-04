@@ -33,7 +33,7 @@ public abstract class ConfigReloadable<T> {
      *
      * @return instance for chaining
      *
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public ConfigReloadable<T> load() {
         load(true);
@@ -47,7 +47,7 @@ public abstract class ConfigReloadable<T> {
      * @param includeStatic should static fields be loaded
      * @return instance for chaining
      *
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @SuppressWarnings("unchecked")
     public ConfigReloadable<T> load(boolean includeStatic) {
@@ -110,7 +110,7 @@ public abstract class ConfigReloadable<T> {
      *
      * @return instance for chaining
      *
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public ConfigReloadable<T> saveDefaults() {
         save(false);
@@ -123,7 +123,7 @@ public abstract class ConfigReloadable<T> {
      *
      * @return instance for chaining
      *
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public ConfigReloadable<T> save() {
         save(true);
@@ -137,7 +137,7 @@ public abstract class ConfigReloadable<T> {
      * @param replace replace current values
      * @return instance for chaining
      *
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @SuppressWarnings("unchecked")
     public ConfigReloadable<T> save(boolean replace) {

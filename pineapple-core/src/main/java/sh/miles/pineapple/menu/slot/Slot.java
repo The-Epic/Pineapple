@@ -11,7 +11,7 @@ import sh.miles.pineapple.menu.ClickEvent;
 /**
  * A basic outline for what a Slot implementation should be capable of
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public interface Slot {
 
@@ -20,14 +20,14 @@ public interface Slot {
      *
      * @param viewer the viewer
      * @param event  the click event
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     void click(@NotNull final Player viewer, @NotNull final InventoryClickEvent event);
 
     /**
      * Pushes the held content within the slot forcefully to it's owning inventory
      *
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     void pushContent();
 
@@ -35,7 +35,7 @@ public interface Slot {
      * Checks whether or not this slot is set to autoSync with its owning inventory.
      *
      * @return true if this slot should auto sync, otherwise false
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     boolean isAutoSync();
 
@@ -44,7 +44,7 @@ public interface Slot {
      * air
      *
      * @return true if the slot has content, otherwise false
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     boolean hasContent();
 
@@ -52,7 +52,7 @@ public interface Slot {
      * Gets the content of this slot. An Empty item stack indicates that the slot is currently empty
      *
      * @return the item stack content
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     ItemStack getContent();
@@ -61,7 +61,7 @@ public interface Slot {
      * Gets the owning inventory of this slot
      *
      * @return the owning inventory
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     Inventory getInventory();
@@ -70,7 +70,7 @@ public interface Slot {
      * Gets the index of this slot on the owning inventory
      *
      * @return the slot index
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     int getSlotIndex();
 
@@ -78,7 +78,7 @@ public interface Slot {
      * Sets the event on this slot
      *
      * @param event the event
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     void setEvent(@Nullable ClickEvent event);
 
@@ -86,7 +86,7 @@ public interface Slot {
      * Sets the content on this slot
      *
      * @param content the content
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     void setContent(@Nullable ItemStack content);
 
@@ -102,7 +102,7 @@ public interface Slot {
      * Sets whether or not this slot should auto sync.
      *
      * @param autoSync true to auto sync, otherwise false
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     void setAutoSync(final boolean autoSync);
 }

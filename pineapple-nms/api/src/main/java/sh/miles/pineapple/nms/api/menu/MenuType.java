@@ -13,7 +13,7 @@ import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
  * Represents a Menu that can be viewed by a player
  *
  * @param <T> the type of scene and data associated with that view
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey> {
 
@@ -48,7 +48,7 @@ public interface MenuType<T extends MenuScene> extends RegistryKey<NamespacedKey
      * @param player the player
      * @param title  the title
      * @return a container scene
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     T create(@NotNull final HumanEntity player, @NotNull final BaseComponent title);
 

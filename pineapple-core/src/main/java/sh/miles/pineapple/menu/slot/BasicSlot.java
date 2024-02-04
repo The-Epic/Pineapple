@@ -13,7 +13,7 @@ import sh.miles.pineapple.menu.ClickEvent;
  * A Basic slot implementation that does the minimum implementation based on the expectation of an implementation of
  * {@link Slot}
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class BasicSlot implements Slot {
 

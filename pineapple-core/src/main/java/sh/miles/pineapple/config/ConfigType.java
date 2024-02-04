@@ -57,7 +57,7 @@ public class ConfigType<T> {
      *
      * @param type the type
      * @return the config type
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public static ConfigType<?> create(Type type) {
         if (type instanceof Class) {

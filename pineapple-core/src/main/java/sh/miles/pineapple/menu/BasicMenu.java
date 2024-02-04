@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  * A Basic Menu implementation that does the minimum a basic {@link Menu} implementation should be expected of doing.
  *
  * @param <T> the type of menu that the player is viewing
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
 
@@ -37,7 +37,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      *
      * @param function the function used to create a MenuScene to be displayed to the viewer
      * @param viewer   the viewer of this Menu
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected BasicMenu(@NotNull final Function<Player, T> function, @NotNull final Player viewer) {
         this.scene = function.apply(viewer);
@@ -70,7 +70,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      *
      * @param index        the index
      * @param slotSupplier the function used to build the slot
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setSlotAt(final int index, @NotNull final Supplier<Slot> slotSupplier) {
         Preconditions.checkArgument(slotSupplier != null, "The given slot must not be null");
@@ -86,7 +86,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      *
      * @param slot  the slot to set the event at
      * @param event the event to set
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setEventAt(final int slot, @Nullable final ClickEvent event) {
         Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);
@@ -98,7 +98,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      *
      * @param slot    the slot to set the content at
      * @param content the content to set
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setContentAt(final int slot, @Nullable ItemStack content) {
         Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);
@@ -111,7 +111,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      * @param slot    the slot to set the content at
      * @param content the content to set
      * @return true if the content was set, otherwise false
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected boolean setContentAtIfAbsent(final int slot, @Nullable ItemStack content) {
         Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, OUT_OF_BOUNDS);
@@ -131,7 +131,7 @@ public abstract class BasicMenu<T extends MenuScene> implements Menu<T> {
      * @param slot    the slot to set the details of
      * @param content the content of the slot
      * @param event   the event the slot will execute when clicked
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setSlotDetail(final int slot, @Nullable ItemStack content, @Nullable ClickEvent event) {
         Preconditions.checkArgument(slot < slots.length && slot > -1, OUT_OF_BOUNDS);

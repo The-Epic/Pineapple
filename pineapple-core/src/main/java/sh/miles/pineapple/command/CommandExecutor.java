@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Executor equivalent to {@link  org.bukkit.command.CommandExecutor}
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 @FunctionalInterface
 public interface CommandExecutor {

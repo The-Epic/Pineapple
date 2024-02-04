@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Pineapple NMS adapts a bunch of useful stuffs from NMS so that we can use it. Don't tell MD_5 he won't be happy.
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public interface PineappleNMS {
 
@@ -27,7 +27,7 @@ public interface PineappleNMS {
      * @param inventory the inventory to open
      * @param title     the title to use
      * @return the legacy bukkit inventory view associated with this task
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @Nullable
     @PullRequested
@@ -39,7 +39,7 @@ public interface PineappleNMS {
      * @param item        the item to rename
      * @param displayName the display name
      * @return the item with its display name changed
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     @PullRequested
@@ -51,7 +51,7 @@ public interface PineappleNMS {
      * @param item the item to set the lore of
      * @param lore the lore
      * @return the item with its lore changed
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     @PullRequested
@@ -62,7 +62,7 @@ public interface PineappleNMS {
      *
      * @param item the item to get the lore of
      * @return the lore
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     @PullRequested
@@ -73,7 +73,7 @@ public interface PineappleNMS {
      *
      * @param itemStack the item stack to convert to bytes
      * @return the bytes
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     byte[] itemToBytes(@NotNull final ItemStack itemStack);
@@ -83,7 +83,7 @@ public interface PineappleNMS {
      *
      * @param bytes the bytes to convert into an ItemStack
      * @return the ItemStack
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     ItemStack itemFromBytes(@NotNull final byte[] bytes);
@@ -92,7 +92,7 @@ public interface PineappleNMS {
      * Gets the PineappleUnsafe class
      *
      * @return the PineappleUnsafe class
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @ApiStatus.Internal
     @NotNull

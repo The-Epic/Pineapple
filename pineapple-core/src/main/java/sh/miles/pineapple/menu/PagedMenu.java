@@ -23,7 +23,7 @@ import java.util.function.Supplier;
  * Creates a menu that can have multiple pages
  *
  * @param <T> the type of MenuScene
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
 
@@ -42,7 +42,7 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
      *
      * @param function the function used to create a MenuScene to be displayed to the viewer
      * @param viewer   the viewer of this Menu
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected PagedMenu(@NotNull final Function<Player, T> function, @NotNull final Player viewer) {
         this.scene = function.apply(viewer);
@@ -140,7 +140,7 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
      * @param index        the index
      * @param slotSupplier the function used to build the slot
      * @param pages        the pages to set the slot on
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setSlotAt(final int index, Supplier<Slot> slotSupplier, int... pages) {
         final Slot slot = slotSupplier.get();
@@ -156,7 +156,7 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
      * @param slot  the slot to set the event at
      * @param event the event to set
      * @param page  the page to set the event on
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setEventAt(final int slot, @Nullable final ClickEvent event, int page) {
         Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, "The given slot must be within the inventory size range");
@@ -170,7 +170,7 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
      * @param slot    the slot to set the content at
      * @param content the content to set
      * @param page    the page to set the content on
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setContentAt(final int slot, @Nullable ItemStack content, int page) {
         Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, "The given slot must be within the inventory size range");
@@ -184,7 +184,7 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
      * @param slot    the slot to set the content at
      * @param content the content to set
      * @param page    the page to set the content on
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setContentAtIfAbsent(final int slot, @Nullable ItemStack content, int page) {
         Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, "The given slot must be within the inventory size range");
@@ -203,7 +203,7 @@ public abstract class PagedMenu<T extends MenuScene> implements Menu<T> {
      * @param content the content of the slot
      * @param event   the event the slot will execute when clicked
      * @param page    the page to set the slot details on
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     protected void setSlotDetail(final int slot, @Nullable ItemStack content, @Nullable ClickEvent event, int page) {
         Preconditions.checkArgument(slot < inventory.getSize() && slot > -1, "The given slot must be within the inventory size range");

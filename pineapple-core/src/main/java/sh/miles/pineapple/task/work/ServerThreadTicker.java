@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  * injects tasks into the main thread. The ServerThreadTicker will attempt to only run as many tasks as possible on the
  * main thread without heavily impacting main thread performance
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class ServerThreadTicker implements Runnable {
 
@@ -36,7 +36,7 @@ public class ServerThreadTicker implements Runnable {
      * Queues a task on the main thread
      *
      * @param worker the worker to queue
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public void queue(@NotNull final ServerThreadWorker worker) {
         this.workers.add(Pair.of(worker, null));
@@ -47,7 +47,7 @@ public class ServerThreadTicker implements Runnable {
      *
      * @param worker   the worker to queue
      * @param callback the callback to execute when the worker finished
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public void queue(@NotNull final ServerThreadWorker worker, @NotNull final ServerThreadCallback<Object> callback) {
         this.workers.add(Pair.of(worker, callback));

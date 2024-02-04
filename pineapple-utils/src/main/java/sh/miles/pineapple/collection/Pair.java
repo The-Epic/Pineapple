@@ -7,7 +7,7 @@ package sh.miles.pineapple.collection;
  * @param right the right value
  * @param <L>   the left type
  * @param <R>   the right type
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public record Pair<L, R>(L left, R right) {
 
@@ -19,7 +19,7 @@ public record Pair<L, R>(L left, R right) {
      * @param <L>   left type
      * @param <R>   right type
      * @return the pair with the given values
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public static <L, R> Pair<L, R> of(L left, R right) {
         return new Pair<>(left, right);

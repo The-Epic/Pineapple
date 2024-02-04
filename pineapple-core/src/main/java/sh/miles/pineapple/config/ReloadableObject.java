@@ -11,7 +11,7 @@ public class ReloadableObject<T> extends ConfigReloadable<T> {
      *
      * @param file   the file used to load the object
      * @param object the object
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @SuppressWarnings("unchecked")
     public ReloadableObject(File file, T object) {

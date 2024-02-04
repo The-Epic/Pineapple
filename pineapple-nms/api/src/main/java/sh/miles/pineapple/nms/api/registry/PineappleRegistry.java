@@ -9,7 +9,7 @@ import sh.miles.pineapple.nms.api.menu.MenuType;
 /**
  * A class full of different types of Registries that can used
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public final class PineappleRegistry {
 
@@ -20,7 +20,7 @@ public final class PineappleRegistry {
     }
 
     private static <T extends RegistryKey<NamespacedKey>> Registry<T, NamespacedKey> make(Class<? super T> interfaceClass) {
-        return NMSLoader.getPineapple().getUnsafe().getRegistry(interfaceClass);
+        return NMSLoader.INSTANCE.getPineapple().getUnsafe().getRegistry(interfaceClass);
     }
 
 }

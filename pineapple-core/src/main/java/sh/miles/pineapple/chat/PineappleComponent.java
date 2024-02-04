@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * A PineappleComponent wraps a BaseComponent and provides extra useful functionality
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class PineappleComponent {
 
@@ -27,7 +27,7 @@ public class PineappleComponent {
      *
      * @param replacements the replacements
      * @return the BaseComponent
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public BaseComponent component(@NotNull final Map<String, Object> replacements) {
         return PineappleChat.parse(this.source, replacements);
@@ -37,7 +37,7 @@ public class PineappleComponent {
      * Converts this PineappleComponent to a BaseComponent
      *
      * @return the BaseComponent
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public BaseComponent component() {
         if (this.parsed != null) {

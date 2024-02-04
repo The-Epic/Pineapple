@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * A class that represents a minecraft version
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public class MinecraftVersion {
 
@@ -58,7 +58,7 @@ public class MinecraftVersion {
      * Gets major number
      *
      * @return the major number
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     public int getMajor() {
         return major;
@@ -68,7 +68,7 @@ public class MinecraftVersion {
      * gets minor number
      *
      * @return the minor number
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     public int getMinor() {
         return minor;
@@ -78,7 +78,7 @@ public class MinecraftVersion {
      * gets patch number or 0 if none
      *
      * @return patch number or 0
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     public int getPatch() {
         return patch;
@@ -88,7 +88,7 @@ public class MinecraftVersion {
      * Gets the relocation version of bukkit
      *
      * @return the relocation version of bukkit
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     @Nullable
     public String getProtocolVersion() {
@@ -99,7 +99,7 @@ public class MinecraftVersion {
      * Gets the standard name of the version e.g. 1.19.4
      *
      * @return the name of the version
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     @NotNull
     public String getName() {
@@ -110,7 +110,7 @@ public class MinecraftVersion {
      * Gets the internal name used in Pineapple
      *
      * @return the internal name in format vMajor_Minor_Patch
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     @NotNull
     public String getInternalName() {
@@ -121,7 +121,7 @@ public class MinecraftVersion {
      * Turns the version into an integer array
      *
      * @return the int array
-     * @since 1.0.0-SNAPSHOT
+     * @since 1.0.0-SNAPSHOT-SNAPSHOT
      */
     @NotNull
     public int[] toArray() {

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Provides information to a command like name usage etc
  *
- * @since 1.0.0
+ * @since 1.0.0-SNAPSHOT
  */
 public final class CommandLabel {
 
@@ -30,7 +30,7 @@ public final class CommandLabel {
      * @param permission  the permission of the command
      * @param description the description of the command
      * @param aliases     the aliases of the command
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public CommandLabel(@NotNull final String name, @NotNull final String permission, @NotNull final String description, List<String> aliases) {
         Preconditions.checkNotNull(name);
@@ -50,7 +50,7 @@ public final class CommandLabel {
      * @param name        name
      * @param permission  permission
      * @param description description
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public CommandLabel(@NotNull final String name, @NotNull final String permission, @NotNull final String description) {
         this(name, permission, description, new ArrayList<>());
@@ -61,7 +61,7 @@ public final class CommandLabel {
      *
      * @param name       name
      * @param permission permission
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     public CommandLabel(@NotNull final String name, @NotNull final String permission) {
         this(name, permission, DEFAULT_DESCRIPTION);
@@ -71,7 +71,7 @@ public final class CommandLabel {
      * Retrieves the name
      *
      * @return a string name
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public String getName() {
@@ -82,7 +82,7 @@ public final class CommandLabel {
      * Retrieves the permission
      *
      * @return a string permission
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public String getPermission() {
@@ -93,7 +93,7 @@ public final class CommandLabel {
      * Retrieves the description
      *
      * @return a string description
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public String getDescription() {
@@ -104,7 +104,7 @@ public final class CommandLabel {
      * Retrieves the aliases
      *
      * @return a list of aliases
-     * @since 1.0.0
+     * @since 1.0.0-SNAPSHOT
      */
     @NotNull
     public List<String> getAliases() {
