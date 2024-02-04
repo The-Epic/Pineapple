@@ -1,5 +1,6 @@
 package sh.miles.pineapple.nms.annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -11,8 +12,8 @@ import java.lang.annotation.Target;
  *
  * @since 1.0.0
  */
+@Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.RECORD_COMPONENT, ElementType.TYPE, ElementType.METHOD})
-@Inherited
 public @interface NMS {
 }

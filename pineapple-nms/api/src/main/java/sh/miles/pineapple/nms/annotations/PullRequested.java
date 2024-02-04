@@ -2,6 +2,7 @@ package sh.miles.pineapple.nms.annotations;
 
 import org.jetbrains.annotations.ApiStatus;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -14,9 +15,9 @@ import java.lang.annotation.Target;
  *
  * @since 1.0.0
  */
+@Documented
 @ApiStatus.Internal
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.TYPE, ElementType.METHOD})
-@Inherited
 public @interface PullRequested {
 }

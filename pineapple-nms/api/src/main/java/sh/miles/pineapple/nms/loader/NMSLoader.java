@@ -1,6 +1,5 @@
 package sh.miles.pineapple.nms.loader;
 
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import sh.miles.pineapple.ReflectionUtils;
 import sh.miles.pineapple.nms.api.PineappleNMS;
@@ -8,13 +7,40 @@ import sh.miles.pineapple.nms.api.PineappleNMS;
 /**
  * Provides Management for NMS Classes
  */
-public class NMSLoader {
+public final class NMSLoader {
 
+    public static final NMSLoader INSTANCE = new NMSLoader();
     private static final String PATH = "sh.miles.pineapple.nms.impl.%s.%s";
-    private static final PineappleNMS handle = getHandle();
+
+    private PineappleNMS handler;
+    private byte active = (byte) 0;
 
     private NMSLoader() {
-        throw new UnsupportedOperationException("That isn't very fresh of you sneaky boy ;)");
+    }
+
+    /**
+     * Activates PineappleNMS and supplies a loader to the NMSLoader
+     *
+     * @since 1.0.0
+     */
+    public void activate() {
+        this.handler = ReflectionUtils.newInstance(PATH.formatted(MinecraftVersion.CURRENT.getProtocolVersion(), PineappleNMS.class.getSimpleName() + "Impl"), new Object[0]);
+        this.active = (byte) 1;
+    }
+
+    /**
+     * Disables PineappleNMS and suppliers a backup loader to the NMSLoader
+     *
+     * @param fallbackHandler the fallback handler
+     */
+    public void fallback(@NotNull final PineappleNMS fallbackHandler) {
+        this.handler = fallbackHandler;
+        this.active = (byte) 2;
+    }
+
+    public void disable() {
+        this.handler = null;
+        this.active = (byte) 0;
     }
 
     /**
@@ -30,21 +56,21 @@ public class NMSLoader {
      * @return the pineapple
      * @since 1.0.0
      */
-    @NotNull
-    public static PineappleNMS getPineapple() {
-        return handle;
+    public PineappleNMS getPineapple() {
+        return this.handler;
     }
 
     /**
-     * Creates a NMS handle
+     * Gets whether or not the NMSLoader is active.
+     * <p>
+     * value of 0 indicates the NMSLoader is disabled
+     * value of 1 indicates the NMSLoader is enabled
+     * value of 2 indicates the NMSLoader is enabled, but working off of fallback
      *
-     * @return returns the type of handle
-     * @since 1.0.0
+     * @return the byte
      */
-    @ApiStatus.Internal
-    private static PineappleNMS getHandle() {
-        return ReflectionUtils.newInstance(PATH.formatted(MinecraftVersion.CURRENT.getProtocolVersion(), PineappleNMS.class.getSimpleName() + "Impl"), new Object[0]);
+    public byte isActive() {
+        return this.active;
     }
-
 
 }
