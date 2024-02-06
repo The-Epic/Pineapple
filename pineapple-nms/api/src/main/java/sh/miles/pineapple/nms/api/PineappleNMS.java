@@ -9,6 +9,9 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import sh.miles.pineapple.nms.annotations.PullRequested;
+import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
+import sh.miles.pineapple.nms.api.menu.scene.custom.extendable.MenuBehavior;
+import sh.miles.pineapple.nms.api.menu.scene.custom.extendable.slot.SlotBehavior;
 
 import java.util.List;
 
@@ -18,6 +21,21 @@ import java.util.List;
  * @since 1.0.0-SNAPSHOT
  */
 public interface PineappleNMS {
+
+    /**
+     * Creates a custom MenuScene with the given player and behavior
+     * <p>
+     * You can create custom behavior by implementing {@link MenuBehavior} as well as implementing
+     * {@link SlotBehavior}. In conjunction you can specify a wide arrays of functions an Inventory can take
+     *
+     * @param player   the player
+     * @param behavior the behavior
+     * @param rows     the amount of rows, no more than 6 no less than 1
+     * @return the MenuScene that can be opened and modified
+     * @since 1.0.0-SNAPSHOT
+     */
+    @NotNull
+    MenuScene createMenuCustom(@NotNull final Player player, @NotNull final MenuBehavior behavior, final int rows);
 
     /**
      * Opens an inventory with a base component title. Note this implementation uses CraftContainer so Inventories
