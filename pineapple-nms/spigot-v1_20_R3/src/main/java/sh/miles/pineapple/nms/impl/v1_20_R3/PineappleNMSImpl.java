@@ -64,14 +64,16 @@ public class PineappleNMSImpl implements PineappleNMS {
 
     @NotNull
     @Override
-    public MenuScene createMenuCustom(@NotNull final Player player, @NotNull final MenuBehavior behavior, final int rows) {
+    public MenuScene createMenuCustom(@NotNull final Player player, @NotNull final MenuBehavior behavior, final int rows, @NotNull final BaseComponent title) {
         Preconditions.checkArgument(player != null, "The given player must not be null");
         Preconditions.checkArgument(behavior != null, "The given behavior must not be null");
+        Preconditions.checkArgument(title != null, "The given title must not be null");
         Preconditions.checkArgument(rows > 0 && rows < 7, "The given rows must be between 1 and 6 inclusive");
 
         final ServerPlayer splayer = ((CraftPlayer) player).getHandle();
-        final MenuType<?> menuType = CHEST_TYPES[rows];
-        final PineappleCustomMenu menu = new PineappleCustomMenu(behavior, menuType, splayer.getInventory(), splayer.nextContainerCounter(), rows);
+        final MenuType<?> menuType = CHEST_TYPES[rows - 1];
+        final PineappleCustomMenu menu = new PineappleCustomMenu(behavior, menuType, splayer.getInventory(), rows, splayer.nextContainerCounter());
+        menu.setTitle(ComponentUtils.toMinecraftChat(title));
         return new PineappleMenuScene<>((CraftInventoryView) menu.getBukkitView());
     }
 

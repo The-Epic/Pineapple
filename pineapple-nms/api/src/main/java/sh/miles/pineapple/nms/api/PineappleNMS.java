@@ -25,17 +25,18 @@ public interface PineappleNMS {
     /**
      * Creates a custom MenuScene with the given player and behavior
      * <p>
-     * You can create custom behavior by implementing {@link MenuBehavior} as well as implementing
-     * {@link SlotBehavior}. In conjunction you can specify a wide arrays of functions an Inventory can take
+     * You can create custom behavior by implementing {@link MenuBehavior} as well as implementing {@link SlotBehavior}.
+     * In conjunction you can specify a wide arrays of functions an Inventory can take
      *
      * @param player   the player
      * @param behavior the behavior
      * @param rows     the amount of rows, no more than 6 no less than 1
+     * @param title    the title of the menu
      * @return the MenuScene that can be opened and modified
      * @since 1.0.0-SNAPSHOT
      */
     @NotNull
-    MenuScene createMenuCustom(@NotNull final Player player, @NotNull final MenuBehavior behavior, final int rows);
+    MenuScene createMenuCustom(@NotNull final Player player, @NotNull final MenuBehavior behavior, final int rows, @NotNull final BaseComponent title);
 
     /**
      * Opens an inventory with a base component title. Note this implementation uses CraftContainer so Inventories
