@@ -9,12 +9,12 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
         mavenLocal()
-        maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
-        maven { url = uri("https://oss.sonatype.org/content/repositories/central") }
-        maven { url = uri("https://libraries.minecraft.net/") }
-        maven { url = uri("https://repo.jeff-media.com/public") }
-        maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
-        maven { url = uri("https://maven.miles.sh/libraries") }
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        maven("https://oss.sonatype.org/content/repositories/central")
+        maven("https://libraries.minecraft.net/")
+        maven("https://repo.jeff-media.com/public")
+        maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://maven.miles.sh/libraries")
     }
 }
 
