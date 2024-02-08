@@ -8,16 +8,15 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import org.bukkit.Server;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftContainer;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftInventoryView;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_20_R3.util.CraftMagicNumbers;
-import org.bukkit.craftbukkit.v1_20_R3.util.CraftNamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -28,11 +27,9 @@ import sh.miles.pineapple.ReflectionUtils;
 import sh.miles.pineapple.nms.api.PineappleNMS;
 import sh.miles.pineapple.nms.api.PineappleUnsafe;
 import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
-import sh.miles.pineapple.nms.api.menu.scene.custom.extendable.MenuBehavior;
-import sh.miles.pineapple.nms.api.registry.PineappleRegistry;
+import sh.miles.pineapple.nms.api.menu.scene.custom.CustomMenuListener;
 import sh.miles.pineapple.nms.impl.v1_20_R3.internal.ComponentUtils;
 import sh.miles.pineapple.nms.impl.v1_20_R3.inventory.scene.PineappleMenuScene;
-import sh.miles.pineapple.nms.impl.v1_20_R3.inventory.scene.PineappleSceneFactory;
 import sh.miles.pineapple.nms.impl.v1_20_R3.inventory.scene.custom.PineappleCustomMenu;
 
 import java.io.ByteArrayInputStream;
@@ -64,15 +61,15 @@ public class PineappleNMSImpl implements PineappleNMS {
 
     @NotNull
     @Override
-    public MenuScene createMenuCustom(@NotNull final Player player, @NotNull final MenuBehavior behavior, final int rows, @NotNull final BaseComponent title) {
+    public MenuScene createMenuCustom(@NotNull final Player player, @NotNull final CustomMenuListener menuListener, final int rows, @NotNull final BaseComponent title) {
         Preconditions.checkArgument(player != null, "The given player must not be null");
-        Preconditions.checkArgument(behavior != null, "The given behavior must not be null");
+        Preconditions.checkArgument(menuListener != null, "The given menuListener must not be null");
         Preconditions.checkArgument(title != null, "The given title must not be null");
         Preconditions.checkArgument(rows > 0 && rows < 7, "The given rows must be between 1 and 6 inclusive");
 
         final ServerPlayer splayer = ((CraftPlayer) player).getHandle();
         final MenuType<?> menuType = CHEST_TYPES[rows - 1];
-        final PineappleCustomMenu menu = new PineappleCustomMenu(behavior, menuType, splayer.getInventory(), rows, splayer.nextContainerCounter());
+        final PineappleCustomMenu menu = new PineappleCustomMenu(menuListener, menuType, new SimpleContainer(rows * 9), splayer.getInventory(), splayer.nextContainerCounter());
         menu.setTitle(ComponentUtils.toMinecraftChat(title));
         return new PineappleMenuScene<>((CraftInventoryView) menu.getBukkitView());
     }
