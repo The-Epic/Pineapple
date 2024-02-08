@@ -47,7 +47,7 @@ public interface CustomMenuSlot {
      *
      * @return true if the slot has an item, otherwise false
      */
-    boolean hasItem();
+    boolean hasBukkitItem();
 
     /**
      * Sets the item in the slot via a player. This method is only triggered when a player places the item
@@ -66,7 +66,7 @@ public interface CustomMenuSlot {
     /**
      * Marks the slot as changed
      */
-    void setChanged();
+    void setSlotChanged();
 
     /**
      * Determines whether or not a player can pick up an item

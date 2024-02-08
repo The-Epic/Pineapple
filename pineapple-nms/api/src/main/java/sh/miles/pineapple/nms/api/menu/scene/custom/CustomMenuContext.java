@@ -18,9 +18,10 @@ public interface CustomMenuContext {
      * @param startIndex the start index (included)
      * @param endIndex   the end index (excluded)
      * @param reverse    whether or not to reverse the search direction
-     * @return true if the stack was merged, otherwise false
+     * @return the move result
      */
-    boolean mergeItemStackBetween(@NotNull final ItemStack item, final int startIndex, final int endIndex, final boolean reverse);
+    @NotNull
+    MergeResult mergeItemStackBetween(@NotNull final ItemStack item, final int startIndex, final int endIndex, final boolean reverse);
 
     /**
      * Callback for when a crafting matrix is changed
@@ -57,4 +58,7 @@ public interface CustomMenuContext {
      * @return the amount of slots
      */
     int getSlotAmount();
+
+    record MergeResult(@NotNull ItemStack item, boolean result) {
+    }
 }

@@ -30,7 +30,7 @@ import sh.miles.pineapple.nms.api.menu.scene.MenuScene;
 import sh.miles.pineapple.nms.api.menu.scene.custom.CustomMenuListener;
 import sh.miles.pineapple.nms.impl.v1_20_R3.internal.ComponentUtils;
 import sh.miles.pineapple.nms.impl.v1_20_R3.inventory.scene.PineappleMenuScene;
-import sh.miles.pineapple.nms.impl.v1_20_R3.inventory.scene.custom.PineappleCustomMenu;
+import sh.miles.pineapple.nms.impl.v1_20_R3.inventory.scene.custom.PineappleMenu;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -69,7 +69,7 @@ public class PineappleNMSImpl implements PineappleNMS {
 
         final ServerPlayer splayer = ((CraftPlayer) player).getHandle();
         final MenuType<?> menuType = CHEST_TYPES[rows - 1];
-        final PineappleCustomMenu menu = new PineappleCustomMenu(menuListener, menuType, new SimpleContainer(rows * 9), splayer.getInventory(), splayer.nextContainerCounter());
+        final PineappleMenu menu = new PineappleMenu(menuListener, menuType, splayer.nextContainerCounter(), splayer.getInventory(), rows);
         menu.setTitle(ComponentUtils.toMinecraftChat(title));
         return new PineappleMenuScene<>((CraftInventoryView) menu.getBukkitView());
     }

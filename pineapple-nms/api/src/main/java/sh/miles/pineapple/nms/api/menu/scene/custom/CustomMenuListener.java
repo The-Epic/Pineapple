@@ -5,6 +5,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import sh.miles.pineapple.nms.api.menu.scene.custom.CustomMenuContext.MergeResult;
 
 /**
  * Gives a variety of methods that can be listened to react to Menu changes
@@ -22,7 +23,36 @@ public interface CustomMenuListener {
      * @return the given quick move result
      */
     default QuickMoveResult quickMoveItem(@NotNull final CustomMenuContext context, @NotNull final HumanEntity player, final int rawSlot) {
-        return QuickMoveResult.delegate();
+        ItemStack result = new ItemStack(Material.AIR);
+        final CustomMenuSlot slot = context.getMenuSlot(rawSlot);
+
+        if (slot != null && slot.hasBukkitItem()) {
+            ItemStack slotItem = slot.getBukkitItem();
+            result = slotItem.clone();
+            MergeResult mergeResult;
+            if (rawSlot < context.getRowAmount() * 9) {
+                mergeResult = context.mergeItemStackBetween(slotItem, context.getRowAmount() * 9, context.getSlotAmount(), true);
+                if (!mergeResult.result()) {
+                    return QuickMoveResult.cancel();
+                }
+
+                slotItem = mergeResult.item();
+            } else {
+                mergeResult = context.mergeItemStackBetween(slotItem, 0, context.getRowAmount() * 9, false);
+                if (!mergeResult.result()) {
+                    return QuickMoveResult.cancel();
+                }
+                slotItem = mergeResult.item();
+            }
+
+            if (slotItem.getType().isAir() || slotItem.getAmount() == 0) {
+                slot.setItemByPlayer(new ItemStack(Material.AIR));
+            } else {
+                slot.setSlotChanged();
+            }
+        }
+
+        return QuickMoveResult.complete(result);
     }
 
     /**
