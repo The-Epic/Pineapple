@@ -78,11 +78,6 @@ public class PineappleSlot extends Slot implements CustomMenuSlot {
         super.setChanged();
     }
 
-    @Override
-    public boolean isHighlightable() {
-        return listener.canHighlight();
-    }
-
     // Pineapple Required
     @Override
     public void onQuickCraftItem(@NotNull final org.bukkit.inventory.ItemStack originalStack, @NotNull final org.bukkit.inventory.ItemStack newStack) {

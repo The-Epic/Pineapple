@@ -110,8 +110,4 @@ public interface CustomSlotListener {
     default boolean dictateAllowSlotModification(@NotNull final CustomMenuContext menuContext, @NotNull final CustomMenuSlot slotContext, @NotNull final HumanEntity player) {
         return dictateMayPickupItem(menuContext, slotContext, player) && dictateMayPlaceItem(menuContext, slotContext, slotContext.getBukkitItem());
     }
-
-    default boolean canHighlight() {
-        return true;
-    }
 }
