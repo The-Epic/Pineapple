@@ -35,22 +35,23 @@ public class PineappleMenu extends AbstractContainerMenu implements CustomMenuCo
         this.rows = rows;
         this.container = new SimpleContainer(9 * rows);
 
+        int rawIndex = 0;
         for (int row = 0; row < this.rows; ++row) {
             for (int column = 0; column < 9; ++column) {
                 final int index = column + row * 9;
-                this.addSlot(new PineappleSlot(this, menuListener, this.container, index));
+                this.addSlot(new PineappleSlot(this, menuListener, this.container, index, rawIndex++));
             }
         }
 
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
                 final int index = column + row * 9 + 9;
-                this.addSlot(new PineappleSlot(this, menuListener, this.playerInventory, index));
+                this.addSlot(new PineappleSlot(this, menuListener, this.playerInventory, index, rawIndex++));
             }
         }
 
         for (int column = 0; column < 9; ++column) {
-            this.addSlot(new PineappleSlot(this, menuListener, this.playerInventory, column));
+            this.addSlot(new PineappleSlot(this, menuListener, this.playerInventory, column, rawIndex++));
         }
     }
 

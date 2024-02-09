@@ -19,10 +19,10 @@ public class PineappleSlot extends Slot implements CustomMenuSlot {
     private final CustomMenuContext context;
     private final CustomSlotListener listener;
 
-    public PineappleSlot(@NotNull final CustomMenuContext context, @NotNull final CustomMenuListener listener, final Container container, final int slotIndex) {
+    public PineappleSlot(@NotNull final CustomMenuContext context, @NotNull final CustomMenuListener listener, final Container container, final int slotIndex, final int rawIndex) {
         super(container, slotIndex, 0, 0);
         this.context = context;
-        this.listener = listener.getSlotListener(slotIndex);
+        this.listener = listener.getSlotListener(rawIndex);
         Preconditions.checkState(this.listener != null, "The given slot listener must not be null");
     }
 
@@ -70,6 +70,17 @@ public class PineappleSlot extends Slot implements CustomMenuSlot {
     @Override
     public boolean allowModification(final Player player) {
         return listener.dictateAllowSlotModification(this.context, this, player.getBukkitEntity());
+    }
+
+    @Override
+    public void setChanged() {
+        this.listener.onSlotChange(this.context, this);
+        super.setChanged();
+    }
+
+    @Override
+    public boolean isHighlightable() {
+        return listener.canHighlight();
     }
 
     // Pineapple Required

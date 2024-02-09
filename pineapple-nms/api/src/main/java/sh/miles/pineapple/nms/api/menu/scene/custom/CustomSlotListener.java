@@ -11,7 +11,18 @@ import org.jetbrains.annotations.NotNull;
 @ApiStatus.OverrideOnly
 public interface CustomSlotListener {
 
-    CustomSlotListener EMPTY = new CustomSlotListener() {};
+    CustomSlotListener EMPTY = new CustomSlotListener() {
+    };
+
+    /**
+     * Triggers when the internal onSlotChange method is called
+     *
+     * @param menuContext the menu context
+     * @param slotContext the slot context
+     */
+    default void onSlotChange(@NotNull final CustomMenuContext menuContext, @NotNull final CustomMenuSlot slotContext) {
+    }
+
 
     /**
      * Triggers when the internal check achievements method is called
@@ -98,5 +109,9 @@ public interface CustomSlotListener {
      */
     default boolean dictateAllowSlotModification(@NotNull final CustomMenuContext menuContext, @NotNull final CustomMenuSlot slotContext, @NotNull final HumanEntity player) {
         return dictateMayPickupItem(menuContext, slotContext, player) && dictateMayPlaceItem(menuContext, slotContext, slotContext.getBukkitItem());
+    }
+
+    default boolean canHighlight() {
+        return true;
     }
 }
