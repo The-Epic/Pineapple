@@ -15,6 +15,7 @@ dependencyResolutionManagement {
         maven("https://repo.jeff-media.com/public")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://maven.miles.sh/libraries")
+        maven("https://repo.codemc.io/repository/nms/")
     }
 }
 
